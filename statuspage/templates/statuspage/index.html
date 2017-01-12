@@ -1,0 +1,44 @@
+{% extends "statuspage/base.html" %}
+
+{% load humanize %}
+{% load statuspage_extras %}
+
+{% block statuspage_content %}
+<div class="container">
+    <div class="alert alert-{{ worst_service.status|status_class:"" }}" role="alert">
+        {{ worst_service.status|status_summary_text:"" }}
+    </div>
+    <h1>Status Page</h1>
+    {% for grp in statusgroups %}
+    <div class="servicegroup">
+        <div class="page-header servicegroup-header">
+            <h2>
+                <span class="header" data-toggle="collapse" href="#servicegroup-content-{{grp.pk}}">
+                    {{ grp.name }}
+                </span>
+                <span style="float: right; font-size: 70%;" class="label label-{{ grp.worst_service.status|status_class:"" }} place-right">
+                    {{ grp.worst_service.get_status_display }}
+                </span>
+            </h2>
+        </div>
+        <div id="servicegroup-content-{{grp.pk}}" class="servicegroup-content collapse in" data-toggle="collapse">
+            <ul class="list-group">
+                {% for srv in grp.services.all %}
+                <li class="list-group-item">
+                    {% if srv.href %}
+                    <a href="{{ srv.href }}">{{ srv.name }}</a>
+                    {% else %}
+                    {{ srv.name }}
+                    {% endif %}
+                    <span class="label label-{{ srv.status|status_class:"" }}" style="float: right;">
+                        {{ srv.get_status_display }}
+                    </span>
+                    <br/><small>last update {{ srv.modified|naturaltime }}</small>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
