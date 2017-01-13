@@ -3,7 +3,7 @@
 {% load humanize %}
 {% load statuspage_extras %}
 
-{% block statuspage_content %}
+{% block content %}
 <div class="container">
     <div class="alert alert-{{ worst_service.status|status_class:"" }}" role="alert">
         {{ worst_service.status|status_summary_text:"" }}
