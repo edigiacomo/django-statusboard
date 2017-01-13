@@ -1,0 +1,6 @@
+include README.md
+include LICENSE
+recursive-include statuspage/static *.js *.css *.png
+recursive-include statuspage/templates *.html
+recursive-exclude * __pycache__
+recursive-exclude * *.py[co]
