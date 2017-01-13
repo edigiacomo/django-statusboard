@@ -2,6 +2,7 @@ from django.shortcuts import render
 
 from rest_framework import viewsets
 from rest_framework import permissions
+from rest_framework import versioning
 
 from .models import Service, ServiceGroup
 from .serializers import ServiceSerializer, ServiceGroupSerializer
@@ -19,9 +20,11 @@ class ServiceGroupViewSet(viewsets.ModelViewSet):
     serializer_class = ServiceGroupSerializer
     queryset = ServiceGroup.objects.all()
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    versioning_class = versioning.URLPathVersioning
 
 
 class ServiceViewSet(viewsets.ModelViewSet):
     serializer_class = ServiceSerializer
     queryset = Service.objects.all()
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    versioning_class = versioning.URLPathVersioning

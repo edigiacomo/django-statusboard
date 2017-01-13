@@ -13,5 +13,5 @@ app_name = "statuspage"
 
 urlpatterns = [
     url(r'^$', views.index, name="index"),
-    url(r'^api/', include(router.urls, namespace="api")),
+    url(r'^api/(?P<version>v0\.1)/', include(router.urls, namespace="api")),
 ]
