@@ -49,7 +49,7 @@
                 <span class="label label-default">{{ incident.service.name }}</span>
                 {% endif %}
                 <strong>{{ incident.name }}</strong>
-                <br/><small>{{ incident.occurred|naturaltime }}</small>
+                <br/><small>occurred {{ incident.occurred|naturaltime }}</small>
             </div>
             <div class="panel-body">
                 {{ incident.description }}
