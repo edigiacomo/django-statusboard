@@ -4,7 +4,7 @@ from rest_framework import viewsets
 from rest_framework import permissions
 from rest_framework import versioning
 
-from .models import Service, ServiceGroup
+from .models import Service, ServiceGroup, Incident
 from .serializers import ServiceSerializer, ServiceGroupSerializer
 
 
@@ -13,6 +13,7 @@ def index(request):
     return render(request, "statuspage/index.html", {
         "statusgroups": ServiceGroup.objects.annotate(services_count=Count('service')).filter(services_count__gt=0),
         "worst_service": Service.objects.latest('status'),
+        "incidents": Incident.objects.order_by('-occurred'),
     })
 
 

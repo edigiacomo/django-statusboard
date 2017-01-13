@@ -5,20 +5,16 @@
 
 {% block content %}
 <div class="container">
-    <div class="alert alert-{{ worst_service.status|status_class:"" }}" role="alert">
-        {{ worst_service.status|status_summary_text:"" }}
+    <div class="alert alert-{{ worst_service.status|service_status_class:"" }}" role="alert">
+        {{ worst_service.status|service_status_summary_text:"" }}
     </div>
     <h1>Status Page</h1>
     {% for grp in statusgroups %}
     <div class="servicegroup">
         <div class="page-header servicegroup-header">
             <h2 class="clearfix">
-                <a class="pull-left" data-toggle="collapse" href="#servicegroup-content-{{grp.pk}}">
-                    {{ grp.name }}
-                </a>
-                <span class="label label-{{ grp.worst_service.status|status_class:"" }} pull-right">
-                    {{ grp.worst_service.get_status_display }}
-                </span>
+                <a class="pull-left" data-toggle="collapse" href="#servicegroup-content-{{grp.pk}}">{{ grp.name }}</a>
+                <span class="label label-{{ grp.worst_service.status|service_status_class:"" }} pull-right">{{ grp.worst_service.get_status_display }}</span>
             </h2>
         </div>
         <div id="servicegroup-content-{{grp.pk}}" class="servicegroup-content collapse in" data-toggle="collapse">
@@ -28,11 +24,9 @@
                     {% if srv.href %}
                     <a href="{{ srv.href }}">{{ srv.name }}</a>
                     {% else %}
-                    {{ srv.name }}
+                    <span>{{ srv.name }}</span>
                     {% endif %}
-                    <span class="label label-{{ srv.status|status_class:"" }} pull-right">
-                        {{ srv.get_status_display }}
-                    </span>
+                    <span class="label label-{{ srv.status|service_status_class:"" }} pull-right">{{ srv.get_status_display }}</span>
                     <br/><small>last update {{ srv.modified|naturaltime }}</small>
                 </li>
                 {% endfor %}
@@ -40,5 +34,28 @@
         </div>
     </div>
     {% endfor %}
+    <div class="incidents">
+        <div id="page-header">
+            <h2>Incidents</h2>
+        </div>
+        {% for incident in incidents %}
+        {% ifchanged incident.occurred.date %}
+        <h3>{{ incident.occurred|date:"DATE_FORMAT" }}</h3>
+        {% endifchanged %}
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <span class="label label-{{ incident.status|incident_status_class:"" }}">{{ incident.get_status_display }}</span>
+                {% if incident.service %}
+                <span class="label label-default">{{ incident.service.name }}</span>
+                {% endif %}
+                <strong>{{ incident.name }}</strong>
+                <br/><small>{{ incident.occurred|naturaltime }}</small>
+            </div>
+            <div class="panel-body">
+                {{ incident.description }}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
 </div>
 {% endblock %}
