@@ -14,7 +14,7 @@
         <div class="page-header servicegroup-header">
             <h2 class="clearfix">
                 <a class="pull-left" data-toggle="collapse" href="#servicegroup-content-{{grp.pk}}">{{ grp.name }}</a>
-                <span class="label label-{{ grp.worst_service.status|service_status_class:"" }} pull-right">{{ grp.worst_service.get_status_display }}</span>
+                <small class="label label-{{ grp.worst_service.status|service_status_class:"" }} pull-right">{{ grp.worst_service.get_status_display }}</small>
             </h2>
         </div>
         <div id="servicegroup-content-{{grp.pk}}" class="servicegroup-content collapse in" data-toggle="collapse">
