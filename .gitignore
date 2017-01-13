@@ -1,0 +1,9 @@
+*.pyc
+*.pyo
+__pycache__
+/dist/
+/django_statuspage.egg-info/
+
+/db.sqlite3
+/manage.py
+/mysite
