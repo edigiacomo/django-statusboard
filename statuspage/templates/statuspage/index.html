@@ -12,11 +12,11 @@
     {% for grp in statusgroups %}
     <div class="servicegroup">
         <div class="page-header servicegroup-header">
-            <h2>
-                <a data-toggle="collapse" href="#servicegroup-content-{{grp.pk}}">
+            <h2 class="clearfix">
+                <a class="pull-left" data-toggle="collapse" href="#servicegroup-content-{{grp.pk}}">
                     {{ grp.name }}
                 </a>
-                <span style="font-size: 70%;" class="label label-{{ grp.worst_service.status|status_class:"" }} pull-right">
+                <span class="label label-{{ grp.worst_service.status|status_class:"" }} pull-right">
                     {{ grp.worst_service.get_status_display }}
                 </span>
             </h2>
@@ -24,7 +24,7 @@
         <div id="servicegroup-content-{{grp.pk}}" class="servicegroup-content collapse in" data-toggle="collapse">
             <ul class="list-group">
                 {% for srv in grp.services.all %}
-                <li class="list-group-item">
+                <li class="list-group-item clearfix">
                     {% if srv.href %}
                     <a href="{{ srv.href }}">{{ srv.name }}</a>
                     {% else %}
