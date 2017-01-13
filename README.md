@@ -28,7 +28,7 @@ Update your urlconf:
 ```python
 # myproject/urls.py
 urlpatterns += [
-    url(r'^statuspage/$', include('statuspage.urls', namespace='statuspage')),
+    url(r'^statuspage/$', include('statuspage.urls')),
 ]
 ```
 

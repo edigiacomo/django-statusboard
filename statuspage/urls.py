@@ -9,6 +9,7 @@ router = routers.DefaultRouter()
 router.register(r'servicegroups', views.ServiceGroupViewSet)
 router.register(r'services', views.ServiceViewSet)
 
+app_name = "statuspage"
 
 urlpatterns = [
     url(r'^$', views.index, name="index"),
