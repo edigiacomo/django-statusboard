@@ -23,7 +23,9 @@ setup(
     url='http://github.com/edigiacomo/django-statuspage',
     author='Emanuele Di Giacomo',
     classifiers=[
+        'Development Status :: 4 - Beta',
         'Environment :: Web Environment',
+        'License :: OSI Approved :: GNU General Public License v2 or later (GPLv2+)',
         'Framework :: Django',
         'Framework :: Django :: 1.9',
         'Operating System :: OS Independent',
