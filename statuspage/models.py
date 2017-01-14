@@ -43,12 +43,21 @@ INCIDENT_STATUSES = (
 )
 
 
+class IncidentManager(models.Manager):
+    def occurred_in_last_n_days(self, days=7):
+        threshold = timezone.now() - timezone.timedelta(days=days)
+        qs = self.get_queryset().filter(occurred__date__gte=threshold.date())
+        return qs
+
+
 class Incident(TimeStampedModel):
     name = models.CharField(max_length=255)
     service = models.ForeignKey('Service', blank=True, null=True)
     status = models.IntegerField(choices=INCIDENT_STATUSES)
     description = models.TextField()
     occurred = models.DateTimeField(default=timezone.now)
+
+    objects = IncidentManager()
 
     def __str__(self):
         return self.name
