@@ -27,7 +27,7 @@
                     <span>{{ srv.name }}</span>
                     {% endif %}
                     <span class="label label-{{ srv.status|service_status_class:"" }} pull-right">{{ srv.get_status_display }}</span>
-                    <br/><small title="{{ srv.modified|date:"r" }}">last update {{ srv.modified|naturaltime }}</small>
+                    <br/><small class="timeinfo" title="{{ srv.modified|date:"r" }}">last update {{ srv.modified|naturaltime }}</small>
                 </li>
                 {% endfor %}
             </ul>
@@ -49,13 +49,13 @@
                 <span class="label label-default">{{ incident.service.name }}</span>
                 {% endif %}
                 <strong>{{ incident.name }}</strong>
-                <br/><small title="{{ incident.occurred|date:"r" }}">occurred {{ incident.occurred|naturaltime }}</small>
+                <br/><small class="timeinfo" title="{{ incident.occurred|date:"r" }}">occurred {{ incident.occurred|naturaltime }}</small>
             </div>
             <div class="panel-body">
                 {{ incident.description }}
             </div>
             <div class="panel-footer">
-                <small title="{{ incident.modified|date:"r" }}">last update {{ incident.modified|naturaltime }}</small>
+                <small class="timeinfo" title="{{ incident.modified|date:"r" }}">last update {{ incident.modified|naturaltime }}</small>
             </div>
         </div>
         {% endfor %}
