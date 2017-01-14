@@ -31,6 +31,16 @@ def service_status_class(value, arg):
 
 
 @register.filter
+def service_status_glyphicon(value, arg):
+    return {
+        "0": "glyphicon-ok-sign",
+        "1": "glyphicon-info-sign",
+        "2": "glyphicon-exclamation-sign",
+        "3": "glyphicon-exclamation-sign",
+    }.get(str(value), arg)
+
+
+@register.filter
 def incident_status_class(value, arg):
     return {
         "0": "danger",
