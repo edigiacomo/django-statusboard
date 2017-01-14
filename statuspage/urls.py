@@ -8,6 +8,7 @@ from . import views
 router = routers.DefaultRouter()
 router.register(r'servicegroups', views.ServiceGroupViewSet)
 router.register(r'services', views.ServiceViewSet)
+router.register(r'incidents', views.IncidentViewSet)
 
 app_name = "statuspage"
 
