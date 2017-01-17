@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.views.generic.dates import MonthArchiveView
 
 from rest_framework import viewsets
 from rest_framework import permissions
@@ -15,6 +16,12 @@ def index(request):
         "worst_service": Service.objects.latest('status'),
         "incidents": Incident.objects.occurred_in_last_n_days(7).order_by('-occurred'),
     })
+
+
+class IncidentMonthArchiveView(MonthArchiveView):
+    queryset = Incident.objects.all()
+    date_field = "occurred"
+    allow_future = False
 
 
 class ServiceGroupViewSet(viewsets.ModelViewSet):
