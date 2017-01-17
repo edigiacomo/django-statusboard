@@ -6,27 +6,7 @@
 {% block content %}
 <div class="container">
     <h2>Incidents reported in {{ month|date:"F Y" }}.</h2>
-    {% for incident in object_list %}
-    {% ifchanged incident.occurred.date %}
-    <h3>{{ incident.occurred|date:"DATE_FORMAT" }}</h3>
-    {% endifchanged %}
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <span class="label label-{{ incident.status|incident_status_class:"" }}">{{ incident.get_status_display }}</span>
-            {% if incident.service %}
-            <span class="label label-default">{{ incident.service.name }}</span>
-            {% endif %}
-            <strong>{{ incident.name }}</strong>
-            <br/><small class="timeinfo" title="{{ incident.occurred|date:"r" }}">occurred {{ incident.occurred|naturaltime }}</small>
-        </div>
-        <div class="panel-body">
-            {{ incident.description }}
-        </div>
-        <div class="panel-footer">
-            <small class="timeinfo" title="{{ incident.modified|date:"r" }}">last update {{ incident.modified|naturaltime }}</small>
-        </div>
-    </div>
-    {% endfor %}
+    {% include "statuspage/incident_list_snippet.html" with incidents=object_list only %}
     <nav>
         <ul class="pager">
             {% if previous_month %}
@@ -47,6 +27,5 @@
             {% endif %}
         </ul>
     </nav>
-    <p>
 </div>
 {% endblock %}
