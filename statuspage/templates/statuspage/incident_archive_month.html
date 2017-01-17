@@ -7,25 +7,6 @@
 <div class="container">
     <h2>Incidents reported in {{ month|date:"F Y" }}.</h2>
     {% include "statuspage/incident_list_snippet.html" with incidents=object_list only %}
-    <nav>
-        <ul class="pager">
-            {% if previous_month %}
-            <li class="previous">
-                <a href="{% url "statuspage:incident:archive-month" previous_month.year previous_month.month %}">
-                    <span aria-hidden="true">&larr;</span>
-                    {{ previous_month|date:"F Y" }}
-                </a>
-            </li>
-            {% endif %}
-            {% if next_month %}
-            <li class="next">
-                <a href="{% url "statuspage:incident:archive-month" next_month.year next_month.month %}">
-                    {{ next_month|date:"F Y" }}
-                    <span aria-hidden="true">&rarr;</span>
-                </a>
-            </li>
-            {% endif %}
-        </ul>
-    </nav>
+    {% include "statuspage/incident_archive_nav_snippet.html" with previous_month=previous_month next_month=next_month only %}
 </div>
 {% endblock %}
