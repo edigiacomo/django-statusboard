@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.http import Http404
 from django.views.generic.dates import MonthArchiveView
 
 from rest_framework import viewsets
@@ -22,6 +23,20 @@ class IncidentMonthArchiveView(MonthArchiveView):
     queryset = Incident.objects.all()
     date_field = "occurred"
     allow_future = False
+    month_format = "%m"
+
+
+    def get_year(self):
+        try:
+            return super(IncidentMonthArchiveView, self).get_year()
+        except Http404:
+            return str(self.get_queryset().latest(self.date_field).occurred.year)
+
+    def get_month(self):
+        try:
+            return super(IncidentMonthArchiveView, self).get_month()
+        except Http404:
+            return str(self.get_queryset().latest(self.date_field).occurred.month)
 
 
 class ServiceGroupViewSet(viewsets.ModelViewSet):

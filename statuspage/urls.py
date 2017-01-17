@@ -13,8 +13,11 @@ router.register(r'incidents', views.IncidentViewSet)
 app_name = "statuspage"
 
 incident_urls = [
+    url('^archive/$',
+        views.IncidentMonthArchiveView.as_view(),
+        name="archive-index"),
     url('^archive/(?P<year>[0-9]{4})/(?P<month>[0-9]{1,2})/$',
-        views.IncidentMonthArchiveView.as_view(month_format="%m"),
+        views.IncidentMonthArchiveView.as_view(),
         name="archive-month"),
 ]
 
