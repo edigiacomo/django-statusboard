@@ -3,6 +3,7 @@ from django.http import Http404
 from django.core.urlresolvers import reverse_lazy
 from django.views.generic.dates import MonthArchiveView
 from django.views.generic.edit import CreateView
+from django.views.generic.edit import UpdateView
 
 from rest_framework import viewsets
 from rest_framework import permissions
@@ -23,7 +24,15 @@ def index(request):
 
 
 class IncidentCreateView(CreateView):
+    model = Incident
     template_name = "statuspage/incidents/create.html"
+    form_class = IncidentForm
+    success_url = reverse_lazy('statuspage:index')
+
+
+class IncidentUpdateView(UpdateView):
+    model = Incident
+    template_name = "statuspage/incidents/edit.html"
     form_class = IncidentForm
     success_url = reverse_lazy('statuspage:index')
 

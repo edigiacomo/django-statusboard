@@ -19,8 +19,12 @@ incident_urls = [
     url('^archive/(?P<year>[0-9]{4})/(?P<month>[0-9]{1,2})/$',
         views.IncidentMonthArchiveView.as_view(),
         name="archive-month"),
-    url('^create/$', views.IncidentCreateView.as_view(),
+    url('^create/$',
+        views.IncidentCreateView.as_view(),
         name="create"),
+    url('^edit/(?P<pk>[0-9]+)/$',
+        views.IncidentUpdateView.as_view(),
+        name="update"),
 ]
 
 urlpatterns = [
