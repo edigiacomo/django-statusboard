@@ -1,0 +1,24 @@
+<nav>
+    <ul class="pager">
+        {% if previous_month %}
+        <li class="previous">
+            <a href="{% url "statuspage:incident:archive-month" previous_month.year previous_month.month %}">
+                <span aria-hidden="true">&larr;</span>
+                {{ previous_month|date:"b Y" }}
+            </a>
+        </li>
+        {% endif %}
+        <li class="">
+            <a href="{% url "statuspage:incident:archive-index" %}">latest</a>
+        </li>
+        {% if next_month %}
+        <li class="next">
+            <a href="{% url "statuspage:incident:archive-month" next_month.year next_month.month %}">
+                {{ next_month|date:"b Y" }}
+                <span aria-hidden="true">&rarr;</span>
+            </a>
+        </li>
+        {% endif %}
+    </ul>
+</nav>
+

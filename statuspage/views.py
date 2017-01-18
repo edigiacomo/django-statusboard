@@ -1,4 +1,6 @@
 from django.shortcuts import render
+from django.http import Http404
+from django.views.generic.dates import MonthArchiveView
 
 from rest_framework import viewsets
 from rest_framework import permissions
@@ -15,6 +17,27 @@ def index(request):
         "worst_service": Service.objects.latest('status'),
         "incidents": Incident.objects.occurred_in_last_n_days(7).order_by('-occurred'),
     })
+
+
+class IncidentMonthArchiveView(MonthArchiveView):
+    queryset = Incident.objects.all()
+    date_field = "occurred"
+    allow_future = False
+    month_format = "%m"
+    template_name = "statuspage/incidents/archive_month.html"
+
+
+    def get_year(self):
+        try:
+            return super(IncidentMonthArchiveView, self).get_year()
+        except Http404:
+            return str(self.get_queryset().latest(self.date_field).occurred.year)
+
+    def get_month(self):
+        try:
+            return super(IncidentMonthArchiveView, self).get_month()
+        except Http404:
+            return str(self.get_queryset().latest(self.date_field).occurred.month)
 
 
 class ServiceGroupViewSet(viewsets.ModelViewSet):
