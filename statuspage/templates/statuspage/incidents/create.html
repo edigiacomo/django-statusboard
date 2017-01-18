@@ -1,0 +1,54 @@
+{% extends "statuspage/base.html" %}
+
+{% load statuspage_extras %}
+
+{% block content %}
+<div class="container">
+        <form class="form" role="form" method="post" action="">
+            {% csrf_token %}
+            <div class="form-group">
+                {{ form.name.errors }}
+                <label class="control-label" for="{{ form.name.id_for_label }}">Name</label>
+                <div>
+                {{ form.name }}
+                </div>
+            </div>
+
+            <div class="form-group">
+                {{ form.service.errors }}
+                <label class="control-label" for="{{ form.service.id_for_label }}">Service</label>
+                <div>
+                {{ form.service }}
+                </div>
+            </div>
+
+            <div class="form-group">
+                {{ form.status.errors }}
+                <label class="control-label" for="{{ form.status.id_for_label }}">Status</label>
+                <div>
+                {{ form.status }}
+                </div>
+            </div>
+                
+            <div class="form-group">
+                {{ form.description.errors }}
+                <label class="control-label" for="{{ form.description.id_for_label }}">Description</label>
+                <div>
+                {{ form.description }}
+                </div>
+            </div>
+
+            <div class="form-group">
+                {{ form.occurred.errors }}
+                <label class="control-label" for="{{ form.occurred.id_for_label }}">Occurred</label>
+                <div>
+                {{ form.occurred }}
+                </div>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" class="btn btn-primary" value="Submit">
+            </div>
+        </form>
+</div>
+{% endblock %}

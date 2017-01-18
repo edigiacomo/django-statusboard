@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.http import Http404
+from django.core.urlresolvers import reverse_lazy
 from django.views.generic.dates import MonthArchiveView
+from django.views.generic.edit import CreateView
 
 from rest_framework import viewsets
 from rest_framework import permissions
@@ -8,6 +10,7 @@ from rest_framework import versioning
 
 from .models import Service, ServiceGroup, Incident
 from .serializers import ServiceSerializer, ServiceGroupSerializer, IncidentSerializer
+from .forms import IncidentForm
 
 
 def index(request):
@@ -17,6 +20,12 @@ def index(request):
         "worst_service": Service.objects.latest('status'),
         "incidents": Incident.objects.occurred_in_last_n_days(7).order_by('-occurred'),
     })
+
+
+class IncidentCreateView(CreateView):
+    template_name = "statuspage/incidents/create.html"
+    form_class = IncidentForm
+    success_url = reverse_lazy('statuspage:index')
 
 
 class IncidentMonthArchiveView(MonthArchiveView):
