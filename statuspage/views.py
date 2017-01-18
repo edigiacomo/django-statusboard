@@ -24,6 +24,7 @@ class IncidentMonthArchiveView(MonthArchiveView):
     date_field = "occurred"
     allow_future = False
     month_format = "%m"
+    template_name = "statuspage/incidents/archive_month.html"
 
 
     def get_year(self):
