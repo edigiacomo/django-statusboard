@@ -22,7 +22,7 @@ setup(
     description='Django app to show system status',
     url='http://github.com/edigiacomo/django-statuspage',
     author='Emanuele Di Giacomo',
-    install_requires=['djangorestframework'],
+    install_requires=['django', 'djangorestframework', 'django-model-utils'],
     classifiers=[
         'Development Status :: 4 - Beta',
         'Environment :: Web Environment',
