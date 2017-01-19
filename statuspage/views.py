@@ -4,6 +4,7 @@ from django.core.urlresolvers import reverse_lazy
 from django.views.generic.dates import MonthArchiveView
 from django.views.generic.edit import CreateView
 from django.views.generic.edit import UpdateView
+from django.views.generic.edit import DeleteView
 
 from rest_framework import viewsets
 from rest_framework import permissions
@@ -34,6 +35,12 @@ class IncidentUpdateView(UpdateView):
     model = Incident
     template_name = "statuspage/incidents/edit.html"
     form_class = IncidentForm
+    success_url = reverse_lazy('statuspage:index')
+
+
+class IncidentDeleteView(DeleteView):
+    model = Incident
+    template_name = "statuspage/incidents/confirm_delete.html"
     success_url = reverse_lazy('statuspage:index')
 
 

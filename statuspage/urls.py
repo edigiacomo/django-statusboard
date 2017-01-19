@@ -22,9 +22,12 @@ incident_urls = [
     url('^create/$',
         views.IncidentCreateView.as_view(),
         name="create"),
-    url('^edit/(?P<pk>[0-9]+)/$',
+    url('^(?P<pk>[0-9]+)/update/$',
         views.IncidentUpdateView.as_view(),
         name="update"),
+    url('^(?P<pk>[0-9]+)/delete/$',
+        views.IncidentDeleteView.as_view(),
+        name="delete"),
 ]
 
 urlpatterns = [
