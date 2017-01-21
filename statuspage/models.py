@@ -17,7 +17,7 @@ class Service(TimeStampedModel):
     description = models.TextField()
     href = models.URLField(blank=True)
     status = models.IntegerField(choices=SERVICE_STATUSES)
-    groups = models.ManyToManyField('ServiceGroup', blank=True,
+    groups = models.ManyToManyField('ServiceGroup',
                                     related_name='services',
                                     related_query_name='service')
 
