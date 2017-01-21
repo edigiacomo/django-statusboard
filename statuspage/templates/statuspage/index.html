@@ -5,9 +5,11 @@
 
 {% block content %}
 <div class="container">
-    <div class="alert alert-{{ worst_service.status|service_status_class:"" }}" role="alert">
-        {{ worst_service.status|service_status_summary_text:"" }}
+    {% if worst_status != None %}
+    <div class="alert alert-{{ worst_status|service_status_class:"" }}" role="alert">
+        {{ worst_status|service_status_summary_text:"" }}
     </div>
+    {% endif %}
     <h1>Status Page</h1>
     {% for grp in statusgroups %}
     <div class="servicegroup">

@@ -14,7 +14,7 @@ def index(request):
     from django.db.models import Count
     return render(request, "statuspage/index.html", {
         "statusgroups": ServiceGroup.objects.annotate(services_count=Count('service')).filter(services_count__gt=0),
-        "worst_service": Service.objects.latest('status'),
+        "worst_status": Service.objects.worst_status(),
         "incidents": Incident.objects.occurred_in_last_n_days(7).order_by('-occurred'),
     })
 

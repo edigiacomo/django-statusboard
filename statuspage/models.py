@@ -12,6 +12,12 @@ SERVICE_STATUSES = (
 )
 
 
+class ServiceManager(models.Manager):
+    def worst_status(self):
+        s = self.get_queryset().aggregate(models.Max('status'))["status__max"]
+        return s
+
+
 class Service(TimeStampedModel):
     name = models.CharField(max_length=255, unique=True)
     description = models.TextField()
@@ -20,6 +26,7 @@ class Service(TimeStampedModel):
     groups = models.ManyToManyField('ServiceGroup',
                                     related_name='services',
                                     related_query_name='service')
+    objects = ServiceManager()
 
     def __str__(self):
         return self.name
@@ -56,7 +63,6 @@ class Incident(TimeStampedModel):
     status = models.IntegerField(choices=INCIDENT_STATUSES)
     description = models.TextField()
     occurred = models.DateTimeField(default=timezone.now)
-
     objects = IncidentManager()
 
     def __str__(self):
