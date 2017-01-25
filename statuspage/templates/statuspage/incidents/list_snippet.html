@@ -17,7 +17,7 @@
         {% for update in incident.updates_by_ctime %}
         <li class="list-group-item">
             <span class="label label-{{ update.status|incident_status_class:"" }}">{{ update.get_status_display }}</span>
-            <span>{{ update.description }}</span>
+            <span>{{ update.description|linebreaksbr }}</span>
             <br/><small class="timeinfo" title="{{ update.modified|date:"r" }}">last update {{ update.modified|naturaltime }}</small>
         </li>
         {% endfor %}
