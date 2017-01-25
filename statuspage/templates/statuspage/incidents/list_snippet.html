@@ -7,7 +7,6 @@
 {% endifchanged %}
 <div class="panel panel-default">
     <div class="panel-heading">
-        <span class="label label-{{ incident.status|incident_status_class:"" }}">{{ incident.get_status_display }}</span>
         {% if incident.service %}
         <span class="label label-default">{{ incident.service.name }}</span>
         {% endif %}
