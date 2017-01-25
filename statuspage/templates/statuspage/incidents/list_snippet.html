@@ -2,8 +2,8 @@
 {% load statuspage_extras %}
 
 {% for incident in incidents %}
-{% ifchanged incident.occurred.date %}
-<h3>{{ incident.occurred|date:"DATE_FORMAT" }}</h3>
+{% ifchanged incident.modified.date %}
+<h3>{{ incident.modified|date:"DATE_FORMAT" }}</h3>
 {% endifchanged %}
 <div class="panel panel-default">
     <div class="panel-heading">
