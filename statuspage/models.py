@@ -60,6 +60,9 @@ class Incident(TimeStampedModel):
     def worst_status(self):
         return self.updates.aggregate(worst=models.Max('status'))['worst']
 
+    def updates_by_ctime(self):
+        return self.updates.order_by('-created')
+
     def __str__(self):
         return self.name
 
