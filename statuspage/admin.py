@@ -5,7 +5,7 @@ from .models import Service, ServiceGroup, Incident, IncidentUpdate
 
 class IncidentUpdateInline(admin.TabularInline):
     model = IncidentUpdate
-    order = ["-created"]
+    ordering = ["created"]
 
 
 class IncidentAdmin(admin.ModelAdmin):
