@@ -53,11 +53,22 @@ class IncidentManager(models.Manager):
 class Incident(TimeStampedModel):
     name = models.CharField(max_length=255)
     service = models.ForeignKey('Service', blank=True, null=True)
-    status = models.IntegerField(choices=INCIDENT_STATUSES)
-    description = models.TextField()
     occurred = models.DateTimeField(default=timezone.now)
 
     objects = IncidentManager()
 
+    def worst_status(self):
+        return self.updates.aggregate(worst=models.Max('status'))['worst']
+
     def __str__(self):
         return self.name
+
+
+class IncidentUpdate(TimeStampedModel):
+    incident = models.ForeignKey(Incident, related_name='updates',
+                                 related_query_name='update')
+    status = models.IntegerField(choices=INCIDENT_STATUSES)
+    description = models.TextField()
+
+    def __str__(self):
+        return "Update {} {}".format(self.incident.name, self.modified)
