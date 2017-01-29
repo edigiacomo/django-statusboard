@@ -6,8 +6,8 @@ from rest_framework import viewsets
 from rest_framework import permissions
 from rest_framework import versioning
 
-from .models import Service, ServiceGroup, Incident
-from .serializers import ServiceSerializer, ServiceGroupSerializer, IncidentSerializer
+from .models import Service, ServiceGroup, Incident, IncidentUpdate
+from .serializers import ServiceSerializer, ServiceGroupSerializer, IncidentSerializer, IncidentUpdateSerializer
 
 
 def index(request):
@@ -57,5 +57,12 @@ class ServiceViewSet(viewsets.ModelViewSet):
 class IncidentViewSet(viewsets.ModelViewSet):
     serializer_class = IncidentSerializer
     queryset = Incident.objects.all()
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    versioning_class = versioning.URLPathVersioning
+
+
+class IncidentUpdateViewSet(viewsets.ModelViewSet):
+    serializer_class = IncidentUpdateSerializer
+    queryset = IncidentUpdate.objects.all()
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     versioning_class = versioning.URLPathVersioning

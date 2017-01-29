@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Service, ServiceGroup, Incident
+from .models import Service, ServiceGroup, Incident, IncidentUpdate
 
 
 class ServiceSerializer(serializers.ModelSerializer):
@@ -19,4 +19,11 @@ class ServiceGroupSerializer(serializers.ModelSerializer):
 class IncidentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Incident
-        fields = ('id', 'name', 'service', 'status', 'description', 'occurred')
+        fields = ('id', 'name', 'service', 'occurred', 'created', 'modified',
+                  'updates')
+
+
+class IncidentUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = IncidentUpdate
+        fields = ('id', 'status', 'description', 'created', 'modified')

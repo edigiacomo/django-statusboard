@@ -7,18 +7,22 @@
 {% endifchanged %}
 <div class="panel panel-default">
     <div class="panel-heading">
-        <span class="label label-{{ incident.status|incident_status_class:"" }}">{{ incident.get_status_display }}</span>
         {% if incident.service %}
         <span class="label label-default">{{ incident.service.name }}</span>
         {% endif %}
         <strong>{{ incident.name }}</strong>
         <br/><small class="timeinfo" title="{{ incident.occurred|date:"r" }}">occurred {{ incident.occurred|naturaltime }}</small>
     </div>
-    <div class="panel-body">
-        {{ incident.description|linebreaksbr }}
-    </div>
+    <ul class="list-group">
+        {% for update in incident.updates_by_ctime %}
+        <li class="list-group-item">
+            <span class="label label-{{ update.status|incident_status_class:"" }}">{{ update.get_status_display }}</span>
+            <span>{{ update.description|linebreaksbr }}</span>
+            <br/><small class="timeinfo" title="{{ update.modified|date:"r" }}">last update {{ update.modified|naturaltime }}</small>
+        </li>
+        {% endfor %}
+    </ul>
     <div class="panel-footer">
-        <small class="timeinfo" title="{{ incident.modified|date:"r" }}">last update {{ incident.modified|naturaltime }}</small>
     </div>
 </div>
 {% endfor %}
