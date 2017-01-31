@@ -1,3 +1,6 @@
+div.incidents {
+    margin-top: 5em;
+}
 small.timeinfo {
     cursor: help;
     opacity: 0.7;
