@@ -16,7 +16,7 @@ version = get_version('statusboard')
 setup(
     name="django-statusboard",
     version=version,
-    packages=['statusboard'],
+    packages=find_packages(include=["statusboard", "statusboard.*"]),
     include_package_data=True,
     license='GPLv2+',
     description='Django app to show system status',
