@@ -32,9 +32,11 @@
         </div>
     </div>
     {% endfor %}
+    {% if incidents %}
     <div class="incidents">
         <h2>Past Incidents</h2>
         {% include "statusboard/incidents/list_snippet.html" with incidents=incidents only %}
     </div>
+    {% endif %}
 </div>
 {% endblock %}
