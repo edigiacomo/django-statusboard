@@ -10,7 +10,7 @@ Status page application.
 Install the package
 
 ```sh
-pip install https://github.com/edigiacomo/django-statusboard/archive/master.zip
+pip install django-statusboard
 ```
 
 Add the following applications to your Django projects
