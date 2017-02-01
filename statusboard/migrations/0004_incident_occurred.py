@@ -9,7 +9,7 @@ import django.utils.timezone
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('statuspage', '0003_auto_20170125_0604'),
+        ('statusboard', '0003_auto_20170125_0604'),
     ]
 
     operations = [

@@ -1,8 +1,8 @@
-# statuspage
+# statusboard
 
 Status page application.
 
-![django-statuspage preview](preview.png)
+![django-statusboard preview](preview.png)
 
 
 ## Installation
@@ -10,7 +10,7 @@ Status page application.
 Install the package
 
 ```sh
-pip install https://github.com/edigiacomo/django-statuspage/archive/master.zip
+pip install https://github.com/edigiacomo/django-statusboard/archive/master.zip
 ```
 
 Add the following applications to your Django projects
@@ -19,7 +19,7 @@ Add the following applications to your Django projects
 INSTALLED_APPS += [
     'django.contrib.humanize',
     'rest_framework',
-    'statuspage',
+    'statusboard',
 ]
 ```
 
@@ -28,14 +28,14 @@ Update your urlconf:
 ```python
 # myproject/urls.py
 urlpatterns += [
-    url(r'^statuspage/$', include('statuspage.urls')),
+    url(r'^statusboard/$', include('statusboard.urls')),
 ]
 ```
 
 Update your database
 
 ```sh
-./manage migrate statuspage
+./manage migrate statusboard
 ```
 
 ## Usage

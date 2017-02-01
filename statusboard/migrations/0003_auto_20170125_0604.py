@@ -11,7 +11,7 @@ import model_utils.fields
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('statuspage', '0002_incident'),
+        ('statusboard', '0002_incident'),
     ]
 
     operations = [
@@ -43,6 +43,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='incidentupdate',
             name='incident',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='updates', related_query_name='update', to='statuspage.Incident'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='updates', related_query_name='update', to='statusboard.Incident'),
         ),
     ]

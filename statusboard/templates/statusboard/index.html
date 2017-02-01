@@ -1,7 +1,7 @@
-{% extends "statuspage/base.html" %}
+{% extends "statusboard/base.html" %}
 
 {% load humanize %}
-{% load statuspage_extras %}
+{% load statusboard_extras %}
 
 {% block content %}
 <div class="container">
@@ -34,7 +34,7 @@
     {% endfor %}
     <div class="incidents">
         <h2>Past Incidents</h2>
-        {% include "statuspage/incidents/list_snippet.html" with incidents=incidents only %}
+        {% include "statusboard/incidents/list_snippet.html" with incidents=incidents only %}
     </div>
 </div>
 {% endblock %}

@@ -11,7 +11,7 @@ import model_utils.fields
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('statuspage', '0001_initial'),
+        ('statusboard', '0001_initial'),
     ]
 
     operations = [
@@ -25,7 +25,7 @@ class Migration(migrations.Migration):
                 ('status', models.IntegerField(choices=[(0, 'Investigating'), (1, 'Identified'), (2, 'Watching'), (3, 'Fixed')])),
                 ('description', models.TextField()),
                 ('occurred', models.DateTimeField(default=django.utils.timezone.now)),
-                ('service', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='statuspage.Service')),
+                ('service', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='statusboard.Service')),
             ],
             options={
                 'abstract': False,

@@ -45,6 +45,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='service',
             name='groups',
-            field=models.ManyToManyField(blank=True, related_name='services', related_query_name='service', to='statuspage.ServiceGroup'),
+            field=models.ManyToManyField(blank=True, related_name='services', related_query_name='service', to='statusboard.ServiceGroup'),
         ),
     ]

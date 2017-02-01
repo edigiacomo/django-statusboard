@@ -1,4 +1,4 @@
-__title__ = 'Django status page'
+__title__ = 'Django status board'
 __version__ = '0.1.0'
 __author__ = 'Emanuele Di Giacomo'
 __license__ = 'GPLv2+'

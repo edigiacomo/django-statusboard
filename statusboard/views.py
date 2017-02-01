@@ -12,7 +12,7 @@ from .serializers import ServiceSerializer, ServiceGroupSerializer, IncidentSeri
 
 def index(request):
     from django.db.models import Count
-    return render(request, "statuspage/index.html", {
+    return render(request, "statusboard/index.html", {
         "statusgroups": ServiceGroup.objects.annotate(services_count=Count('service')).filter(services_count__gt=0),
         "worst_status": Service.objects.worst_status(),
         "incidents": Incident.objects.occurred_in_last_n_days(7).order_by('-modified'),
@@ -24,7 +24,7 @@ class IncidentMonthArchiveView(MonthArchiveView):
     date_field = "occurred"
     allow_future = False
     month_format = "%m"
-    template_name = "statuspage/incidents/archive_month.html"
+    template_name = "statusboard/incidents/archive_month.html"
 
 
     def get_year(self):

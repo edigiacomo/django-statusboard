@@ -8,13 +8,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('statuspage', '0002_incident'),
+        ('statusboard', '0002_incident'),
     ]
 
     operations = [
         migrations.AlterField(
             model_name='service',
             name='groups',
-            field=models.ManyToManyField(related_name='services', related_query_name='service', to='statuspage.ServiceGroup'),
+            field=models.ManyToManyField(related_name='services', related_query_name='service', to='statusboard.ServiceGroup'),
         ),
     ]
