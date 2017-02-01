@@ -12,7 +12,6 @@ def get_version(package):
 
 version = get_version('statusboard')
 
-
 setup(
     name="django-statusboard",
     version=version,
