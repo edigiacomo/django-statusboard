@@ -14,3 +14,24 @@ class IncidentForm(forms.ModelForm):
     class Meta:
         model = Incident
         fields = ['name', 'service', 'occurred', 'service_status']
+
+    def __init__(self, *args, **kwargs):
+        super(IncidentForm, self).__init__(*args, **kwargs)
+        if self.instance and self.instance.service:
+            self.fields['service_status'].initial = self.instance.service.status
+
+    def save(self, commit=True):
+        model = super(IncidentForm, self).save(commit=False)
+        status = self.cleaned_data['service_status']
+        if status:
+            if model.service:
+                model.service.status = status
+                model.service.save()
+            else:
+                # model.service = Service()
+                pass
+
+        if commit:
+            model.save()
+
+        return model
