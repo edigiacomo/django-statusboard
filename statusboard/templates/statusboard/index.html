@@ -1,0 +1,42 @@
+{% extends "statusboard/base.html" %}
+
+{% load humanize %}
+{% load statusboard_extras %}
+
+{% block content %}
+<div class="container">
+    {% if worst_status != None %}
+    <div class="alert alert-{{ worst_status|service_status_class:"" }}" role="alert">
+        {{ worst_status|service_status_summary_text:"" }}
+    </div>
+    {% endif %}
+    {% for grp in statusgroups %}
+    <div class="servicegroup">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <strong>{{ grp.name }}</strong>
+        </div>
+        <ul class="list-group">
+            {% for srv in grp.services.all %}
+            <li class="list-group-item clearfix">
+                {% if srv.href %}
+                    <a href="{{ srv.href }}">{{ srv.name }}</a>
+                    {% else %}
+                    <span>{{ srv.name }}</span>
+                    {% endif %}
+                    <span class="label label-{{ srv.status|service_status_class:"" }} pull-right">{{ srv.get_status_display }}</span>
+                    <br/><small class="timeinfo" title="{{ srv.modified|date:"r" }}">last update {{ srv.modified|naturaltime }}</small>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    {% endfor %}
+    {% if incidents %}
+    <div class="incidents">
+        <h2>Past Incidents</h2>
+        {% include "statusboard/incidents/list_snippet.html" with incidents=incidents only %}
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

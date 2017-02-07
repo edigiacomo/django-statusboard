@@ -12,14 +12,21 @@ SERVICE_STATUSES = (
 )
 
 
+class ServiceManager(models.Manager):
+    def worst_status(self):
+        s = self.get_queryset().aggregate(models.Max('status'))["status__max"]
+        return s
+
+
 class Service(TimeStampedModel):
     name = models.CharField(max_length=255, unique=True)
     description = models.TextField()
     href = models.URLField(blank=True)
     status = models.IntegerField(choices=SERVICE_STATUSES)
-    groups = models.ManyToManyField('ServiceGroup', blank=True,
+    groups = models.ManyToManyField('ServiceGroup',
                                     related_name='services',
                                     related_query_name='service')
+    objects = ServiceManager()
 
     def __str__(self):
         return self.name
@@ -53,11 +60,24 @@ class IncidentManager(models.Manager):
 class Incident(TimeStampedModel):
     name = models.CharField(max_length=255)
     service = models.ForeignKey('Service', blank=True, null=True)
-    status = models.IntegerField(choices=INCIDENT_STATUSES)
-    description = models.TextField()
     occurred = models.DateTimeField(default=timezone.now)
-
     objects = IncidentManager()
+
+    def worst_status(self):
+        return self.updates.aggregate(worst=models.Max('status'))['worst']
+
+    def updates_by_ctime(self):
+        return self.updates.order_by('-created')
 
     def __str__(self):
         return self.name
+
+
+class IncidentUpdate(TimeStampedModel):
+    incident = models.ForeignKey(Incident, related_name='updates',
+                                 related_query_name='update')
+    status = models.IntegerField(choices=INCIDENT_STATUSES)
+    description = models.TextField()
+
+    def __str__(self):
+        return "Update {} {}".format(self.incident.name, self.modified)

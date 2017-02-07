@@ -9,8 +9,9 @@ router = routers.DefaultRouter()
 router.register(r'servicegroups', views.ServiceGroupViewSet)
 router.register(r'services', views.ServiceViewSet)
 router.register(r'incidents', views.IncidentViewSet)
+router.register(r'incidentupdates', views.IncidentUpdateViewSet)
 
-app_name = "statuspage"
+app_name = "statusboard"
 
 incident_urls = [
     url('^archive/$',

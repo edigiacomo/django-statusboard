@@ -1,6 +1,6 @@
 from django import template
 
-from statuspage.models import SERVICE_STATUSES
+from statusboard.models import SERVICE_STATUSES
 
 
 register = template.Library()

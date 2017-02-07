@@ -10,19 +10,18 @@ def get_version(package):
     return re.search("__version__ = ['\"]([^'\"]+)['\"]", init_py).group(1)
 
 
-version = get_version('statuspage')
-
+version = get_version('statusboard')
 
 setup(
-    name="django-statuspage",
+    name="django-statusboard",
     version=version,
-    packages=['statuspage'],
+    packages=find_packages(include=["statusboard", "statusboard.*"]),
     include_package_data=True,
     license='GPLv2+',
     description='Django app to show system status',
-    url='http://github.com/edigiacomo/django-statuspage',
+    url='http://github.com/edigiacomo/django-statusboard',
     author='Emanuele Di Giacomo',
-    install_requires=['djangorestframework'],
+    install_requires=['django', 'djangorestframework', 'django-model-utils'],
     classifiers=[
         'Development Status :: 4 - Beta',
         'Environment :: Web Environment',

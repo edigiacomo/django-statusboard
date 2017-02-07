@@ -1,0 +1,30 @@
+{% load humanize %}
+{% load statusboard_extras %}
+
+{% for incident in incidents %}
+{% ifchanged incident.modified.date %}
+<div class="page-header">
+    <h3>{{ incident.modified|date:"DATE_FORMAT" }}</h3>
+</div>
+{% endifchanged %}
+<div class="panel panel-default">
+    <div class="panel-heading">
+        {% if incident.service %}
+        <span class="label label-default">{{ incident.service.name }}</span>
+        {% endif %}
+        <strong>{{ incident.name }}</strong>
+        <br/><small class="timeinfo" title="{{ incident.occurred|date:"r" }}">occurred {{ incident.occurred|naturaltime }}</small>
+    </div>
+    <ul class="list-group">
+        {% for update in incident.updates_by_ctime %}
+        <li class="list-group-item">
+            <span class="label label-{{ update.status|incident_status_class:"" }}">{{ update.get_status_display }}</span>
+            <span>{{ update.description|linebreaksbr }}</span>
+            <br/><small class="timeinfo" title="{{ update.modified|date:"r" }}">last update {{ update.modified|naturaltime }}</small>
+        </li>
+        {% endfor %}
+    </ul>
+    <div class="panel-footer">
+    </div>
+</div>
+{% endfor %}

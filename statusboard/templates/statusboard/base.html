@@ -6,20 +6,20 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>{% block title %} statuspage {% endblock %}</title>
-        <link rel="stylesheet" href="{% static "statuspage/css/bootstrap.min.css" %}"/>
-        <link rel="stylesheet" href="{% static "statuspage/css/bootstrap-theme.min.css" %}"/>
-        <link rel="stylesheet" href="{% static "statuspage/css/statuspage.css" %}"/>
-        <script src="{% static "statuspage/js/jquery-3.1.1.min.js" %}"></script>
-        <script src="{% static "statuspage/js/bootstrap.min.js" %}"></script>
+        <title>{% block title %} statusboard {% endblock %}</title>
+        <link rel="stylesheet" href="{% static "statusboard/css/bootstrap.min.css" %}"/>
+        <link rel="stylesheet" href="{% static "statusboard/css/bootstrap-theme.min.css" %}"/>
+        <link rel="stylesheet" href="{% static "statusboard/css/statusboard.css" %}"/>
+        <script src="{% static "statusboard/js/jquery-3.1.1.min.js" %}"></script>
+        <script src="{% static "statusboard/js/bootstrap.min.js" %}"></script>
     </head>
-    <body style="padding-top: 70px;">
+    <body>
         {% block navbar %}
         <nav class="navbar navbar-inverse navbar-fixed-top">
             <div class="container">
                 <div class="navbar-header">
                     {% block branding %}
-                    <a class="navbar-brand" href="#">Django Status Page</a>
+                    <a class="navbar-brand" href="#">Django Status Board</a>
                     {% endblock %}
                 </div>
                 <div id="navbar" class="collapse navbar-collapse">
