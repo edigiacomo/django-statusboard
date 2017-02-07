@@ -1,7 +1,9 @@
 from django import forms
+from django.forms import inlineformset_factory
 
 from .models import Incident
 from .models import Service
+from .models import IncidentUpdate
 from .models import SERVICE_STATUSES
 
 
@@ -35,3 +37,7 @@ class IncidentForm(forms.ModelForm):
             model.save()
 
         return model
+
+
+IncidentUpdateFormSet = inlineformset_factory(Incident, IncidentUpdate,
+                                              fields=('status', 'description'))
