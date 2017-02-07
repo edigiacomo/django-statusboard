@@ -7,4 +7,4 @@ from .models import Service
 class IncidentForm(forms.ModelForm):
     class Meta:
         model = Incident
-        fields = ['name', 'service', 'status', 'description', 'occurred']
+        fields = ['name', 'service', 'occurred']

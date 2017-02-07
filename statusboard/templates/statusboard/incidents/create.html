@@ -1,6 +1,6 @@
-{% extends "statuspage/base.html" %}
+{% extends "statusboard/base.html" %}
 
-{% load statuspage_extras %}
+{% load statusboard_extras %}
 
 {% block content %}
 <div class="container">
@@ -8,6 +8,6 @@
         <h1>Report a new incident</h1>
     </div>
 
-    {% include "statuspage/incidents/form.html" with form=form %}
+    {% include "statusboard/incidents/form.html" with form=form %}
 </div>
 {% endblock %}

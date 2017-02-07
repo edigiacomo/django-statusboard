@@ -26,22 +26,22 @@ def index(request):
 
 class IncidentCreateView(CreateView):
     model = Incident
-    template_name = "statuspage/incidents/create.html"
+    template_name = "statusboard/incidents/create.html"
     form_class = IncidentForm
-    success_url = reverse_lazy('statuspage:index')
+    success_url = reverse_lazy('statusboard:index')
 
 
 class IncidentUpdateView(UpdateView):
     model = Incident
-    template_name = "statuspage/incidents/edit.html"
+    template_name = "statusboard/incidents/edit.html"
     form_class = IncidentForm
-    success_url = reverse_lazy('statuspage:index')
+    success_url = reverse_lazy('statusboard:index')
 
 
 class IncidentDeleteView(DeleteView):
     model = Incident
-    template_name = "statuspage/incidents/confirm_delete.html"
-    success_url = reverse_lazy('statuspage:index')
+    template_name = "statusboard/incidents/confirm_delete.html"
+    success_url = reverse_lazy('statusboard:index')
 
 
 class IncidentMonthArchiveView(MonthArchiveView):
