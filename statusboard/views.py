@@ -7,6 +7,8 @@ from django.views.generic.edit import CreateView
 from django.views.generic.edit import UpdateView
 from django.views.generic.edit import DeleteView
 from django.db import transaction
+from django.contrib.auth.decorators import permission_required
+from django.contrib.auth.mixins import PermissionRequiredMixin
 
 from rest_framework import viewsets
 from rest_framework import permissions
@@ -26,6 +28,7 @@ def index(request):
     })
 
 
+@permission_required('incidents.can_create')
 def incident_create(request):
     form = IncidentForm()
     incident_updates = IncidentUpdateFormSet()
@@ -45,6 +48,7 @@ def incident_create(request):
     })
 
 
+@permission_required('incidents.can_edit')
 def incident_edit(request, pk):
     incident = Incident.objects.get(pk=pk)
     form = IncidentForm(instance=incident)
@@ -66,10 +70,11 @@ def incident_edit(request, pk):
     })
 
 
-class IncidentDeleteView(DeleteView):
+class IncidentDeleteView(PermissionRequiredMixin, DeleteView):
     model = Incident
     template_name = "statusboard/incidents/confirm_delete.html"
     success_url = reverse_lazy('statusboard:index')
+    permission_required = 'incidents.can_delete'
 
 
 class IncidentMonthArchiveView(MonthArchiveView):
