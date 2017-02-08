@@ -36,7 +36,7 @@
     {{ incident_updates.management_form }}
     {% for form in incident_updates %}
     <div class="panel panel-default">
-        <div class="panel-heading">Incident update</div>
+        <div class="panel-heading">Incident update #{{ forloop.counter }}</div>
         <div class="panel-body">
             <div class="form-group">
                 {{ form.status.errors }}
