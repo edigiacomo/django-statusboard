@@ -16,7 +16,7 @@ from rest_framework import versioning
 
 from .models import Service, ServiceGroup, Incident, IncidentUpdate
 from .serializers import ServiceSerializer, ServiceGroupSerializer, IncidentSerializer, IncidentUpdateSerializer
-from .forms import IncidentForm, IncidentUpdateFormSet, ServiceGroupForm
+from .forms import IncidentForm, IncidentUpdateFormSet, ServiceGroupForm, ServiceForm
 
 
 def index(request):
@@ -49,6 +49,29 @@ class ServiceGroupDelete(PermissionRequiredMixin, DeleteView):
     template_name = "statusboard/servicegroup/confirm_delete.html"
     success_url = reverse_lazy('statusboard:index')
     permission_required = 'statusboard.delete_servicegroup'
+
+
+class ServiceCreate(PermissionRequiredMixin, CreateView):
+    model = Service
+    form_class = ServiceForm
+    template_name = "statusboard/service/create.html"
+    success_url = reverse_lazy('statusboard:index')
+    permission_required = 'statusboard.create_service'
+
+
+class ServiceUpdate(PermissionRequiredMixin, UpdateView):
+    model = Service
+    form_class = ServiceForm
+    template_name = "statusboard/service/edit.html"
+    success_url = reverse_lazy('statusboard:index')
+    permission_required = 'statusboard.edit_service'
+
+
+class ServiceDelete(PermissionRequiredMixin, DeleteView):
+    model = Service
+    template_name = "statusboard/service/confirm_delete.html"
+    success_url = reverse_lazy('statusboard:index')
+    permission_required = 'statusboard.delete_service'
 
 
 @permission_required('statusboard.create_incident')

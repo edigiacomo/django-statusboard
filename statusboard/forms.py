@@ -14,6 +14,12 @@ class ServiceGroupForm(forms.ModelForm):
         fields = ['name']
 
 
+class ServiceForm(forms.ModelForm):
+    class Meta:
+        model = Service
+        fields = ['name', 'href', 'description', 'status', 'groups']
+
+
 class IncidentForm(forms.ModelForm):
 
     service_status = forms.IntegerField(
