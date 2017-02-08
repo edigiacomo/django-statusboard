@@ -69,34 +69,6 @@ def incident_update(request, pk):
     })
 
 
-class IncidentUpdateView(UpdateView):
-    model = Incident
-    template_name = "statusboard/incidents/edit.html"
-    form_class = IncidentForm
-    success_url = reverse_lazy('statusboard:index')
-
-    def get_context_data(self, **kwargs):
-        from .forms import IncidentUpdateFormSet
-        data = super(IncidentUpdateView, self).get_context_data(**kwargs)
-        if self.request.POST:
-            data['incident_updates'] = IncidentUpdateFormSet(self.request.POST, instance=self.get_object())
-        else:
-            data['incident_updates'] = IncidentUpdateFormSet(instance=self.get_object())
-
-        return data
-
-    def form_valid(self, form):
-        context = self.get_context_data()
-        incident_updates = context['incident_updates']
-        with transaction.atomic():
-            self.object = form.save()
-            if incident_updates.is_valid():
-                incident_updates.instance = self.object
-                incident_updates.save()
-
-        return super(IncidentCreateView, self).form_valid(form)
-
-
 class IncidentDeleteView(DeleteView):
     model = Incident
     template_name = "statusboard/incidents/confirm_delete.html"
