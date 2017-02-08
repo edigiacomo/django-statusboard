@@ -31,10 +31,13 @@
                 <div id="navbar" class="collapse navbar-collapse">
                     <ul class="nav navbar-nav">
                         <li><a href="{% url 'statusboard:incident:archive-index' %}">Incident archive</a></li>
-                        {% if perms.statusboard.create_servicegroup or perms.statusboard.create_service %}
+                        {% if perms.statusboard.create_servicegroup or perms.statusboard.create_service or perms.statusboard.create_incident %}
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Manage <span class="caret"></a>
                             <ul class="dropdown-menu">
+                                {% if perms.statusboard.create_incident %}
+                                <li><a href="{% url 'statusboard:incident:create' %}">Create new incident</a></li>
+                                {% endif %}
                                 {% if perms.statusboard.create_servicegroup %}
                                 <li><a href="{% url 'statusboard:servicegroup:create' %}">Create new service group</a></li>
                                 {% endif %}
