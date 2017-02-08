@@ -2,9 +2,6 @@
 
 {% block content %}
 <div class="container">
-    <div class="page-header">
-        <h1>Please sign in</h1>
-    </div>
     {% if forms.errors %}
     <div class="alert alert-danger" role="alert">
         Your username and password didn't match. Please try again.
@@ -24,6 +21,9 @@
         {% endif %}
     {% endif %}
 
+    <div class="page-header">
+        <h1>Please sign in</h1>
+    </div>
     <form class="form-horizontal" role="form" method="post" action="{% url "statusboard:login" %}">
         {% csrf_token %}
         <div class="form-group">
