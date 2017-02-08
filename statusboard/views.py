@@ -46,7 +46,7 @@ def incident_create(request):
     })
 
 
-def incident_update(request, pk):
+def incident_edit(request, pk):
     incident = Incident.objects.get(pk=pk)
 
     if request.POST:
