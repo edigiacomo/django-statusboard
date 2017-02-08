@@ -40,7 +40,7 @@
             <small><a href="{% url "statusboard:incident:create" %}">create</a></small>
             {% endif %}
         </h2>
-        {% include "statusboard/incidents/list_snippet.html" with incidents=incidents perms=perms only %}
+        {% include "statusboard/incident/list_snippet.html" with incidents=incidents perms=perms only %}
     </div>
     {% endif %}
 </div>
