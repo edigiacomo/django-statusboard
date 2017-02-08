@@ -34,8 +34,13 @@
     {% endfor %}
     {% if incidents %}
     <div class="incidents">
-        <h2>Past Incidents</h2>
-        {% include "statusboard/incidents/list_snippet.html" with incidents=incidents only %}
+        <h2>
+            Past Incidents
+            {% if perms.statusboard.incident_create %}
+            <small><a href="{% url "statusboard:incident:create" %}">create</a></small>
+            {% endif %}
+        </h2>
+        {% include "statusboard/incidents/list_snippet.html" with incidents=incidents perms=perms only %}
     </div>
     {% endif %}
 </div>
