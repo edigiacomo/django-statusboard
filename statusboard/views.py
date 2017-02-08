@@ -28,7 +28,7 @@ def index(request):
     })
 
 
-@permission_required('incidents.can_create')
+@permission_required('statusboard.create_incident')
 def incident_create(request):
     form = IncidentForm()
     incident_updates = IncidentUpdateFormSet()
@@ -48,7 +48,7 @@ def incident_create(request):
     })
 
 
-@permission_required('incidents.can_edit')
+@permission_required('statusboard.change_incident')
 def incident_edit(request, pk):
     incident = Incident.objects.get(pk=pk)
     form = IncidentForm(instance=incident)
@@ -74,7 +74,7 @@ class IncidentDeleteView(PermissionRequiredMixin, DeleteView):
     model = Incident
     template_name = "statusboard/incidents/confirm_delete.html"
     success_url = reverse_lazy('statusboard:index')
-    permission_required = 'incidents.can_delete'
+    permission_required = 'statusboard.delete_incident'
 
 
 class IncidentMonthArchiveView(MonthArchiveView):
