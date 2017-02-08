@@ -13,6 +13,30 @@ router.register(r'incidentupdates', views.IncidentUpdateViewSet)
 
 app_name = "statusboard"
 
+service_urls = [
+    url('^create/$',
+        views.ServiceCreate.as_view(),
+        name="create"),
+    url('^(?P<pk>[0-9]+)/edit/$',
+        views.ServiceUpdate.as_view(),
+        name="edit"),
+    url('^(?P<pk>[0-9]+)/delete/$',
+        views.ServiceDelete.as_view(),
+        name="delete"),
+]
+
+servicegroup_urls = [
+    url('^create/$',
+        views.ServiceGroupCreate.as_view(),
+        name="create"),
+    url('^(?P<pk>[0-9]+)/edit/$',
+        views.ServiceGroupUpdate.as_view(),
+        name="edit"),
+    url('^(?P<pk>[0-9]+)/delete/$',
+        views.ServiceGroupDelete.as_view(),
+        name="delete"),
+]
+
 incident_urls = [
     url('^archive/$',
         views.IncidentMonthArchiveView.as_view(),
@@ -20,10 +44,21 @@ incident_urls = [
     url('^archive/(?P<year>[0-9]{4})/(?P<month>[0-9]{1,2})/$',
         views.IncidentMonthArchiveView.as_view(),
         name="archive-month"),
+    url('^create/$',
+        views.incident_create,
+        name="create"),
+    url('^(?P<pk>[0-9]+)/edit/$',
+        views.incident_edit,
+        name="edit"),
+    url('^(?P<pk>[0-9]+)/delete/$',
+        views.IncidentDeleteView.as_view(),
+        name="delete"),
 ]
 
 urlpatterns = [
     url(r'^$', views.index, name="index"),
+    url(r'^services/', include(service_urls, namespace="service")),
+    url(r'^servicegroups/', include(servicegroup_urls, namespace="servicegroup")),
     url(r'^incidents/', include(incident_urls, namespace="incident")),
     url(r'^api/(?P<version>v0\.1)/', include(router.urls, namespace="api")),
 ]

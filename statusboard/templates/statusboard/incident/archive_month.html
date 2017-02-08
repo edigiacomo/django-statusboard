@@ -1,0 +1,12 @@
+{% extends "statusboard/base.html" %}
+
+{% load humanize %}
+{% load statusboard_extras %}
+
+{% block content %}
+<div class="container">
+    <h2>Incidents reported in {{ month|date:"F Y" }}</h2>
+    {% include "statusboard/incident/list_snippet.html" with incidents=object_list user=user perms=perms only %}
+    {% include "statusboard/incident/archive_paginate_snippet.html" with previous_month=previous_month next_month=next_month only %}
+</div>
+{% endblock %}

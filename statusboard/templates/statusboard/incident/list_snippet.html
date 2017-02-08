@@ -13,6 +13,12 @@
         <span class="label label-default">{{ incident.service.name }}</span>
         {% endif %}
         <strong>{{ incident.name }}</strong>
+        {% if perms.statusboard.delete_incident %}
+        <small><a href="{% url 'statusboard:incident:delete' pk=incident.id %}">delete</a></small>
+        {% endif %}
+        {% if perms.statusboard.edit_incident %}
+        <small><a href="{% url 'statusboard:incident:edit' pk=incident.id %}">edit</a></small>
+        {% endif %}
         <br/><small class="timeinfo" title="{{ incident.occurred|date:"r" }}">occurred {{ incident.occurred|naturaltime }}</small>
     </div>
     <ul class="list-group">

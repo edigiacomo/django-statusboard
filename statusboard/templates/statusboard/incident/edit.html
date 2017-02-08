@@ -1,0 +1,15 @@
+{% extends "statusboard/base.html" %}
+
+{% load statusboard_extras %}
+
+{% block content %}
+<div class="container">
+    <div class="page-header">
+        <h1>Edit incident
+            <small><a class="btn btn-danger pull-right" href="{% url "statusboard:incident:delete" pk=form.instance.id %}">Delete</a></small>
+        </h1>
+    </div>
+
+    {% include "statusboard/incident/form.html" with form=form delete=False %}
+</div>
+{% endblock %}
