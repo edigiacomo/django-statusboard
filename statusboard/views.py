@@ -65,7 +65,7 @@ def incident_create(request):
                 incident_updates.save()
                 return HttpResponseRedirect(reverse('statusboard:index'))
 
-    return render(request, "statusboard/incidents/create.html", {
+    return render(request, "statusboard/incident/create.html", {
         "form": form,
         "incident_updates": incident_updates,
     })
@@ -87,7 +87,7 @@ def incident_edit(request, pk):
                 incident_updates.save()
                 return HttpResponseRedirect(reverse('statusboard:index'))
 
-    return render(request, "statusboard/incidents/edit.html", {
+    return render(request, "statusboard/incident/edit.html", {
         "form": form,
         "incident_updates": incident_updates,
     })
@@ -95,7 +95,7 @@ def incident_edit(request, pk):
 
 class IncidentDeleteView(PermissionRequiredMixin, DeleteView):
     model = Incident
-    template_name = "statusboard/incidents/confirm_delete.html"
+    template_name = "statusboard/incident/confirm_delete.html"
     success_url = reverse_lazy('statusboard:index')
     permission_required = 'statusboard.delete_incident'
 
@@ -105,7 +105,7 @@ class IncidentMonthArchiveView(MonthArchiveView):
     date_field = "occurred"
     allow_future = False
     month_format = "%m"
-    template_name = "statusboard/incidents/archive_month.html"
+    template_name = "statusboard/incident/archive_month.html"
 
 
     def get_year(self):
