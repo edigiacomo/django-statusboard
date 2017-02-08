@@ -27,6 +27,8 @@ def index(request):
 
 
 def incident_create(request):
+    form = IncidentForm()
+    incident_updates = IncidentUpdateFormSet()
     if request.POST:
         form = IncidentForm(request.POST)
         if form.is_valid():
@@ -36,9 +38,6 @@ def incident_create(request):
                 incident.save()
                 incident_updates.save()
                 return HttpResponseRedirect(reverse('statusboard:index'))
-    else:
-        form = IncidentForm()
-        incident_updates = IncidentUpdateFormSet()
 
     return render(request, "statusboard/incidents/create.html", {
         "form": form,
@@ -48,6 +47,8 @@ def incident_create(request):
 
 def incident_edit(request, pk):
     incident = Incident.objects.get(pk=pk)
+    form = IncidentForm(instance=incident)
+    incident_updates = IncidentUpdateFormSet(instance=incident)
 
     if request.POST:
         form = IncidentForm(request.POST or None, instance=incident)
@@ -58,10 +59,6 @@ def incident_edit(request, pk):
                 incident.save()
                 incident_updates.save()
                 return HttpResponseRedirect(reverse('statusboard:index'))
-
-    else:
-        form = IncidentForm(instance=incident)
-        incident_updates = IncidentUpdateFormSet(instance=incident)
 
     return render(request, "statusboard/incidents/edit.html", {
         "form": form,
