@@ -24,9 +24,13 @@
     <ul class="list-group">
         {% for update in incident.updates_by_ctime %}
         <li class="list-group-item">
-            <span class="label label-{{ update.status|incident_status_class:"" }}">{{ update.get_status_display }}</span>
-            <span>{{ update.description|linebreaksbr }}</span>
-            <br/><small class="timeinfo" title="{{ update.modified|date:"r" }}">last update {{ update.modified|naturaltime }}</small>
+            <div class="row">
+                <strong class="col-xs-4 col-md-2">{{ update.get_status_display }}</strong>
+                <div class="col-xs-8 col-md-10">
+                    <span>{{ update.description|linebreaksbr }}</span>
+                    <br/><small class="timeinfo" title="{{ update.modified|date:"r" }}">last update {{ update.modified|naturaltime }}</small>
+                </div>
+            </div>
         </li>
         {% endfor %}
     </ul>
