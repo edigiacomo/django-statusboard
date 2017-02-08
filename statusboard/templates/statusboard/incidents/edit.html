@@ -5,9 +5,11 @@
 {% block content %}
 <div class="container">
     <div class="page-header">
-        <h1>Edit incident</h1>
+        <h1>Edit incident
+            <small><a class="btn btn-danger pull-right" href="{% url "statusboard:incident:delete" pk=form.instance.id %}">Delete</a></small>
+        </h1>
     </div>
 
-    {% include "statusboard/incidents/form.html" with form=form %}
+    {% include "statusboard/incidents/form.html" with form=form delete=False %}
 </div>
 {% endblock %}
