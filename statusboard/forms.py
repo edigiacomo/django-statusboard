@@ -3,8 +3,15 @@ from django.forms import inlineformset_factory
 
 from .models import Incident
 from .models import Service
+from .models import ServiceGroup
 from .models import IncidentUpdate
 from .models import SERVICE_STATUSES
+
+
+class ServiceGroupForm(forms.ModelForm):
+    class Meta:
+        model = ServiceGroup
+        fields = ['name']
 
 
 class IncidentForm(forms.ModelForm):

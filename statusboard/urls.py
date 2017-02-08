@@ -13,6 +13,18 @@ router.register(r'incidentupdates', views.IncidentUpdateViewSet)
 
 app_name = "statusboard"
 
+servicegroup_urls = [
+    url('^create/$',
+        views.ServiceGroupCreate.as_view(),
+        name="create"),
+    url('^(?P<pk>[0-9]+)/edit/$',
+        views.ServiceGroupUpdate.as_view(),
+        name="edit"),
+    url('^(?P<pk>[0-9]+)/delete/$',
+        views.ServiceGroupDelete.as_view(),
+        name="delete"),
+]
+
 incident_urls = [
     url('^archive/$',
         views.IncidentMonthArchiveView.as_view(),
@@ -33,6 +45,7 @@ incident_urls = [
 
 urlpatterns = [
     url(r'^$', views.index, name="index"),
+    url(r'^servicegroups/', include(servicegroup_urls, namespace="servicegroup")),
     url(r'^incidents/', include(incident_urls, namespace="incident")),
     url(r'^api/(?P<version>v0\.1)/', include(router.urls, namespace="api")),
 ]

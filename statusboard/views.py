@@ -16,7 +16,7 @@ from rest_framework import versioning
 
 from .models import Service, ServiceGroup, Incident, IncidentUpdate
 from .serializers import ServiceSerializer, ServiceGroupSerializer, IncidentSerializer, IncidentUpdateSerializer
-from .forms import IncidentForm, IncidentUpdateFormSet
+from .forms import IncidentForm, IncidentUpdateFormSet, ServiceGroupForm
 
 
 def index(request):
@@ -26,6 +26,29 @@ def index(request):
         "worst_status": Service.objects.worst_status(),
         "incidents": Incident.objects.occurred_in_last_n_days(7).order_by('-modified'),
     })
+
+
+class ServiceGroupCreate(PermissionRequiredMixin, CreateView):
+    model = ServiceGroup
+    form_class = ServiceGroupForm
+    template_name = "statusboard/servicegroup/create.html"
+    success_url = reverse_lazy('statusboard:index')
+    permission_required = 'statusboard.create_servicegroup'
+
+
+class ServiceGroupUpdate(PermissionRequiredMixin, UpdateView):
+    model = ServiceGroup
+    form_class = ServiceGroupForm
+    template_name = "statusboard/servicegroup/edit.html"
+    success_url = reverse_lazy('statusboard:index')
+    permission_required = 'statusboard.edit_servicegroup'
+
+
+class ServiceGroupDelete(PermissionRequiredMixin, DeleteView):
+    model = ServiceGroup
+    template_name = "statusboard/servicegroup/confirm_delete.html"
+    success_url = reverse_lazy('statusboard:index')
+    permission_required = 'statusboard.delete_servicegroup'
 
 
 @permission_required('statusboard.create_incident')
