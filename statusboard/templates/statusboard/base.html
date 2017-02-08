@@ -47,6 +47,15 @@
                         </li>
                         {% endif %}
                     </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        {% block userlinks %}
+                        {% if user.is_authenticated %}
+                        <li><a href="{% url 'statusboard:logout' %}">Sign out</a></li>
+                        {% else %}
+                        <li><a href="{% url 'statusboard:login' %}">Sign in</a></li>
+                        {% endif %}
+                        {% endblock %}
+                    </ul>
                 </div>
             </div>
         </nav>
