@@ -8,13 +8,15 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>{% block title %} statusboard {% endblock %}</title>
         <link rel="stylesheet" href="{% static "statusboard/css/bootstrap.min.css" %}"/>
+        {% block bootstrap_theme %}
         <link rel="stylesheet" href="{% static "statusboard/css/bootstrap-theme.min.css" %}"/>
+        {% endblock %}
         <link rel="stylesheet" href="{% static "statusboard/css/statusboard.css" %}"/>
         <script src="{% static "statusboard/js/jquery-3.1.1.min.js" %}"></script>
         <script src="{% static "statusboard/js/bootstrap.min.js" %}"></script>
     </head>
     <body>
-        {% block navbar %}
+        {% block header %}
         <nav class="navbar navbar-inverse navbar-fixed-top">
             <div class="container">
                 <div class="navbar-header">
@@ -51,5 +53,6 @@
         {% endblock %}
 
         {% block content %} {% endblock %}
+        {% block footer %} {% endblock %}
     </body>
 </html>
