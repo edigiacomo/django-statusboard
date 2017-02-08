@@ -81,3 +81,9 @@ class IncidentUpdate(TimeStampedModel):
 
     def __str__(self):
         return "Update {} {}".format(self.incident.name, self.modified)
+
+
+class Maintenance(TimeStampedModel):
+    scheduled = models.DateTimeField()
+    name = models.CharField(max_length=255)
+    description = models.TextField()
