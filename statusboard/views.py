@@ -16,7 +16,7 @@ from rest_framework import permissions
 from rest_framework import versioning
 
 from .models import Service, ServiceGroup, Incident, IncidentUpdate, Maintenance
-from .serializers import ServiceSerializer, ServiceGroupSerializer, IncidentSerializer, IncidentUpdateSerializer
+from .serializers import ServiceSerializer, ServiceGroupSerializer, IncidentSerializer, IncidentUpdateSerializer, MaintenanceSerializer
 from .forms import IncidentForm, IncidentUpdateFormSet, ServiceGroupForm, ServiceForm
 
 
@@ -170,5 +170,12 @@ class IncidentViewSet(viewsets.ModelViewSet):
 class IncidentUpdateViewSet(viewsets.ModelViewSet):
     serializer_class = IncidentUpdateSerializer
     queryset = IncidentUpdate.objects.all()
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    versioning_class = versioning.URLPathVersioning
+
+
+class MaintenanceViewSet(viewsets.ModelViewSet):
+    serializer_class = MaintenanceSerializer
+    queryset = Maintenance.objects.all()
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     versioning_class = versioning.URLPathVersioning

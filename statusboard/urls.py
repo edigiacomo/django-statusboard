@@ -10,6 +10,7 @@ router.register(r'servicegroups', views.ServiceGroupViewSet)
 router.register(r'services', views.ServiceViewSet)
 router.register(r'incidents', views.IncidentViewSet)
 router.register(r'incidentupdates', views.IncidentUpdateViewSet)
+router.register(r'maintenances', views.MaintenanceViewSet)
 
 app_name = "statusboard"
 
