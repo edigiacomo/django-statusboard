@@ -54,3 +54,5 @@ Blocks:
 * `header`
 * `userlinks`
 * `footer`
+* `style`
+* `script`

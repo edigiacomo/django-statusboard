@@ -7,13 +7,20 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>{% block title %} statusboard {% endblock %}</title>
+
+        {% block style %}
         <link rel="stylesheet" href="{% static "statusboard/css/bootstrap.min.css" %}"/>
+        <link rel="stylesheet" href="{% static "statusboard/css/statusboard.css" %}"/>
+        {% endblock %}
+
         {% block bootstrap_theme %}
         <link rel="stylesheet" href="{% static "statusboard/css/bootstrap-theme.min.css" %}"/>
         {% endblock %}
-        <link rel="stylesheet" href="{% static "statusboard/css/statusboard.css" %}"/>
+
+        {% block script %}
         <script src="{% static "statusboard/js/jquery-3.1.1.min.js" %}"></script>
         <script src="{% static "statusboard/js/bootstrap.min.js" %}"></script>
+        {% endblock %}
     </head>
     <body>
         {% block header %}
