@@ -5,6 +5,22 @@
 
 {% block content %}
 <div class="container">
+    {% for m in maintenances %}
+    <div class="alert alert-info" role="alert">
+        <p>
+        <strong>{{ m.name }} - scheduled in <abbr title="{{ m.scheduled|date:"r" }}">{{ m.scheduled|naturaltime }}</abbr></strong>
+        {% if perms.statusboard.delete_maintenance %}
+        <small><a href="{% url 'statusboard:maintenance:delete' pk=m.id %}">delete</a></small>
+        {% endif %}
+        {% if perms.statusboard.edit_maintenance %}
+        <small><a href="{% url 'statusboard:maintenance:edit' pk=m.id %}">edit</a></small>
+        {% endif %}
+        </p>
+        <p>
+            {{ m.description }}
+        </p>
+    </div>
+    {% endfor %}
     {% if worst_status != None %}
     <div class="alert alert-{{ worst_status|service_status_class:"" }}" role="alert">
         {{ worst_status|service_status_summary_text:"" }}

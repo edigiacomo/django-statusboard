@@ -7,6 +7,7 @@ from django.views.generic.edit import CreateView
 from django.views.generic.edit import UpdateView
 from django.views.generic.edit import DeleteView
 from django.db import transaction
+from django.utils import timezone
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.mixins import PermissionRequiredMixin
 
@@ -14,9 +15,9 @@ from rest_framework import viewsets
 from rest_framework import permissions
 from rest_framework import versioning
 
-from .models import Service, ServiceGroup, Incident, IncidentUpdate
-from .serializers import ServiceSerializer, ServiceGroupSerializer, IncidentSerializer, IncidentUpdateSerializer
-from .forms import IncidentForm, IncidentUpdateFormSet, ServiceGroupForm, ServiceForm
+from .models import Service, ServiceGroup, Incident, IncidentUpdate, Maintenance
+from .serializers import ServiceSerializer, ServiceGroupSerializer, IncidentSerializer, IncidentUpdateSerializer, MaintenanceSerializer
+from .forms import IncidentForm, IncidentUpdateFormSet, ServiceGroupForm, ServiceForm, MaintenanceForm
 
 
 def index(request):
@@ -25,6 +26,7 @@ def index(request):
         "statusgroups": ServiceGroup.objects.annotate(services_count=Count('service')).filter(services_count__gt=0),
         "worst_status": Service.objects.worst_status(),
         "incidents": Incident.objects.occurred_in_last_n_days(7).order_by('-modified'),
+        "maintenances": Maintenance.objects.filter(scheduled__gt=timezone.now()).order_by('-scheduled'),
     })
 
 
@@ -72,6 +74,29 @@ class ServiceDelete(PermissionRequiredMixin, DeleteView):
     template_name = "statusboard/service/confirm_delete.html"
     success_url = reverse_lazy('statusboard:index')
     permission_required = 'statusboard.delete_service'
+
+
+class MaintenanceCreate(PermissionRequiredMixin, CreateView):
+    model = Maintenance
+    form_class = MaintenanceForm
+    template_name = "statusboard/maintenance/create.html"
+    success_url = reverse_lazy('statusboard:index')
+    permission_required = 'statusboard.create_maintenance'
+
+
+class MaintenanceUpdate(PermissionRequiredMixin, UpdateView):
+    model = Maintenance
+    form_class = MaintenanceForm
+    template_name = "statusboard/maintenance/edit.html"
+    success_url = reverse_lazy('statusboard:index')
+    permission_required = 'statusboard.edit_maintenance'
+
+
+class MaintenanceDelete(PermissionRequiredMixin, DeleteView):
+    model = Maintenance
+    template_name = "statusboard/maintenance/confirm_delete.html"
+    success_url = reverse_lazy('statusboard:index')
+    permission_required = 'statusboard.delete_maintenance'
 
 
 @permission_required('statusboard.create_incident')
@@ -168,5 +193,12 @@ class IncidentViewSet(viewsets.ModelViewSet):
 class IncidentUpdateViewSet(viewsets.ModelViewSet):
     serializer_class = IncidentUpdateSerializer
     queryset = IncidentUpdate.objects.all()
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    versioning_class = versioning.URLPathVersioning
+
+
+class MaintenanceViewSet(viewsets.ModelViewSet):
+    serializer_class = MaintenanceSerializer
+    queryset = Maintenance.objects.all()
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     versioning_class = versioning.URLPathVersioning

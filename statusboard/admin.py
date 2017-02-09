@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Service, ServiceGroup, Incident, IncidentUpdate
+from .models import Service, ServiceGroup, Incident, IncidentUpdate, Maintenance
 
 
 class IncidentUpdateInline(admin.TabularInline):
@@ -15,3 +15,4 @@ class IncidentAdmin(admin.ModelAdmin):
 admin.site.register(Service)
 admin.site.register(ServiceGroup)
 admin.site.register(Incident, IncidentAdmin)
+admin.site.register(Maintenance)
