@@ -17,7 +17,7 @@ from rest_framework import versioning
 
 from .models import Service, ServiceGroup, Incident, IncidentUpdate, Maintenance
 from .serializers import ServiceSerializer, ServiceGroupSerializer, IncidentSerializer, IncidentUpdateSerializer, MaintenanceSerializer
-from .forms import IncidentForm, IncidentUpdateFormSet, ServiceGroupForm, ServiceForm
+from .forms import IncidentForm, IncidentUpdateFormSet, ServiceGroupForm, ServiceForm, MaintenanceForm
 
 
 def index(request):
@@ -74,6 +74,29 @@ class ServiceDelete(PermissionRequiredMixin, DeleteView):
     template_name = "statusboard/service/confirm_delete.html"
     success_url = reverse_lazy('statusboard:index')
     permission_required = 'statusboard.delete_service'
+
+
+class MaintenanceCreate(PermissionRequiredMixin, CreateView):
+    model = Maintenance
+    form_class = MaintenanceForm
+    template_name = "statusboard/maintenance/create.html"
+    success_url = reverse_lazy('statusboard:index')
+    permission_required = 'statusboard.create_maintenance'
+
+
+class MaintenanceUpdate(PermissionRequiredMixin, UpdateView):
+    model = Maintenance
+    form_class = MaintenanceForm
+    template_name = "statusboard/maintenance/edit.html"
+    success_url = reverse_lazy('statusboard:index')
+    permission_required = 'statusboard.edit_maintenance'
+
+
+class MaintenanceDelete(PermissionRequiredMixin, DeleteView):
+    model = Maintenance
+    template_name = "statusboard/maintenance/confirm_delete.html"
+    success_url = reverse_lazy('statusboard:index')
+    permission_required = 'statusboard.delete_maintenance'
 
 
 @permission_required('statusboard.create_incident')

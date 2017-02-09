@@ -38,6 +38,18 @@ servicegroup_urls = [
         name="delete"),
 ]
 
+maintenance_urls = [
+    url('^create/$',
+        views.MaintenanceCreate.as_view(),
+        name="create"),
+    url('^(?P<pk>[0-9]+)/edit/$',
+        views.MaintenanceUpdate.as_view(),
+        name="edit"),
+    url('^(?P<pk>[0-9]+)/delete/$',
+        views.MaintenanceDelete.as_view(),
+        name="delete"),
+]
+
 incident_urls = [
     url('^archive/$',
         views.IncidentMonthArchiveView.as_view(),
@@ -61,5 +73,6 @@ urlpatterns = [
     url(r'^services/', include(service_urls, namespace="service")),
     url(r'^servicegroups/', include(servicegroup_urls, namespace="servicegroup")),
     url(r'^incidents/', include(incident_urls, namespace="incident")),
+    url(r'^maintenances/', include(maintenance_urls, namespace="maintenance")),
     url(r'^api/(?P<version>v0\.1)/', include(router.urls, namespace="api")),
 ]

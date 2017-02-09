@@ -7,7 +7,15 @@
 <div class="container">
     {% for m in maintenances %}
     <div class="alert alert-info" role="alert">
-        <p><strong>{{ m.name }} - scheduled in <abbr title="{{ m.scheduled|date:"r" }}">{{ m.scheduled|naturaltime }}</abbr></strong></p>
+        <p>
+        <strong>{{ m.name }} - scheduled in <abbr title="{{ m.scheduled|date:"r" }}">{{ m.scheduled|naturaltime }}</abbr></strong>
+        {% if perms.statusboard.delete_maintenance %}
+        <small><a href="{% url 'statusboard:maintenance:delete' pk=m.id %}">delete</a></small>
+        {% endif %}
+        {% if perms.statusboard.edit_maintenance %}
+        <small><a href="{% url 'statusboard:maintenance:edit' pk=m.id %}">edit</a></small>
+        {% endif %}
+        </p>
         <p>
             {{ m.description }}
         </p>
