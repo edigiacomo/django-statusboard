@@ -42,3 +42,17 @@ Update your database
 
 Service status can be managed from Django admin interface or using the REST
 API.
+
+
+## Customize pages
+
+Blocks:
+
+* `title`
+* `branding`
+* `bootstrap_theme`
+* `header`
+* `userlinks`
+* `footer`
+* `style`
+* `script`

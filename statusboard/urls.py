@@ -1,4 +1,5 @@
 from django.conf.urls import url, include
+from django.contrib.auth import views as auth_views
 
 from rest_framework import routers
 
@@ -75,4 +76,10 @@ urlpatterns = [
     url(r'^incidents/', include(incident_urls, namespace="incident")),
     url(r'^maintenances/', include(maintenance_urls, namespace="maintenance")),
     url(r'^api/(?P<version>v0\.1)/', include(router.urls, namespace="api")),
+    url(r'^login/$', auth_views.login, {
+        "template_name": "statusboard/login.html",
+    }, name="login"),
+    url(r'^logout/$', auth_views.logout, {
+        "template_name": "statusboard/login.html",
+    }, name="logout"),
 ]
