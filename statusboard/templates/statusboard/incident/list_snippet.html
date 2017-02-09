@@ -19,7 +19,7 @@
         {% if perms.statusboard.edit_incident %}
         <small><a href="{% url 'statusboard:incident:edit' pk=incident.id %}">edit</a></small>
         {% endif %}
-        <br/><small class="timeinfo" title="{{ incident.occurred|date:"r" }}">occurred {{ incident.occurred|naturaltime }}</small>
+        <br/><small class="timeinfo">occurred <abbr title="{{ incident.occurred|date:"r" }}">{{ incident.occurred|naturaltime }}</abbr></small>
     </div>
     <ul class="list-group">
         {% for update in incident.updates_by_ctime %}
@@ -29,6 +29,7 @@
                 <div class="col-xs-8 col-md-10">
                     <span>{{ update.description|linebreaksbr }}</span>
                     <br/><small class="timeinfo" title="{{ update.modified|date:"r" }}">last update {{ update.modified|naturaltime }}</small>
+                    <br/><small class="timeinfo">last update <abbr title="{{ update.modified|date:"r" }}">{{ update.modified|naturaltime }}</abbr></small>
                 </div>
             </div>
         </li>

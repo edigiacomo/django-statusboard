@@ -39,7 +39,7 @@
                 {% endif %}
 
                 <span class="label label-{{ srv.status|service_status_class:"" }} pull-right">{{ srv.get_status_display }}</span>
-                <br/><small class="timeinfo" title="{{ srv.modified|date:"r" }}">last update {{ srv.modified|naturaltime }}</small>
+                <br/><small class="timeinfo">last update <abbr title="{{ srv.modified|date:"r" }}">{{ srv.modified|naturaltime }}</abbr></small>
             </li>
             {% endfor %}
         </ul>
