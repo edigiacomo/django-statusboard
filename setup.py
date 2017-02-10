@@ -22,6 +22,7 @@ setup(
     url='http://github.com/edigiacomo/django-statusboard',
     author='Emanuele Di Giacomo',
     install_requires=['django', 'djangorestframework', 'django-model-utils'],
+    test_suite="runtests.runtests",
     classifiers=[
         'Development Status :: 4 - Beta',
         'Environment :: Web Environment',
