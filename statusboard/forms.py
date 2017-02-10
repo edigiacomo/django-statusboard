@@ -30,7 +30,7 @@ class MaintenanceForm(forms.ModelForm):
 class IncidentForm(forms.ModelForm):
 
     service_status = forms.IntegerField(
-        label='service_status', widget=forms.Select(choices=SERVICE_STATUSES),
+        label='Service status', widget=forms.Select(choices=SERVICE_STATUSES),
     )
 
     class Meta:
