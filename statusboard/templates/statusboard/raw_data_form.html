@@ -1,26 +1,10 @@
 {% load rest_framework %}
 
-{% if form.non_field_errors %}
-<div class="alert alert-danger">
-    <ul>
-        {% for error in field.non_field_errors %}
-        <li>{{ error|escape }}</li>
-        {% endfor %}
-    </ul>
-</div>
-{% endif %}
+{% include "statusboard/raw_data_form_errors.html" with errors=form.non_field_errors only %}
 
 {% for field in form %}
 <div class="form-group {% if field.errors %}has-error{% endif %}">
-    {% if field.errors %}
-    <div class="col-sm-10 col-sm-offset-2 alert alert-danger">
-        <ul>
-        {% for error in field.errors %}
-        <li>{{ error|escape }}</li>
-        {% endfor %}
-        </ul>
-    </div>
-    {% endif %}
+    {% include "statusboard/raw_data_form_errors.html" with errors=field.errors only %}
     {{ field.label_tag|add_class:"col-sm-2 control-label" }}
     <div class="col-sm-10">
         {{ field|add_class:"form-control" }}
