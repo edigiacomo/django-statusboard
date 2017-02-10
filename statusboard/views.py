@@ -148,6 +148,19 @@ class IncidentDeleteView(PermissionRequiredMixin, DeleteView):
     permission_required = 'statusboard.delete_incident'
 
 
+def incident_archive_index(request):
+    try:
+        dt = Incident.objects.latest("occurred").occurred
+        objects = Incident.objects.filter(occurred__year=dt.year,
+                                          occurred__month=dt.month)
+        return render(request, "statusboard/incident/archive_month.html", {
+            "objects": objects,
+        })
+    except Incident.DoesNotExist:
+        return render(request, "statusboard/incident/archive_month_empty.html")
+
+
+
 class IncidentMonthArchiveView(MonthArchiveView):
     queryset = Incident.objects.all()
     date_field = "occurred"
@@ -160,13 +173,21 @@ class IncidentMonthArchiveView(MonthArchiveView):
         try:
             return super(IncidentMonthArchiveView, self).get_year()
         except Http404:
-            return str(self.get_queryset().latest(self.date_field).occurred.year)
+            try:
+                return str(self.get_queryset().latest(self.date_field).occurred.year)
+            except Incident.DoesNotExist:
+                # List is empty
+                return str(timezone.now().year)
 
     def get_month(self):
         try:
             return super(IncidentMonthArchiveView, self).get_month()
         except Http404:
-            return str(self.get_queryset().latest(self.date_field).occurred.month)
+            try:
+                return str(self.get_queryset().latest(self.date_field).occurred.month)
+            except Incident.DoesNotExist:
+                # List is empty
+                return str(timezone.now().month)
 
 
 class ServiceGroupViewSet(viewsets.ModelViewSet):

@@ -53,7 +53,7 @@ maintenance_urls = [
 
 incident_urls = [
     url('^archive/$',
-        views.IncidentMonthArchiveView.as_view(),
+        views.incident_archive_index,
         name="archive-index"),
     url('^archive/(?P<year>[0-9]{4})/(?P<month>[0-9]{1,2})/$',
         views.IncidentMonthArchiveView.as_view(),
