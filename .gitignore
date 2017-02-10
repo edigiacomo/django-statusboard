@@ -1,9 +1,9 @@
 *.pyc
 *.pyo
-__pycache__
+/.tox
+/db.sqlite3
 /dist/
 /django_statusboard.egg-info/
-
-/db.sqlite3
 /manage.py
 /mysite
+__pycache__
