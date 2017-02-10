@@ -22,6 +22,7 @@ check_service_status_input();
     <div class="panel panel-default">
         <div class="panel-heading">Incident update #{{ forloop.counter }}</div>
         <div class="panel-body">
+            {{ form.id }}
             <div class="form-group">
                 {% include "statusboard/raw_data_form_errors.html" with errors=field.status.errors only %}
                 <label class="control-label col-sm-2" for="{{ form.status.id_for_label }}">Status</label>
