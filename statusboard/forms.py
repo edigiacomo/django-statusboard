@@ -31,6 +31,7 @@ class IncidentForm(forms.ModelForm):
 
     service_status = forms.IntegerField(
         label='Service status', widget=forms.Select(choices=SERVICE_STATUSES),
+        required=False,
     )
 
     class Meta:
