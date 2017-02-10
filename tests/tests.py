@@ -8,10 +8,6 @@ from statusboard.models import ServiceGroup
 
 class TestApiPermission(TestCase):
     def setUp(self):
-        self.admin = User.objects.create_user(username="admin", is_superuser=True)
-        self.admin_client = APIClient()
-        self.admin_client.force_authenticate(self.admin)
-
         self.anon_client = APIClient()
 
         createuser = User.objects.create_user(username="create")
