@@ -8,9 +8,6 @@
             </a>
         </li>
         {% endif %}
-        <li class="">
-            <a href="{% url "statusboard:incident:archive-index" %}">latest</a>
-        </li>
         {% if next_month %}
         <li class="next">
             <a href="{% url "statusboard:incident:archive-month" next_month.year next_month.month %}">

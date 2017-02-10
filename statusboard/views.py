@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import Http404
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse_lazy, reverse
@@ -151,11 +151,8 @@ class IncidentDeleteView(PermissionRequiredMixin, DeleteView):
 def incident_archive_index(request):
     try:
         dt = Incident.objects.latest("occurred").occurred
-        objects = Incident.objects.filter(occurred__year=dt.year,
-                                          occurred__month=dt.month)
-        return render(request, "statusboard/incident/archive_month.html", {
-            "objects": objects,
-        })
+        return redirect('statusboard:incident:archive-month',
+                        year=dt.year, month=dt.month)
     except Incident.DoesNotExist:
         return render(request, "statusboard/incident/archive_month_empty.html")
 
