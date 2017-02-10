@@ -35,7 +35,7 @@ class IncidentForm(forms.ModelForm):
 
     class Meta:
         model = Incident
-        fields = ['name', 'service', 'occurred', 'service_status']
+        fields = ['name', 'occurred', 'service', 'service_status']
 
     def __init__(self, *args, **kwargs):
         super(IncidentForm, self).__init__(*args, **kwargs)
