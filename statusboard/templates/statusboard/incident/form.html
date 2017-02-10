@@ -4,6 +4,18 @@
     {% csrf_token %}
 
     {% include "statusboard/raw_data_form.html" %}
+    <script type="text/javascript">
+// Disable service status if service is not set
+
+function check_service_status_input() {
+    var disable = $("#{{ form.service.id_for_label }}").val() == "";
+    $("#{{ form.service_status.id_for_label }}").prop("disabled", disable);
+}
+$("#{{ form.service.id_for_label }}").on("change", function() {
+    check_service_status_input();
+});
+check_service_status_input();
+    </script>
 
     {{ incident_updates.management_form }}
     {% for form in incident_updates %}
