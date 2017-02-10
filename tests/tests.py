@@ -11,19 +11,19 @@ class TestApiPermission(TestCase):
         self.anon_client = APIClient()
 
         createuser = User.objects.create_user(username="create")
-        createuser.user_permissions.add([Permission.objects.get(codename="add_servicegroup")])
+        createuser.user_permissions.add(Permission.objects.get(codename="add_servicegroup"))
         createuser.save()
         self.create_client = APIClient()
         self.create_client.force_authenticate(createuser)
 
         deleteuser = User.objects.create_user(username="delete")
-        deleteuser.user_permissions.add([Permission.objects.get(codename="delete_servicegroup")])
+        deleteuser.user_permissions.add(Permission.objects.get(codename="delete_servicegroup"))
         deleteuser.save()
         self.delete_client = APIClient()
         self.delete_client.force_authenticate(deleteuser)
 
         edituser = User.objects.create_user(username="edit")
-        edituser.user_permissions.add([Permission.objects.get(codename="change_servicegroup")])
+        edituser.user_permissions.add(Permission.objects.get(codename="change_servicegroup"))
         edituser.save()
         self.edit_client = APIClient()
         self.edit_client.force_authenticate(edituser)
