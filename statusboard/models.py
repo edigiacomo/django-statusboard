@@ -20,13 +20,14 @@ class ServiceManager(models.Manager):
 
 
 class Service(TimeStampedModel):
-    name = models.CharField(max_length=255, unique=True)
-    description = models.TextField()
+    name = models.CharField(max_length=255, unique=True, verbose_name=_("name"))
+    description = models.TextField(verbose_name=_("description"))
     href = models.URLField(blank=True)
-    status = models.IntegerField(choices=SERVICE_STATUSES)
+    status = models.IntegerField(choices=SERVICE_STATUSES, verbose_name=_("status"))
     groups = models.ManyToManyField('ServiceGroup',
                                     related_name='services',
-                                    related_query_name='service')
+                                    related_query_name='service',
+                                    verbose_name=_("groups"))
     objects = ServiceManager()
 
     def __str__(self):
@@ -38,7 +39,7 @@ class Service(TimeStampedModel):
 
 
 class ServiceGroup(TimeStampedModel):
-    name = models.CharField(max_length=255, unique=True)
+    name = models.CharField(max_length=255, unique=True, verbose_name=_("name"))
 
     def worst_service(self):
         return self.services.all().latest('status')
@@ -67,10 +68,10 @@ class IncidentManager(models.Manager):
 
 
 class Incident(TimeStampedModel):
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, verbose_name=_("name"))
     service = models.ForeignKey('Service', blank=True, null=True,
                                 verbose_name=_("service"))
-    occurred = models.DateTimeField(default=timezone.now)
+    occurred = models.DateTimeField(default=timezone.now, verbose_name=_("occurred"))
     objects = IncidentManager()
 
     def worst_status(self):
@@ -91,8 +92,8 @@ class IncidentUpdate(TimeStampedModel):
     incident = models.ForeignKey(Incident, related_name='updates',
                                  related_query_name='update',
                                  verbose_name=_("incident"))
-    status = models.IntegerField(choices=INCIDENT_STATUSES)
-    description = models.TextField()
+    status = models.IntegerField(choices=INCIDENT_STATUSES, verbose_name=_("status"))
+    description = models.TextField(verbose_name=_("description"))
 
     def __str__(self):
         return "Update {} {}".format(self.incident.name, self.modified)
@@ -103,9 +104,9 @@ class IncidentUpdate(TimeStampedModel):
 
 
 class Maintenance(TimeStampedModel):
-    scheduled = models.DateTimeField()
-    name = models.CharField(max_length=255)
-    description = models.TextField()
+    scheduled = models.DateTimeField(verbose_name=_("scheduled"))
+    name = models.CharField(max_length=255, verbose_name=_("name"))
+    description = models.TextField(verbose_name=_("description"))
 
     def __str__(self):
         return self.name
