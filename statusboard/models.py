@@ -1,14 +1,15 @@
 from django.db import models
 from django.utils import timezone
+from django.utils.translation import ugettext as _
 
 from model_utils.models import TimeStampedModel
 
 
 SERVICE_STATUSES = (
-    (0, 'Operational'),
-    (1, 'Performance issues'),
-    (2, 'Partial outage'),
-    (3, 'Major outage'),
+    (0, _('Operational')),
+    (1, _('Performance issues')),
+    (2, _('Partial outage')),
+    (3, _('Major outage')),
 )
 
 
@@ -31,6 +32,10 @@ class Service(TimeStampedModel):
     def __str__(self):
         return self.name
 
+    class Meta:
+        verbose_name = _("service")
+        verbose_name_plural = _("services")
+
 
 class ServiceGroup(TimeStampedModel):
     name = models.CharField(max_length=255, unique=True)
@@ -41,12 +46,16 @@ class ServiceGroup(TimeStampedModel):
     def __str__(self):
         return self.name
 
+    class Meta:
+        verbose_name = _("service group")
+        verbose_name_plural = _("service groups")
+
 
 INCIDENT_STATUSES = (
-    (0, "Investigating"),
-    (1, "Identified"),
-    (2, "Watching"),
-    (3, "Fixed"),
+    (0, _("Investigating")),
+    (1, _("Identified")),
+    (2, _("Watching")),
+    (3, _("Fixed")),
 )
 
 
@@ -59,7 +68,8 @@ class IncidentManager(models.Manager):
 
 class Incident(TimeStampedModel):
     name = models.CharField(max_length=255)
-    service = models.ForeignKey('Service', blank=True, null=True)
+    service = models.ForeignKey('Service', blank=True, null=True,
+                                verbose_name=_("service"))
     occurred = models.DateTimeField(default=timezone.now)
     objects = IncidentManager()
 
@@ -72,15 +82,24 @@ class Incident(TimeStampedModel):
     def __str__(self):
         return self.name
 
+    class Meta:
+        verbose_name = _("incident")
+        verbose_name_plural = _("incidents")
+
 
 class IncidentUpdate(TimeStampedModel):
     incident = models.ForeignKey(Incident, related_name='updates',
-                                 related_query_name='update')
+                                 related_query_name='update',
+                                 verbose_name=_("incident"))
     status = models.IntegerField(choices=INCIDENT_STATUSES)
     description = models.TextField()
 
     def __str__(self):
         return "Update {} {}".format(self.incident.name, self.modified)
+
+    class Meta:
+        verbose_name = _("incident update")
+        verbose_name_plural = _("incident updates")
 
 
 class Maintenance(TimeStampedModel):
@@ -90,3 +109,7 @@ class Maintenance(TimeStampedModel):
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        verbose_name = _("maintenance")
+        verbose_name_plural = _("maintenances")

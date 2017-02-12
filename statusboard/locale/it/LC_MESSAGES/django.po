@@ -1,0 +1,90 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-02-12 17:12+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: statusboard/models.py:9
+msgid "Operational"
+msgstr ""
+
+#: statusboard/models.py:10
+msgid "Performance issues"
+msgstr ""
+
+#: statusboard/models.py:11
+msgid "Partial outage"
+msgstr ""
+
+#: statusboard/models.py:12
+msgid "Major outage"
+msgstr ""
+
+#: statusboard/models.py:36 statusboard/models.py:72
+msgid "service"
+msgstr ""
+
+#: statusboard/models.py:37
+msgid "services"
+msgstr ""
+
+#: statusboard/models.py:50
+msgid "service group"
+msgstr ""
+
+#: statusboard/models.py:51
+msgid "service groups"
+msgstr ""
+
+#: statusboard/models.py:55
+msgid "Investigating"
+msgstr ""
+
+#: statusboard/models.py:56
+msgid "Identified"
+msgstr ""
+
+#: statusboard/models.py:57
+msgid "Watching"
+msgstr ""
+
+#: statusboard/models.py:58
+msgid "Fixed"
+msgstr ""
+
+#: statusboard/models.py:86 statusboard/models.py:93
+msgid "incident"
+msgstr ""
+
+#: statusboard/models.py:87
+msgid "incidents"
+msgstr ""
+
+#: statusboard/models.py:101
+msgid "incident update"
+msgstr ""
+
+#: statusboard/models.py:102
+msgid "incident updates"
+msgstr ""
+
+#: statusboard/models.py:114
+msgid "maintenance"
+msgstr ""
+
+#: statusboard/models.py:115
+msgid "maintenances"
+msgstr ""
