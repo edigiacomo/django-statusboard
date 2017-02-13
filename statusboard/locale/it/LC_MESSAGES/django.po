@@ -250,7 +250,7 @@ msgid ""
 msgstr ""
 "\n"
 "            Il tuo account non sembra avere accesso a questa pagina. Per procedere,\n"
-"            per favore entra con un account che ha i permessi di accesso.\n"
+"            per favore effettua l'accesso con un utente che ha gli opportuni permessi.\n"
 "            "
 
 #: statusboard/templates/statusboard/login.html:25
