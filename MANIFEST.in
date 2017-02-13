@@ -2,5 +2,6 @@ include README.md
 include LICENSE
 recursive-include statusboard/static *.js *.css *.png
 recursive-include statusboard/templates *.html
+recursive-include statusboard/locale *.po *.mo
 recursive-exclude * __pycache__
 recursive-exclude * *.py[co]
