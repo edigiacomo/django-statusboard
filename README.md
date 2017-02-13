@@ -1,5 +1,8 @@
 # statusboard
 
+[![Build Status](https://travis-ci.org/edigiacomo/django-statusboard.svg?branch=master)](https://travis-ci.org/edigiacomo/django-statusboard)
+[![Pypi](https://img.shields.io/pypi/v/django-statusboard.svg)](https://pypi.python.org/pypi/django-statusboard/)
+
 Status page application.
 
 ![django-statusboard preview](preview.png)
@@ -56,3 +59,5 @@ Blocks:
 * `footer`
 * `style`
 * `script`
+
+[travis]: http://travis-ci.org/edigiacomo/django-statusboard
