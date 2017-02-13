@@ -190,33 +190,33 @@ class IncidentMonthArchiveView(MonthArchiveView):
 class ServiceGroupViewSet(viewsets.ModelViewSet):
     serializer_class = ServiceGroupSerializer
     queryset = ServiceGroup.objects.all()
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.DjangoModelPermissionsOrAnonReadOnly]
     versioning_class = versioning.URLPathVersioning
 
 
 class ServiceViewSet(viewsets.ModelViewSet):
     serializer_class = ServiceSerializer
     queryset = Service.objects.all()
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.DjangoModelPermissionsOrAnonReadOnly]
     versioning_class = versioning.URLPathVersioning
 
 
 class IncidentViewSet(viewsets.ModelViewSet):
     serializer_class = IncidentSerializer
     queryset = Incident.objects.all()
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.DjangoModelPermissionsOrAnonReadOnly]
     versioning_class = versioning.URLPathVersioning
 
 
 class IncidentUpdateViewSet(viewsets.ModelViewSet):
     serializer_class = IncidentUpdateSerializer
     queryset = IncidentUpdate.objects.all()
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.DjangoModelPermissionsOrAnonReadOnly]
     versioning_class = versioning.URLPathVersioning
 
 
 class MaintenanceViewSet(viewsets.ModelViewSet):
     serializer_class = MaintenanceSerializer
     queryset = Maintenance.objects.all()
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.DjangoModelPermissionsOrAnonReadOnly]
     versioning_class = versioning.URLPathVersioning

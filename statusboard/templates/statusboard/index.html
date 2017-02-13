@@ -2,18 +2,19 @@
 
 {% load humanize %}
 {% load statusboard_extras %}
+{% load i18n %}
 
 {% block content %}
 <div class="container">
     {% for m in maintenances %}
     <div class="alert alert-info" role="alert">
         <p>
-        <strong>{{ m.name }} - scheduled in <abbr title="{{ m.scheduled|date:"r" }}">{{ m.scheduled|naturaltime }}</abbr></strong>
+        <strong>{{ m.name }} - {% trans 'scheduled in' %} <abbr title="{{ m.scheduled|date:"r" }}">{{ m.scheduled|naturaltime }}</abbr></strong>
         {% if perms.statusboard.delete_maintenance %}
-        <small><a href="{% url 'statusboard:maintenance:delete' pk=m.id %}">delete</a></small>
+        <small><a href="{% url 'statusboard:maintenance:delete' pk=m.id %}">{% trans 'delete' %}</a></small>
         {% endif %}
         {% if perms.statusboard.edit_maintenance %}
-        <small><a href="{% url 'statusboard:maintenance:edit' pk=m.id %}">edit</a></small>
+        <small><a href="{% url 'statusboard:maintenance:edit' pk=m.id %}">{% trans 'edit' %}</a></small>
         {% endif %}
         </p>
         <p>
@@ -32,10 +33,10 @@
             <div class="panel-heading">
                 <strong>{{ grp.name }}</strong>
                 {% if perms.statusboard.delete_servicegroup %}
-                <small><a href="{% url 'statusboard:servicegroup:delete' pk=grp.id %}">delete</a></small>
+                <small><a href="{% url 'statusboard:servicegroup:delete' pk=grp.id %}">{% trans 'delete' %}</a></small>
                 {% endif %}
                 {% if perms.statusboard.edit_servicegroup %}
-                <small><a href="{% url 'statusboard:servicegroup:edit' pk=grp.id %}">edit</a></small>
+                <small><a href="{% url 'statusboard:servicegroup:edit' pk=grp.id %}">{% trans 'edit' %}</a></small>
                 {% endif %}
         </div>
         <ul class="list-group">
@@ -48,10 +49,10 @@
                 {% endif %}
 
                 {% if perms.statusboard.delete_service %}
-                <small><a href="{% url 'statusboard:service:delete' pk=srv.id %}">delete</a></small>
+                <small><a href="{% url 'statusboard:service:delete' pk=srv.id %}">{% trans 'delete' %}</a></small>
                 {% endif %}
                 {% if perms.statusboard.edit_service %}
-                <small><a href="{% url 'statusboard:service:edit' pk=srv.id %}">edit</a></small>
+                <small><a href="{% url 'statusboard:service:edit' pk=srv.id %}">{% trans 'edit' %}</a></small>
                 {% endif %}
 
                 <span class="label label-{{ srv.status|service_status_class:"" }} pull-right">{{ srv.get_status_display }}</span>
@@ -66,9 +67,9 @@
     {% if incidents %}
     <div class="incidents">
         <h2>
-            Past Incidents
+            {% trans 'Past Incidents' %}
             {% if perms.statusboard.incident_create %}
-            <small><a href="{% url "statusboard:incident:create" %}">create</a></small>
+            <small><a href="{% url "statusboard:incident:create" %}">{% trans 'create' %}</a></small>
             {% endif %}
         </h2>
         {% include "statusboard/incident/list_snippet.html" with incidents=incidents perms=perms only %}

@@ -1,11 +1,12 @@
 {% extends "statusboard/base.html" %}
 
 {% load statusboard_extras %}
+{% load i18n %}
 
 {% block content %}
 <div class="container">
     <div class="page-header">
-        <h1>Edit service</h1>
+        <h1>{% trans "Edit service" %}</h1>
     </div>
     {% include "statusboard/service/form.html" %}
 </div>
