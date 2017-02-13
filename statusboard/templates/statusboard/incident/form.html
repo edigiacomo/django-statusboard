@@ -1,4 +1,5 @@
 {% load rest_framework %}
+{% load i18n %}
 
 <form class="form-horizontal" role="form" method="post" action="">
     {% csrf_token %}
@@ -20,19 +21,19 @@ check_service_status_input();
     {{ incident_updates.management_form }}
     {% for form in incident_updates %}
     <div class="panel panel-default">
-        <div class="panel-heading">Incident update #{{ forloop.counter }}</div>
+        <div class="panel-heading">{% trans "Incident update" %} #{{ forloop.counter }}</div>
         <div class="panel-body">
             {{ form.id }}
             <div class="form-group">
                 {% include "statusboard/raw_data_form_errors.html" with errors=field.status.errors only %}
-                <label class="control-label col-sm-2" for="{{ form.status.id_for_label }}">Status</label>
+                <label class="control-label col-sm-2" for="{{ form.status.id_for_label }}">{% trans "Status" %}</label>
                 <div class="col-sm-10">
                     {{ form.status|add_class:"form-control" }}
                 </div>
             </div>
             <div class="form-group">
                 {% include "statusboard/raw_data_form_errors.html" with errors=field.description.errors only %}
-                <label class="control-label col-sm-2" for="{{ form.description.id_for_label }}">Description</label>
+                <label class="control-label col-sm-2" for="{{ form.description.id_for_label }}">{% trans "Description" %}</label>
                 <div class="col-sm-10">
                     {{ form.description|add_class:"form-control" }}
                 </div>
@@ -42,7 +43,7 @@ check_service_status_input();
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
                     {{ form.DELETE }}
-                    <label class="control-label" for="{{ form.DELETE.id_for_label }}">Delete</label>
+                    <label class="control-label" for="{{ form.DELETE.id_for_label }}">{% trans "delete" %}</label>
                 </div>
             </div>
             {% endif %}
@@ -52,7 +53,7 @@ check_service_status_input();
 
     <div class="form-group">
         <div class="col-sm-10 col-sm-offset-2">
-            <input type="submit" class="btn btn-primary" value="Submit">
+            <input type="submit" class="btn btn-primary" value="{% trans "Submit" %}">
         </div>
     </div>
 </form>

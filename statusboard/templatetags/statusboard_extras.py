@@ -1,4 +1,5 @@
 from django import template
+from django.utils.translation import ugettext as _
 
 from statusboard.models import SERVICE_STATUSES
 
@@ -13,10 +14,10 @@ def service_status_text(value, arg):
 @register.filter
 def service_status_summary_text(value, arg):
     return {
-        "0": "All systems are operational",
-        "1": "Some systems suffer of performance issues",
-        "2": "Some systems suffer of minor outage",
-        "3": "Some systems suffer of major outage",
+        "0": _("All systems are operational"),
+        "1": _("Some systems suffer of performance issues"),
+        "2": _("Some systems suffer of minor outage"),
+        "3": _("Some systems suffer of major outage"),
     }.get(str(value), arg)
 
 

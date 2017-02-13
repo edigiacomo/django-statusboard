@@ -1,5 +1,6 @@
 {% load humanize %}
 {% load statusboard_extras %}
+{% load i18n %}
 
 {% for incident in incidents %}
 {% ifchanged incident.modified.date %}
@@ -14,12 +15,12 @@
         {% endif %}
         <strong>{{ incident.name }}</strong>
         {% if perms.statusboard.delete_incident %}
-        <small><a href="{% url 'statusboard:incident:delete' pk=incident.id %}">delete</a></small>
+        <small><a href="{% url 'statusboard:incident:delete' pk=incident.id %}">{% trans 'delete' %}</a></small>
         {% endif %}
         {% if perms.statusboard.edit_incident %}
-        <small><a href="{% url 'statusboard:incident:edit' pk=incident.id %}">edit</a></small>
+        <small><a href="{% url 'statusboard:incident:edit' pk=incident.id %}">{% trans 'edit' %}</a></small>
         {% endif %}
-        <br/><small class="timeinfo">occurred <abbr title="{{ incident.occurred|date:"r" }}">{{ incident.occurred|naturaltime }}</abbr></small>
+        <br/><small class="timeinfo">{% trans "occurred" %} <abbr title="{{ incident.occurred|date:"r" }}">{{ incident.occurred|naturaltime }}</abbr></small>
     </div>
     <ul class="list-group">
         {% for update in incident.updates_by_ctime %}
@@ -28,7 +29,7 @@
                 <strong class="col-xs-4 col-md-2">{{ update.get_status_display }}</strong>
                 <div class="col-xs-8 col-md-10">
                     <span>{{ update.description|linebreaksbr }}</span>
-                    <br/><small class="timeinfo">last update <abbr title="{{ update.modified|date:"r" }}">{{ update.modified|naturaltime }}</abbr></small>
+                    <br/><small class="timeinfo">{% trans "last update" %} <abbr title="{{ update.modified|date:"r" }}">{{ update.modified|naturaltime }}</abbr></small>
                 </div>
             </div>
         </li>

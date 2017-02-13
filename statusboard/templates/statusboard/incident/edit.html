@@ -1,12 +1,13 @@
 {% extends "statusboard/base.html" %}
 
 {% load statusboard_extras %}
+{% load i18n %}
 
 {% block content %}
 <div class="container">
     <div class="page-header">
-        <h1>Edit incident
-            <small><a class="btn btn-danger pull-right" href="{% url "statusboard:incident:delete" pk=form.instance.id %}">Delete</a></small>
+        <h1>{% trans "Edit incident" %}
+            <small><a class="btn btn-danger pull-right" href="{% url "statusboard:incident:delete" pk=form.instance.id %}">{% trans "delete" %}</a></small>
         </h1>
     </div>
 
