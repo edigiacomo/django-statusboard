@@ -1,41 +1,53 @@
 {% extends "statusboard/base.html" %}
 
+{% load i18n %}
+
 {% block content %}
 <div class="container">
     {% if forms.errors %}
     <div class="alert alert-danger" role="alert">
+        {% blocktrans %}
         Your username and password didn't match. Please try again.
+        {% endblocktrans %}
     </div>
     {% endif %}
 
     {% if next %}
         {% if user.is_authenticated %}
         <div class="alert alert-danger" role="danger">
+            {% blocktrans %}
             Your account doesn't have access to this page. To proceed,
             please login with an account that has access.
+            {% endblocktrans %}
         </div>
         {% else %}
         <div class="alert alert-danger" role="danger">
+            {% blocktrans %}
             Please login to see this page.
+            {% endblocktrans %}
         </div>
         {% endif %}
     {% endif %}
 
     <div class="page-header">
-        <h1>Please sign in</h1>
+        <h1>
+            {% blocktrans %}
+            Please sign in
+            {% endblocktrans %}
+        </h1>
     </div>
     <form class="form-horizontal" role="form" method="post" action="{% url "statusboard:login" %}">
         {% csrf_token %}
         <div class="form-group">
-            <label for="form.username.id_for_label">Username</label>
+            <label for="form.username.id_for_label">{% trans "Username" %}</label>
             <input class="form-control" type="text" id="{{ form.username.id_for_label }}" name="{{ form.username.name }}">
         </div>
         <div class="form-group">
-            <label for="form.password.id_for_label">Password</label>
+            <label for="form.password.id_for_label">{% trans "Password" %}</label>
             <input class="form-control" type="password" id="{{ form.password.id_for_label }}" name="{{ form.password.name }}">
         </div>
         <div class="form-group">
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">{% trans "Sign in" %}</button>
         </div>
         <input type="hidden" name="next" value="{{ next }}" />
     </form>
