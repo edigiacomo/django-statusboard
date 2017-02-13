@@ -9,7 +9,11 @@ from django.views.generic.edit import DeleteView
 from django.db import transaction
 from django.utils import timezone
 from django.contrib.auth.decorators import permission_required
-from django.contrib.auth.mixins import PermissionRequiredMixin
+try:
+    from django.contrib.auth.mixins import PermissionRequiredMixin
+except ImportError:
+    # Django < 1.9
+    from .utils import PermissionRequiredMixin
 
 from rest_framework import viewsets
 from rest_framework import permissions
