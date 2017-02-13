@@ -21,6 +21,7 @@ setup(
     description='Django app to show system status',
     url='http://github.com/edigiacomo/django-statusboard',
     author='Emanuele Di Giacomo',
+    author_email="emanuele@digiacomo.cc",
     install_requires=['django', 'djangorestframework', 'django-model-utils'],
     test_suite="runtests.runtests",
     classifiers=[
