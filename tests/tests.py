@@ -1,4 +1,5 @@
 from django.test import TestCase
+from django.test import Client
 from django.contrib.auth.models import User, Permission
 
 from rest_framework.test import APIClient
@@ -61,3 +62,29 @@ class TestApiPermission(TestCase):
         response = self.delete_client.delete("/statusboard/api/v0.1/servicegroups/1/")
         self.assertEquals(response.status_code, 204)
         self.assertEquals(ServiceGroup.objects.filter(pk=1).count(), 0)
+
+
+class TestTemplate(TestCase):
+    def setUp(self):
+        self.admin = User.objects.create_user(username="admin", is_superuser=True)
+        self.admin.save()
+
+    def test_service_create(self):
+        client = Client()
+        client.force_login(user=self.admin)
+        response = client.get('/statusboard/services/create/')
+        self.assertEquals(response.status_code, 200)
+        templates = [t.name for t in response.templates]
+        self.assertTrue('statusboard/base.html' in templates)
+        self.assertTrue('statusboard/service/create.html' in templates)
+        self.assertTrue('statusboard/service/form.html' in templates)
+
+    def test_maintenance_create(self):
+        client = Client()
+        client.force_login(user=self.admin)
+        response = client.get('/statusboard/maintenances/create/')
+        self.assertEquals(response.status_code, 200)
+        templates = [t.name for t in response.templates]
+        self.assertTrue('statusboard/base.html' in templates)
+        self.assertTrue('statusboard/maintenance/create.html' in templates)
+        self.assertTrue('statusboard/maintenance/form.html' in templates)

@@ -62,7 +62,7 @@ class ServiceCreate(PermissionRequiredMixin, CreateView):
     form_class = ServiceForm
     template_name = "statusboard/service/create.html"
     success_url = reverse_lazy('statusboard:index')
-    permission_required = 'statusboard.create_service'
+    permission_required = 'statusboard.add_service'
 
 
 class ServiceUpdate(PermissionRequiredMixin, UpdateView):
