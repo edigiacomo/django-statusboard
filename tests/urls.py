@@ -2,5 +2,5 @@ from django.conf.urls import url, include
 
 
 urlpatterns = [
-    url(r'^statusboard/', include('statusboard.urls')),
+    url(r'^statusboard/', include('statusboard.urls', app_name="statusboard")),
 ]
