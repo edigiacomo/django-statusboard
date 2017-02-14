@@ -3,7 +3,6 @@ import re
 
 from setuptools import find_packages, setup
 
-import pypandoc
 
 
 def get_version(package):
@@ -13,7 +12,11 @@ def get_version(package):
 
 
 def read_md(path):
-    pypandoc.convert(path, 'rst')
+    try:
+        import pypandoc
+        pypandoc.convert(path, 'rst')
+    except ImportError:
+        return open(path).read()
 
 
 version = get_version('statusboard')
