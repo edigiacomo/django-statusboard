@@ -1,5 +1,6 @@
 from django.test import TestCase
 from django.test import Client
+from django.test import override_settings
 from django.contrib.auth.models import User, Permission
 
 from rest_framework.test import APIClient
@@ -64,6 +65,10 @@ class TestApiPermission(TestCase):
         self.assertEquals(ServiceGroup.objects.filter(pk=1).count(), 0)
 
 
+@override_settings(MIDDLEWARE_CLASSES=[
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+], STATIC_URL='/static/')
 class TestTemplate(TestCase):
     def setUp(self):
         self.admin = User.objects.create_user(username="admin", is_superuser=True)
