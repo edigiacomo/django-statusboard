@@ -3,11 +3,17 @@ import re
 
 from setuptools import find_packages, setup
 
+import pypandoc
+
 
 def get_version(package):
     # Thanks to Tom Christie
     init_py = open(os.path.join(package, '__init__.py')).read()
     return re.search("__version__ = ['\"]([^'\"]+)['\"]", init_py).group(1)
+
+
+def read_md(path):
+    pypandoc.convert(path, 'rst')
 
 
 version = get_version('statusboard')
@@ -19,6 +25,7 @@ setup(
     include_package_data=True,
     license='GPLv2+',
     description='Django app to show system status',
+    log_description=read_md('README.md'),
     url='http://github.com/edigiacomo/django-statusboard',
     author='Emanuele Di Giacomo',
     author_email="emanuele@digiacomo.cc",
