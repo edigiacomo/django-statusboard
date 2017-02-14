@@ -71,12 +71,15 @@ class TestApiPermission(TestCase):
 ], STATIC_URL='/static/')
 class TestTemplate(TestCase):
     def setUp(self):
-        self.admin = User.objects.create_user(username="admin", is_superuser=True)
-        self.admin.save()
+        admin = User.objects.create_superuser(username="admin",
+                                              password="admin",
+                                              email="admin@admin")
+        admin.save()
+
 
     def test_service_create(self):
         client = Client()
-        client.force_login(user=self.admin)
+        client.login(username="admin", password="admin")
         response = client.get('/statusboard/services/create/')
         self.assertEquals(response.status_code, 200)
         templates = [t.name for t in response.templates]
@@ -86,7 +89,7 @@ class TestTemplate(TestCase):
 
     def test_maintenance_create(self):
         client = Client()
-        client.force_login(user=self.admin)
+        client.login(username="admin", password="admin")
         response = client.get('/statusboard/maintenances/create/')
         self.assertEquals(response.status_code, 200)
         templates = [t.name for t in response.templates]
