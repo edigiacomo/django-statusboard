@@ -11,6 +11,8 @@ env:
     - TOX_ENV=py35-18
     - TOX_ENV=py35-19
     - TOX_ENV=py35-110
+before_install:
+    - sudo apt-get install -y pandoc
 install:
     - pip install tox
     - pip install -r requirements.txt
