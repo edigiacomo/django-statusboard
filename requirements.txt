@@ -2,4 +2,3 @@ django
 pytz
 djangorestframework
 django-model-utils
-pypandoc
