@@ -46,7 +46,7 @@ class IncidentForm(forms.ModelForm):
     def save(self, commit=True):
         model = super(IncidentForm, self).save(commit=False)
         status = self.cleaned_data['service_status']
-        if status:
+        if status is not None:
             if model.service:
                 model.service.status = status
                 model.service.save()

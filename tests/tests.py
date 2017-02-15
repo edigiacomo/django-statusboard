@@ -5,7 +5,9 @@ from django.contrib.auth.models import User, Permission
 
 from rest_framework.test import APIClient
 
+from statusboard.models import Service
 from statusboard.models import ServiceGroup
+from statusboard.models import Incident
 
 
 class TestApiPermission(TestCase):
@@ -96,3 +98,38 @@ class TestTemplate(TestCase):
         self.assertTrue('statusboard/base.html' in templates)
         self.assertTrue('statusboard/maintenance/create.html' in templates)
         self.assertTrue('statusboard/maintenance/form.html' in templates)
+
+
+@override_settings(MIDDLEWARE_CLASSES=[
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+], STATIC_URL='/static/')
+class IncidentEdit(TestCase):
+    def setUp(self):
+        admin = User.objects.create_superuser(username="admin",
+                                              password="admin",
+                                              email="admin@admin")
+        admin.save()
+
+        s = Service(name="service", description="test", status=2)
+        s.full_clean()
+        s.save()
+        i = Incident(name="incident", service=s)
+        i.full_clean()
+        i.save()
+
+    def test_edit(self):
+        client = Client()
+        client.login(username="admin", password="admin")
+        response = client.post('/statusboard/incidents/1/edit/', {
+            'name': 'incident',
+            'occurred': '2010-01-01 00:00:00',
+            'service': 1,
+            'service_status': 0,
+            'updates-INITIAL_FORMS': 0,
+            'updates-TOTAL_FORMS': 0,
+            'updates-MAX_NUM_FORMS': 0,
+            'updates-MIN_NUM_FORMS': 0,
+        })
+        s = Incident.objects.get(pk=1).service
+        self.assertEquals(s.status, 0)
