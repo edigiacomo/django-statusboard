@@ -28,7 +28,7 @@ setup(
     include_package_data=True,
     license='GPLv2+',
     description='Django app to show system status',
-    log_description=read_md('README.md'),
+    long_description=read_md('README.md'),
     url='http://github.com/edigiacomo/django-statusboard',
     author='Emanuele Di Giacomo',
     author_email="emanuele@digiacomo.cc",
