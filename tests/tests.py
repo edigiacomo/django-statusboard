@@ -133,3 +133,19 @@ class IncidentEdit(TestCase):
         })
         s = Incident.objects.get(pk=1).service
         self.assertEquals(s.status, 0)
+
+    def test_valid_status(self):
+        client = Client()
+        client.login(username="admin", password="admin")
+        response = client.post('/statusboard/incidents/1/edit/', {
+            'name': 'incident',
+            'occurred': '2010-01-01 00:00:00',
+            'service': 1,
+            'service_status': 33,
+            'updates-INITIAL_FORMS': 0,
+            'updates-TOTAL_FORMS': 0,
+            'updates-MAX_NUM_FORMS': 0,
+            'updates-MIN_NUM_FORMS': 0,
+        })
+        s = Incident.objects.get(pk=1).service
+        self.assertEquals(s.status, 2)

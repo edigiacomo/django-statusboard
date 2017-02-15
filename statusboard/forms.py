@@ -29,10 +29,9 @@ class MaintenanceForm(forms.ModelForm):
 
 class IncidentForm(forms.ModelForm):
 
-    service_status = forms.IntegerField(
-        label='Service status', widget=forms.Select(choices=SERVICE_STATUSES),
-        required=False,
-    )
+    service_status = forms.ChoiceField(choices=SERVICE_STATUSES,
+                                       label='Service status',
+                                       required=False)
 
     class Meta:
         model = Incident
