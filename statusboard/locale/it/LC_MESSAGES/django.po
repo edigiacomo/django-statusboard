@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Django Statusboard\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-13 07:10+0000\n"
+"POT-Creation-Date: 2017-02-15 11:19+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Emanuele Di Giacomo <emanuele@digiacomo.cc>\n"
 "Language-Team: Italian\n"
@@ -17,220 +17,215 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: statusboard/models.py:9
+#: models.py:9
 msgid "Operational"
 msgstr "Operativo"
 
-#: statusboard/models.py:10
+#: models.py:10
 msgid "Performance issues"
 msgstr "Problemi di performance"
 
-#: statusboard/models.py:11
+#: models.py:11
 msgid "Partial outage"
 msgstr "Interruzione parziale"
 
-#: statusboard/models.py:12
+#: models.py:12
 msgid "Major outage"
 msgstr "Interruzione totale"
 
-#: statusboard/models.py:23 statusboard/models.py:42 statusboard/models.py:71
-#: statusboard/models.py:108
+#: models.py:23 models.py:42 models.py:71 models.py:108
 msgid "name"
 msgstr "nome"
 
-#: statusboard/models.py:24 statusboard/models.py:96 statusboard/models.py:109
+#: models.py:24 models.py:96 models.py:109
 msgid "description"
 msgstr "descrizione"
 
-#: statusboard/models.py:26 statusboard/models.py:95
+#: models.py:26 models.py:95
 msgid "status"
 msgstr "status"
 
-#: statusboard/models.py:30
+#: models.py:30
 msgid "groups"
 msgstr "gruppi"
 
-#: statusboard/models.py:37 statusboard/models.py:73
+#: models.py:37 models.py:73
 msgid "service"
 msgstr "servizio"
 
-#: statusboard/models.py:38
+#: models.py:38
 msgid "services"
 msgstr "servizi"
 
-#: statusboard/models.py:51
+#: models.py:51
 msgid "service group"
 msgstr "gruppo dei servizi"
 
-#: statusboard/models.py:52
+#: models.py:52
 msgid "service groups"
 msgstr "gruppi dei servizi"
 
-#: statusboard/models.py:56
+#: models.py:56
 msgid "Investigating"
 msgstr "In studio"
 
-#: statusboard/models.py:57
+#: models.py:57
 msgid "Identified"
 msgstr "Identificato"
 
-#: statusboard/models.py:58
+#: models.py:58
 msgid "Watching"
 msgstr "In esame"
 
-#: statusboard/models.py:59
+#: models.py:59
 msgid "Fixed"
 msgstr "Risolto"
 
-#: statusboard/models.py:74
-#: statusboard/templates/statusboard/incident/list_snippet.html:23
+#: models.py:74 templates/statusboard/incident/list_snippet.html:23
 msgid "occurred"
 msgstr "avvenuto"
 
-#: statusboard/models.py:87 statusboard/models.py:94
+#: models.py:87 models.py:94
 msgid "incident"
 msgstr "incidente"
 
-#: statusboard/models.py:88
+#: models.py:88
 msgid "incidents"
 msgstr "incidenti"
 
-#: statusboard/models.py:102
+#: models.py:102
 msgid "incident update"
 msgstr "aggiornamento dell'incidente"
 
-#: statusboard/models.py:103
+#: models.py:103
 msgid "incident updates"
 msgstr "aggiornamenti dell'incidente"
 
-#: statusboard/models.py:107
+#: models.py:107
 msgid "scheduled"
 msgstr "pianificato"
 
-#: statusboard/models.py:115
+#: models.py:115
 msgid "maintenance"
 msgstr "manutenzione"
 
-#: statusboard/models.py:116
+#: models.py:116
 msgid "maintenances"
 msgstr "manutenzioni"
 
-#: statusboard/templates/statusboard/base.html:32
+#: templates/statusboard/base.html:32
 msgid "Toggle navigation"
 msgstr "Alterna la navigazione"
 
-#: statusboard/templates/statusboard/base.html:43
+#: templates/statusboard/base.html:43
 msgid "Incident archive"
 msgstr "Archivio degli incidenti"
 
-#: statusboard/templates/statusboard/base.html:46
+#: templates/statusboard/base.html:46
 msgid "Manage"
 msgstr "Gestione"
 
-#: statusboard/templates/statusboard/base.html:49
+#: templates/statusboard/base.html:49
 msgid "Create new incident"
 msgstr "Crea un nuovo incidente"
 
-#: statusboard/templates/statusboard/base.html:52
+#: templates/statusboard/base.html:52
 msgid "Create new service group"
 msgstr "Crea un nuovo gruppo di servizi"
 
-#: statusboard/templates/statusboard/base.html:55
+#: templates/statusboard/base.html:55
 msgid "Create new service"
 msgstr "Crea un nuovo servizio"
 
-#: statusboard/templates/statusboard/base.html:58
+#: templates/statusboard/base.html:58
 msgid "Create new maintenance"
 msgstr "Crea una nuova manutenzione"
 
-#: statusboard/templates/statusboard/base.html:67
+#: templates/statusboard/base.html:67
 msgid "Sign out"
 msgstr "Esci"
 
-#: statusboard/templates/statusboard/base.html:69
-#: statusboard/templates/statusboard/login.html:50
+#: templates/statusboard/base.html:69 templates/statusboard/login.html:50
 msgid "Sign in"
 msgstr "Entra"
 
-#: statusboard/templates/statusboard/incident/archive_month.html:9
+#: templates/statusboard/incident/archive_month.html:9
 msgid "Incidents reported in"
 msgstr "Incidenti segnalati a"
 
-#: statusboard/templates/statusboard/incident/archive_month_empty.html:9
+#: templates/statusboard/incident/archive_month_empty.html:9
 msgid "No incidents found"
 msgstr "Nessun incidente trovato"
 
-#: statusboard/templates/statusboard/incident/confirm_delete.html:9
+#: templates/statusboard/incident/confirm_delete.html:9
 msgid "Delete an incident"
 msgstr "Elimina un incidente"
 
-#: statusboard/templates/statusboard/incident/confirm_delete.html:16
-#: statusboard/templates/statusboard/maintenance/confirm_delete.html:16
-#: statusboard/templates/statusboard/service/confirm_delete.html:16
-#: statusboard/templates/statusboard/servicegroup/confirm_delete.html:16
+#: templates/statusboard/incident/confirm_delete.html:16
+#: templates/statusboard/maintenance/confirm_delete.html:16
+#: templates/statusboard/service/confirm_delete.html:16
+#: templates/statusboard/servicegroup/confirm_delete.html:16
 msgid "Confirm"
 msgstr "Conferma"
 
-#: statusboard/templates/statusboard/incident/create.html:9
+#: templates/statusboard/incident/create.html:9
 msgid "Report a new incident"
 msgstr "Segnala un nuovo incidente"
 
-#: statusboard/templates/statusboard/incident/edit.html:9
+#: templates/statusboard/incident/edit.html:9
 msgid "Edit incident"
 msgstr "Modifica l'incidente"
 
-#: statusboard/templates/statusboard/incident/edit.html:10
-#: statusboard/templates/statusboard/incident/form.html:46
-#: statusboard/templates/statusboard/incident/list_snippet.html:18
-#: statusboard/templates/statusboard/index.html:14
-#: statusboard/templates/statusboard/index.html:36
-#: statusboard/templates/statusboard/index.html:52
+#: templates/statusboard/incident/edit.html:10
+#: templates/statusboard/incident/form.html:46
+#: templates/statusboard/incident/list_snippet.html:18
+#: templates/statusboard/index.html:14 templates/statusboard/index.html:36
+#: templates/statusboard/index.html:52
 msgid "delete"
 msgstr "elimina"
 
-#: statusboard/templates/statusboard/incident/form.html:24
+#: templates/statusboard/incident/form.html:24
 msgid "Incident update"
 msgstr "Aggiornamento dell'incidente"
 
-#: statusboard/templates/statusboard/incident/form.html:29
+#: templates/statusboard/incident/form.html:29
 msgid "Status"
 msgstr "Status"
 
-#: statusboard/templates/statusboard/incident/form.html:36
+#: templates/statusboard/incident/form.html:36
 msgid "Description"
 msgstr "Descrizione"
 
-#: statusboard/templates/statusboard/incident/form.html:56
-#: statusboard/templates/statusboard/maintenance/form.html:7
-#: statusboard/templates/statusboard/service/form.html:6
-#: statusboard/templates/statusboard/servicegroup/form.html:7
+#: templates/statusboard/incident/form.html:56
+#: templates/statusboard/maintenance/form.html:7
+#: templates/statusboard/service/form.html:7
+#: templates/statusboard/servicegroup/form.html:7
 msgid "Submit"
 msgstr "Invia"
 
-#: statusboard/templates/statusboard/incident/list_snippet.html:21
-#: statusboard/templates/statusboard/index.html:17
-#: statusboard/templates/statusboard/index.html:39
-#: statusboard/templates/statusboard/index.html:55
+#: templates/statusboard/incident/list_snippet.html:21
+#: templates/statusboard/index.html:17 templates/statusboard/index.html:39
+#: templates/statusboard/index.html:55
 msgid "edit"
 msgstr "modifica"
 
-#: statusboard/templates/statusboard/incident/list_snippet.html:32
+#: templates/statusboard/incident/list_snippet.html:32
 msgid "last update"
 msgstr "ultimo aggiornamento"
 
-#: statusboard/templates/statusboard/index.html:12
+#: templates/statusboard/index.html:12
 msgid "scheduled in"
 msgstr "programmato tra"
 
-#: statusboard/templates/statusboard/index.html:70
+#: templates/statusboard/index.html:70
 msgid "Past Incidents"
 msgstr "Incidenti passati"
 
-#: statusboard/templates/statusboard/index.html:72
+#: templates/statusboard/index.html:72
 msgid "create"
 msgstr "crea"
 
-#: statusboard/templates/statusboard/login.html:9
+#: templates/statusboard/login.html:9
 msgid ""
 "\n"
 "        Your username and password didn't match. Please try again.\n"
@@ -241,7 +236,7 @@ msgstr ""
 "riprova.\n"
 "        "
 
-#: statusboard/templates/statusboard/login.html:18
+#: templates/statusboard/login.html:18
 msgid ""
 "\n"
 "            Your account doesn't have access to this page. To proceed,\n"
@@ -249,11 +244,13 @@ msgid ""
 "            "
 msgstr ""
 "\n"
-"            Il tuo account non sembra avere accesso a questa pagina. Per procedere,\n"
-"            per favore effettua l'accesso con un utente che ha gli opportuni permessi.\n"
+"            Il tuo account non sembra avere accesso a questa pagina. Per "
+"procedere,\n"
+"            per favore effettua l'accesso con un utente che ha gli opportuni "
+"permessi.\n"
 "            "
 
-#: statusboard/templates/statusboard/login.html:25
+#: templates/statusboard/login.html:25
 msgid ""
 "\n"
 "            Please login to see this page.\n"
@@ -263,7 +260,7 @@ msgstr ""
 "            Per favore effettua l'accesso per vedere questa pagina.\n"
 "            "
 
-#: statusboard/templates/statusboard/login.html:34
+#: templates/statusboard/login.html:34
 msgid ""
 "\n"
 "            Please sign in\n"
@@ -273,62 +270,72 @@ msgstr ""
 "            Per favore effettua l'accesso\n"
 "            "
 
-#: statusboard/templates/statusboard/login.html:42
+#: templates/statusboard/login.html:42
 msgid "Username"
 msgstr "Nome utente"
 
-#: statusboard/templates/statusboard/login.html:46
+#: templates/statusboard/login.html:46
 msgid "Password"
 msgstr "Password"
 
-#: statusboard/templates/statusboard/maintenance/confirm_delete.html:9
+#: templates/statusboard/maintenance/confirm_delete.html:9
 msgid "Delete a maintenance"
 msgstr "Elimina una manutenzione"
 
-#: statusboard/templates/statusboard/service/confirm_delete.html:13
+#: templates/statusboard/maintenance/create.html:9
+#| msgid "Create new maintenance"
+msgid "Create a new maintenance"
+msgstr "Crea una nuova manutenzione"
+
+#: templates/statusboard/service/confirm_delete.html:9
+#| msgid "Delete a service group"
+msgid "Delete a service"
+msgstr "Elimina un servizio"
+
+#: templates/statusboard/service/confirm_delete.html:13
 #, python-format
 msgid "Are you sure you want to delete the service \"%(service)s\"?"
 msgstr "Sei sicuro che vuoi eliminare il servizio \"%(service)s\"?"
 
-#: statusboard/templates/statusboard/service/create.html:9
+#: templates/statusboard/service/create.html:9
 msgid "Create a new service"
 msgstr "Crea un nuovo servizio"
 
-#: statusboard/templates/statusboard/service/edit.html:9
+#: templates/statusboard/service/edit.html:9
 msgid "Edit service"
 msgstr "Modifica il servizio"
 
-#: statusboard/templates/statusboard/servicegroup/confirm_delete.html:9
+#: templates/statusboard/servicegroup/confirm_delete.html:9
 msgid "Delete a service group"
 msgstr "Elimina un gruppo di servizi"
 
-#: statusboard/templates/statusboard/servicegroup/confirm_delete.html:13
+#: templates/statusboard/servicegroup/confirm_delete.html:13
 #, python-format
 msgid ""
 "Are you sure you want to delete the service group \"%(servicegroup)s\"? "
 msgstr ""
 "Sei sicuro che vuoi eliminare il gruppo di servizi \"%(servicegroup)s\"? "
 
-#: statusboard/templates/statusboard/servicegroup/create.html:9
+#: templates/statusboard/servicegroup/create.html:9
 msgid "Create a new service group"
 msgstr "Crea un nuovo gruppo di servizi"
 
-#: statusboard/templates/statusboard/servicegroup/edit.html:9
+#: templates/statusboard/servicegroup/edit.html:9
 msgid "Edit service group"
 msgstr "Modifica un gruppo di servizi"
 
-#: statusboard/templatetags/statusboard_extras.py:17
+#: templatetags/statusboard_extras.py:17
 msgid "All systems are operational"
 msgstr "Tutti i sistemi sono operativi"
 
-#: statusboard/templatetags/statusboard_extras.py:18
+#: templatetags/statusboard_extras.py:18
 msgid "Some systems suffer of performance issues"
 msgstr "Qualche sistema soffre di problemi di prestazioni"
 
-#: statusboard/templatetags/statusboard_extras.py:19
+#: templatetags/statusboard_extras.py:19
 msgid "Some systems suffer of minor outage"
 msgstr "Qualche sistema soffre di interruzione parziale"
 
-#: statusboard/templatetags/statusboard_extras.py:20
+#: templatetags/statusboard_extras.py:20
 msgid "Some systems suffer of major outage"
 msgstr "Qualche sistema soffre di interruzione totale"
