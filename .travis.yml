@@ -28,3 +28,4 @@ deploy:
     on:
         tags: true
         branch: master
+        condition: $TOX_ENV = py35-110
