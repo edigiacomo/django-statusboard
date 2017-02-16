@@ -40,6 +40,7 @@ class Service(TimeStampedModel):
 
 class ServiceGroup(TimeStampedModel):
     name = models.CharField(max_length=255, unique=True, verbose_name=_("name"))
+    collapse = models.BooleanField(default=True)
 
     def worst_service(self):
         return self.services.all().latest('status')
