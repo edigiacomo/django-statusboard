@@ -1,6 +1,8 @@
 *.pyc
 *.pyo
+/.eggs
 /.tox
+/build
 /db.sqlite3
 /dist/
 /django_statusboard.egg-info/
