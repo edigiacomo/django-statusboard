@@ -12,7 +12,7 @@ from .models import SERVICE_STATUSES
 class ServiceGroupForm(forms.ModelForm):
     class Meta:
         model = ServiceGroup
-        fields = ['name']
+        fields = ['name', 'collapse']
 
 
 class ServiceForm(forms.ModelForm):

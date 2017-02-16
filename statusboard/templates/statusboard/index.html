@@ -31,7 +31,7 @@
     <div class="servicegroup">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <strong><a class="servicegroup-name" data-toggle="collapse" data-target="#servicegroup-{{ grp.id}}-panel-body">{{ grp.name }}</a></strong>
+                <strong><a class="servicegroup-name {% if grp.collapse %}collapsed{% endif %}" data-toggle="collapse" data-target="#servicegroup-{{ grp.id}}-panel-body">{{ grp.name }}</a></strong>
                 {% if perms.statusboard.delete_servicegroup %}
                 <small><a href="{% url 'statusboard:servicegroup:delete' pk=grp.id %}">{% trans 'delete' %}</a></small>
                 {% endif %}
@@ -42,7 +42,7 @@
                     <span class="dot dot-{{ grp.worst_service.status|service_status_class:"" }}" title="{{ grp.worst_service.get_status_display }}"></span>
                 </div>
             </div>
-            <ul id="servicegroup-{{ grp.id}}-panel-body" class="list-group collapse in">
+            <ul id="servicegroup-{{ grp.id}}-panel-body" class="list-group collapse {% if not grp.collapse %}in{% endif %}">
                 {% for srv in grp.services.all %}
                 <li class="list-group-item clearfix">
                     {% if srv.href %}

@@ -13,7 +13,7 @@ class ServiceSerializer(serializers.ModelSerializer):
 class ServiceGroupSerializer(serializers.ModelSerializer):
     class Meta:
         model = ServiceGroup
-        fields = ('id', 'name', 'services', 'created', 'modified')
+        fields = ('id', 'name', 'collapse', 'services', 'created', 'modified')
 
 
 class IncidentSerializer(serializers.ModelSerializer):
