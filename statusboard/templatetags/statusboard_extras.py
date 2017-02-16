@@ -1,4 +1,5 @@
 from django import template
+from django import forms
 from django.utils.translation import ugettext as _
 
 from statusboard.models import SERVICE_STATUSES
@@ -49,3 +50,8 @@ def incident_status_class(value, arg):
         "2": "info",
         "3": "success",
     }.get(str(value), arg)
+
+
+@register.filter
+def is_checkbox(field):
+    return isinstance(field.field.widget, forms.CheckboxInput)
