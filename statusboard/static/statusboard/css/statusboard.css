@@ -24,3 +24,26 @@ div.servicegroup a.servicegroup-name:before {
 div.servicegroup a.servicegroup-name.collapsed:before {
     content: "\e080 ";
 }
+
+.dot {
+    display: inline-block;
+    border-radius: 50%;
+    width: 50%;
+    background-color: #EEE;
+    height: 15px;
+    width: 15px;
+    margin: 0 2px;
+    vertical-align: baseline;
+}
+.dot.dot-success {
+    background-color: #449D44;
+}
+.dot.dot-info {
+    background-color: #5BC0DE;
+}
+.dot.dot-warning {
+    background-color: #F0AD4E;
+}
+.dot.dot-danger {
+    background-color: #D9534F;
+}

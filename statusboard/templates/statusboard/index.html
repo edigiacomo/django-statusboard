@@ -38,6 +38,7 @@
                 {% if perms.statusboard.edit_servicegroup %}
                 <small><a href="{% url 'statusboard:servicegroup:edit' pk=grp.id %}">{% trans 'edit' %}</a></small>
                 {% endif %}
+                <span class="dot dot-{{ grp.worst_service.status|service_status_class:"" }} pull-right" title="{{ grp.worst_service.get_status_display }}"></span>
             </div>
             <ul id="servicegroup-{{ grp.id}}-panel-body" class="list-group collapse in">
                 {% for srv in grp.services.all %}
