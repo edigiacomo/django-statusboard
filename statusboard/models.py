@@ -38,9 +38,16 @@ class Service(TimeStampedModel):
         verbose_name_plural = _("services")
 
 
+class ServiceGroupManager(models.Manager):
+    def position_sorted(self):
+        return self.get_queryset().order_by('position', 'name')
+
+
 class ServiceGroup(TimeStampedModel):
     name = models.CharField(max_length=255, unique=True, verbose_name=_("name"))
     collapse = models.BooleanField(default=True)
+    position = models.PositiveIntegerField(default=0)
+    objects = ServiceGroupManager()
 
     def worst_service(self):
         return self.services.all().latest('status')

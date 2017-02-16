@@ -162,3 +162,18 @@ class TestIncidentManager(TestCase):
         Incident.objects.create(name="a", service=s, occurred=dt - timezone.timedelta(days=days))
         self.assertTrue(Incident.objects.occurred_in_last_n_days(days-1).count(), 1)
         self.assertTrue(Incident.objects.occurred_in_last_n_days(days).count(), 2)
+
+
+class TestServiceGroup(TestCase):
+    def test_position_order(self):
+        s0 = ServiceGroup.objects.create(name="s0", position=1)
+        s1 = ServiceGroup.objects.create(name="s1", position=0)
+        self.assertEquals(ServiceGroup.objects.all()[0], s0)
+        self.assertEquals(ServiceGroup.objects.all()[1], s1)
+        self.assertEquals(ServiceGroup.objects.position_sorted()[0], s1)
+        self.assertEquals(ServiceGroup.objects.position_sorted()[1], s0)
+        # When two groups have the same position, order by name
+        s2 = ServiceGroup.objects.create(name="s2", position=0)
+        self.assertEquals(ServiceGroup.objects.position_sorted()[0], s1)
+        self.assertEquals(ServiceGroup.objects.position_sorted()[1], s2)
+        self.assertEquals(ServiceGroup.objects.position_sorted()[2], s0)
