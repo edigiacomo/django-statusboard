@@ -2,6 +2,7 @@ from django.test import TestCase
 from django.test import Client
 from django.test import override_settings
 from django.contrib.auth.models import User, Permission
+from django.utils import timezone
 
 from rest_framework.test import APIClient
 
@@ -149,3 +150,15 @@ class IncidentEdit(TestCase):
         })
         s = Incident.objects.get(pk=1).service
         self.assertEquals(s.status, 2)
+
+
+class TestIncidentManager(TestCase):
+    def test_occurred_in_last_n_days(self):
+        """Test for django 1.8 compatibility"""
+        dt = timezone.datetime.now()
+        days = 3
+        s = Service.objects.create(name="service", description="test", status=0)
+        Incident.objects.create(name="a", service=s, occurred=dt)
+        Incident.objects.create(name="a", service=s, occurred=dt - timezone.timedelta(days=days))
+        self.assertTrue(Incident.objects.occurred_in_last_n_days(days-1).count(), 1)
+        self.assertTrue(Incident.objects.occurred_in_last_n_days(days).count(), 2)
