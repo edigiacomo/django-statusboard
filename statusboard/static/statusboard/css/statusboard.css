@@ -9,3 +9,18 @@ div.incidents {
 small.timeinfo {
     opacity: 0.7;
 }
+
+div.servicegroup a.servicegroup-name {
+    color: black;
+    text-decoration: none;
+}
+
+div.servicegroup a.servicegroup-name:before {
+    font-family: 'Glyphicons Halflings';
+    font-size: 80%;
+    content: "\e114";
+    padding-right: 3px;
+}
+div.servicegroup a.servicegroup-name.collapsed:before {
+    content: "\e080 ";
+}

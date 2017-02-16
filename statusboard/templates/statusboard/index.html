@@ -31,35 +31,35 @@
     <div class="servicegroup">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <strong>{{ grp.name }}</strong>
+                <strong><a class="servicegroup-name" data-toggle="collapse" data-target="#servicegroup-{{ grp.id}}-panel-body">{{ grp.name }}</a></strong>
                 {% if perms.statusboard.delete_servicegroup %}
                 <small><a href="{% url 'statusboard:servicegroup:delete' pk=grp.id %}">{% trans 'delete' %}</a></small>
                 {% endif %}
                 {% if perms.statusboard.edit_servicegroup %}
                 <small><a href="{% url 'statusboard:servicegroup:edit' pk=grp.id %}">{% trans 'edit' %}</a></small>
                 {% endif %}
-        </div>
-        <ul class="list-group">
-            {% for srv in grp.services.all %}
-            <li class="list-group-item clearfix">
-                {% if srv.href %}
-                <a href="{{ srv.href }}">{{ srv.name }}</a>
-                {% else %}
-                <span>{{ srv.name }}</span>
-                {% endif %}
+            </div>
+            <ul id="servicegroup-{{ grp.id}}-panel-body" class="list-group collapse in">
+                {% for srv in grp.services.all %}
+                <li class="list-group-item clearfix">
+                    {% if srv.href %}
+                    <a href="{{ srv.href }}">{{ srv.name }}</a>
+                    {% else %}
+                    <span>{{ srv.name }}</span>
+                    {% endif %}
 
-                {% if perms.statusboard.delete_service %}
-                <small><a href="{% url 'statusboard:service:delete' pk=srv.id %}">{% trans 'delete' %}</a></small>
-                {% endif %}
-                {% if perms.statusboard.edit_service %}
-                <small><a href="{% url 'statusboard:service:edit' pk=srv.id %}">{% trans 'edit' %}</a></small>
-                {% endif %}
+                    {% if perms.statusboard.delete_service %}
+                    <small><a href="{% url 'statusboard:service:delete' pk=srv.id %}">{% trans 'delete' %}</a></small>
+                    {% endif %}
+                    {% if perms.statusboard.edit_service %}
+                    <small><a href="{% url 'statusboard:service:edit' pk=srv.id %}">{% trans 'edit' %}</a></small>
+                    {% endif %}
 
-                <span class="label label-{{ srv.status|service_status_class:"" }} pull-right">{{ srv.get_status_display }}</span>
-                <br/><small class="timeinfo">last update <abbr title="{{ srv.modified|date:"r" }}">{{ srv.modified|naturaltime }}</abbr></small>
-            </li>
-            {% endfor %}
-        </ul>
+                    <span class="label label-{{ srv.status|service_status_class:"" }} pull-right">{{ srv.get_status_display }}</span>
+                    <br/><small class="timeinfo">last update <abbr title="{{ srv.modified|date:"r" }}">{{ srv.modified|naturaltime }}</abbr></small>
+                </li>
+                {% endfor %}
+            </ul>
         </div>
     </div>
     {% endfor %}
