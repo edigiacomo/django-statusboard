@@ -59,15 +59,15 @@ msgstr "servizi"
 
 #: models.py:42
 msgid "Never collapse"
-msgstr "Non collassare mai"
+msgstr "Non compattare mai"
 
 #: models.py:43
 msgid "Always collapse"
-msgstr "Collassa sempre"
+msgstr "Compatta sempre"
 
 #: models.py:44
 msgid "Collapse when a service is not operational"
-msgstr "Collassa quando un servizio non è operativo"
+msgstr "Compatta quando un servizio non è operativo"
 
 #: models.py:71
 msgid "service group"
