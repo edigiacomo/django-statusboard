@@ -41,7 +41,7 @@ class Service(TimeStampedModel):
 SERVICEGROUP_COLLAPSE_OPTIONS = (
     (0, _('Never collapse')),
     (1, _('Always collapse')),
-    (2, _('When service is not operational')),
+    (2, _('Collapse when a service is not operational')),
 )
 
 

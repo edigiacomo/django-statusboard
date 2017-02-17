@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Django Statusboard\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-17 09:30+0100\n"
+"POT-Creation-Date: 2017-02-17 09:35+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Emanuele Di Giacomo <emanuele@digiacomo.cc>\n"
 "Language-Team: Italian\n"
@@ -66,8 +66,8 @@ msgid "Always collapse"
 msgstr "Collassa sempre"
 
 #: models.py:44
-msgid "When service is not operational"
-msgstr "Quando un servizio non è operativo"
+msgid "Collapse when a service is not operational"
+msgstr "Collassa quando un servizio non è operativo"
 
 #: models.py:71
 msgid "service group"
@@ -174,6 +174,7 @@ msgid "Delete an incident"
 msgstr "Elimina un incidente"
 
 #: templates/statusboard/incident/confirm_delete.html:13
+#, python-format
 msgid "Are you sure you want to delete the incident \"%(incident)s\"?"
 msgstr "Sei sicuro che vuoi eliminare l'incidente \"%(incident)s\"?"
 
@@ -299,6 +300,7 @@ msgid "Delete a maintenance"
 msgstr "Elimina una manutenzione"
 
 #: templates/statusboard/maintenance/confirm_delete.html:13
+#, python-format
 msgid "Are you sure you want to delete the maintenance \"%(maintenance)s\"?"
 msgstr "Sei sicuro che vuoi eliminare la manutenzione \"%(maintenance)s\"?"
 
