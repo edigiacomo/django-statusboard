@@ -93,6 +93,8 @@ class IncidentManager(models.Manager):
 class Incident(TimeStampedModel):
     name = models.CharField(max_length=255, verbose_name=_("name"))
     service = models.ForeignKey('Service', blank=True, null=True,
+                                related_name='incidents',
+                                related_query_name='incident',
                                 verbose_name=_("service"))
     occurred = models.DateTimeField(default=timezone.now, verbose_name=_("occurred"))
     objects = IncidentManager()
