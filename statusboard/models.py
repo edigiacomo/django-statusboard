@@ -38,9 +38,17 @@ class Service(TimeStampedModel):
         verbose_name_plural = _("services")
 
 
+SERVICEGROUP_COLLAPSE_OPTIONS = (
+    (0, _('Never collapse')),
+    (1, _('Always collapse')),
+    (2, _('When service is not operational')),
+)
+
+
 class ServiceGroup(TimeStampedModel):
     name = models.CharField(max_length=255, unique=True, verbose_name=_("name"))
-    collapse = models.BooleanField(default=True)
+    collapse = models.IntegerField(choices=SERVICEGROUP_COLLAPSE_OPTIONS,
+                                   default=0)
 
     def worst_service(self):
         return self.services.all().latest('status')
