@@ -177,3 +177,5 @@ class TestServiceGroup(TestCase):
         self.assertEquals(ServiceGroup.objects.position_sorted()[0], s1)
         self.assertEquals(ServiceGroup.objects.position_sorted()[1], s2)
         self.assertEquals(ServiceGroup.objects.position_sorted()[2], s0)
+        # Filter queryset object
+        self.assertEquals(ServiceGroup.objects.filter(name="s1").position_sorted()[0], s1)

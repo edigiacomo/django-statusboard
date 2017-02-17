@@ -38,9 +38,17 @@ class Service(TimeStampedModel):
         verbose_name_plural = _("services")
 
 
-class ServiceGroupManager(models.Manager):
+class ServiceGroupQuerySet(models.QuerySet):
     def position_sorted(self):
-        return self.get_queryset().order_by('position', 'name')
+        return self.order_by('position', 'name')
+
+
+class ServiceGroupManager(models.Manager):
+    def get_queryset(self):
+        return ServiceGroupQuerySet(self.model, using=self._db)
+
+    def position_sorted(self):
+        return self.get_queryset().position_sorted()
 
 
 class ServiceGroup(TimeStampedModel):
