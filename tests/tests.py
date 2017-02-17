@@ -166,26 +166,24 @@ class TestIncidentManager(TestCase):
 
 class TestTemplateTags(TestCase):
     def test_servicegroup_collapse(self):
-        from statusboard.templatetags.statusboard_extras import servicegroup_collapse
-
         g = ServiceGroup.objects.create(name="test", collapse=0)
-        self.assertFalse(servicegroup_collapse(g))
+        self.assertFalse(g.collapsed())
 
         g.collapse = 1
         g.save()
-        self.assertTrue(servicegroup_collapse(g))
+        self.assertTrue(g.collapsed())
 
         g.collapse = 2
         g.save()
-        self.assertTrue(servicegroup_collapse(g))
+        self.assertTrue(g.collapsed())
 
         s = Service.objects.create(name="service", description="test", status=0)
         s.groups = [g]
         s.save()
         g.collapse = 2
         g.save()
-        self.assertTrue(servicegroup_collapse(g))
+        self.assertTrue(g.collapsed())
 
         s.status = 1
         s.save()
-        self.assertFalse(servicegroup_collapse(g))
+        self.assertFalse(g.collapsed())

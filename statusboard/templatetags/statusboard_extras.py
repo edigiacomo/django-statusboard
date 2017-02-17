@@ -56,17 +56,3 @@ def incident_status_class(value, arg):
 @register.filter
 def is_checkbox(field):
     return isinstance(field.field.widget, forms.CheckboxInput)
-
-
-@register.filter
-def servicegroup_collapse(grp):
-    """Check if the service group should collapse or not.
-
-    Return true if a group doesn't have any service.
-    """
-    if grp.collapse == 0:
-        return False
-    elif grp.collapse == 1:
-        return True
-    else:
-        return not grp.services.exclude(status=0).exists()
