@@ -162,3 +162,28 @@ class TestIncidentManager(TestCase):
         Incident.objects.create(name="a", service=s, occurred=dt - timezone.timedelta(days=days))
         self.assertTrue(Incident.objects.occurred_in_last_n_days(days-1).count(), 1)
         self.assertTrue(Incident.objects.occurred_in_last_n_days(days).count(), 2)
+
+
+class TestTemplateTags(TestCase):
+    def test_servicegroup_collapse(self):
+        g = ServiceGroup.objects.create(name="test", collapse=0)
+        self.assertFalse(g.collapsed())
+
+        g.collapse = 1
+        g.save()
+        self.assertTrue(g.collapsed())
+
+        g.collapse = 2
+        g.save()
+        self.assertTrue(g.collapsed())
+
+        s = Service.objects.create(name="service", description="test", status=0)
+        s.groups = [g]
+        s.save()
+        g.collapse = 2
+        g.save()
+        self.assertTrue(g.collapsed())
+
+        s.status = 1
+        s.save()
+        self.assertFalse(g.collapsed())
