@@ -16,8 +16,8 @@ before_install:
     - sudo apt-get install -y pandoc
 install:
     - pip install tox
-    - pip install -r requirements.txt
-    - pip install -r packagaging_requirements.txt
+    - pip install -r requirements/requirements.txt
+    - pip install -r requirements/requirements-packaging.txt
 script:
     - tox -e $TOX_ENV
 deploy:
