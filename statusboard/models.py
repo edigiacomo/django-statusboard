@@ -91,14 +91,21 @@ INCIDENT_STATUSES = (
 )
 
 
-class IncidentManager(models.Manager):
+class IncidentQuerySet(models.QuerySet):
     def occurred_in_last_n_days(self, days=7):
         threshold = timezone.now() - timezone.timedelta(days=days)
         threshold = timezone.datetime(threshold.year,
                                       threshold.month,
                                       threshold.day)
-        qs = self.get_queryset().filter(occurred__gte=threshold)
-        return qs
+        return self.filter(occurred__gte=threshold)
+
+
+class IncidentManager(models.Manager):
+    def get_queryset(self):
+        return IncidentQuerySet(self.model, using=self._db)
+
+    def occurred_in_last_n_days(self, days=7):
+        return self.get_queryset().occurred_in_last_n_days(days=days)
 
 
 class Incident(TimeStampedModel):
