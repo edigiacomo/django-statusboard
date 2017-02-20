@@ -5,9 +5,6 @@
 
 Status page application.
 
-![django-statusboard preview](preview.png)
-
-
 ## Installation
 
 Install the package
