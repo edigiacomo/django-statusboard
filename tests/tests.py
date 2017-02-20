@@ -187,3 +187,25 @@ class TestTemplateTags(TestCase):
         s.status = 1
         s.save()
         self.assertFalse(g.collapsed())
+
+
+class TestService(TestCase):
+    def test_worst_status(self):
+        # ServiceManager
+        self.assertEquals(Service.objects.worst_status(), None)
+        # ServiceQuerySet
+        self.assertEquals(Service.objects.all().worst_status(), None)
+
+
+class TestServiceGroup(TestCase):
+    def test_worst_service(self):
+        g = ServiceGroup.objects.create(name="test", collapse=0)
+        self.assertRaises(Service.DoesNotExist, g.worst_service)
+        s = Service.objects.create(name="s0", description="test", status=0)
+        g.services.add(s)
+        g.save()
+        self.assertEquals(g.worst_service(), s)
+        s = Service.objects.create(name="s1", description="test", status=1)
+        g.services.add(s)
+        g.save()
+        self.assertEquals(g.worst_service(), s)

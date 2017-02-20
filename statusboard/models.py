@@ -13,10 +13,19 @@ SERVICE_STATUSES = (
 )
 
 
-class ServiceManager(models.Manager):
+class ServiceQuerySet(models.QuerySet):
     def worst_status(self):
-        s = self.get_queryset().aggregate(models.Max('status'))["status__max"]
-        return s
+        """Return worst status in queryset."""
+        return self.aggregate(models.Max('status'))['status__max']
+
+
+class ServiceManager(models.Manager):
+    def get_queryset(self):
+        return ServiceQuerySet(self.model, using=self._db)
+
+    def worst_status(self):
+        """Return worst status in queryset."""
+        return self.get_queryset().worst_status()
 
 
 class Service(TimeStampedModel):
