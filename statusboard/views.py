@@ -164,7 +164,7 @@ def incident_archive_index(request):
 
 
 class IncidentMonthArchiveView(MonthArchiveView):
-    queryset = Incident.objects.all()
+    queryset = Incident.objects.all().order_by('-occurred')
     date_field = "occurred"
     allow_future = False
     month_format = "%m"
