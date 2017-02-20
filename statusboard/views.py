@@ -161,14 +161,12 @@ def incident_archive_index(request):
         return render(request, "statusboard/incident/archive_month_empty.html")
 
 
-
 class IncidentMonthArchiveView(MonthArchiveView):
     queryset = Incident.objects.all()
     date_field = "occurred"
     allow_future = False
     month_format = "%m"
     template_name = "statusboard/incident/archive_month.html"
-
 
     def get_year(self):
         try:
