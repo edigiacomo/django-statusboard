@@ -344,18 +344,18 @@ msgstr "Crea un nuovo gruppo di servizi"
 msgid "Edit service group"
 msgstr "Modifica un gruppo di servizi"
 
-#: templatetags/statusboard_extras.py:19
+#: templatetags/statusboard.py:19
 msgid "All systems are operational"
 msgstr "Tutti i sistemi sono operativi"
 
-#: templatetags/statusboard_extras.py:20
+#: templatetags/statusboard.py:20
 msgid "Some systems suffer of performance issues"
 msgstr "Qualche sistema soffre di problemi di prestazioni"
 
-#: templatetags/statusboard_extras.py:21
+#: templatetags/statusboard.py:21
 msgid "Some systems suffer of minor outage"
 msgstr "Qualche sistema soffre di interruzione parziale"
 
-#: templatetags/statusboard_extras.py:22
+#: templatetags/statusboard.py:22
 msgid "Some systems suffer of major outage"
 msgstr "Qualche sistema soffre di interruzione totale"
