@@ -5,9 +5,6 @@
 
 Status page application.
 
-![django-statusboard preview](preview.png)
-
-
 ## Installation
 
 Install the package
@@ -38,26 +35,55 @@ urlpatterns += [
 Update your database
 
 ```sh
-./manage migrate statusboard
+./manage migrate
 ```
 
-## Usage
+## Configuration
 
-Service status can be managed from Django admin interface or using the REST
-API.
+You can configure the app using the dict `STATUSBOARD` in `settings.py`:
 
+```
+STATUSBOARD = {
+    INCIDENT_DAYS_IN_INDEX: 7,
+}
+```
 
 ## Customize pages
 
-Blocks:
+The following blocks are customizable in `statusboard/base.html`:
 
-* `title`
-* `branding`
-* `bootstrap_theme`
-* `header`
-* `userlinks`
-* `footer`
-* `style`
-* `script`
+* `title`: title of the page
+* `branding`: branding in fixed navbar
+* `bootstrap_theme`: bootstrap theme
+* `header`: header of the page
+* `userlinks`: links in the header
+* `footer`: footer div
+* `style`: `CSS` files
+* `script`: JavaScript files
 
-[travis]: http://travis-ci.org/edigiacomo/django-statusboard
+### Example: change branding and title
+
+
+#### Django 1.8
+
+Copy `statusboard/templates/statusboard/base.html` in one of your templates dir
+and edit the file.
+
+#### Django >= 1.9
+
+In Django >= 1.9, the templates can be extended recursively (see
+https://docs.djangoproject.com/en/1.10/releases/1.9/).
+
+Create a `statusboard/base.html` in one of your templates dir:
+
+```
+{% extends `statusboard/base.html %}
+
+{% block title %}
+ACME, Inc.
+{% endblock %}
+
+{% block branding %}
+<a class="navbar-brand" href="{% url 'statusboard:index' %}">ACME status</a>
+{% endblock %}
+```

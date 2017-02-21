@@ -1,11 +1,11 @@
 {% load humanize %}
-{% load statusboard_extras %}
+{% load statusboard %}
 {% load i18n %}
 
 {% for incident in incidents %}
-{% ifchanged incident.modified.date %}
+{% ifchanged incident.occurred.date %}
 <div class="page-header">
-    <h3>{{ incident.modified|date:"DATE_FORMAT" }}</h3>
+    <h3>{{ incident.occurred|date:"DATE_FORMAT" }}</h3>
 </div>
 {% endifchanged %}
 <div class="panel panel-default">

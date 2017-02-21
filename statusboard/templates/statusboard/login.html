@@ -29,14 +29,12 @@
         {% endif %}
     {% endif %}
 
-    <div class="page-header">
-        <h1>
+    <form class="form-signin" role="form" method="post" action="{% url "statusboard:login" %}">
+        <h2 class="signin-header">
             {% blocktrans %}
             Please sign in
             {% endblocktrans %}
-        </h1>
-    </div>
-    <form class="form-horizontal" role="form" method="post" action="{% url "statusboard:login" %}">
+        </h2>
         {% csrf_token %}
         <div class="form-group">
             <label for="form.username.id_for_label">{% trans "Username" %}</label>

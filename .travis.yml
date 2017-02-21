@@ -1,5 +1,6 @@
 language: python
 python: 3.5
+cache: pip
 env:
     - TOX_ENV=py27-18
     - TOX_ENV=py27-19
@@ -15,8 +16,8 @@ before_install:
     - sudo apt-get install -y pandoc
 install:
     - pip install tox
-    - pip install -r requirements.txt
-    - pip install -r packagaging_requirements.txt
+    - pip install -r requirements/requirements.txt
+    - pip install -r requirements/requirements-packaging.txt
 script:
     - tox -e $TOX_ENV
 deploy:
@@ -27,3 +28,4 @@ deploy:
     on:
         tags: true
         branch: master
+        condition: $TOX_ENV = py35-110

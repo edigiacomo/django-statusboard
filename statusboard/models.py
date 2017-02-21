@@ -1,8 +1,12 @@
+from __future__ import unicode_literals
+
 from django.db import models
 from django.utils import timezone
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _
 
 from model_utils.models import TimeStampedModel
+
+from .settings import statusconf
 
 
 SERVICE_STATUSES = (
@@ -13,10 +17,19 @@ SERVICE_STATUSES = (
 )
 
 
-class ServiceManager(models.Manager):
+class ServiceQuerySet(models.QuerySet):
     def worst_status(self):
-        s = self.get_queryset().aggregate(models.Max('status'))["status__max"]
-        return s
+        """Return worst status in queryset."""
+        return self.aggregate(models.Max('status'))['status__max']
+
+
+class ServiceManager(models.Manager):
+    def get_queryset(self):
+        return ServiceQuerySet(self.model, using=self._db)
+
+    def worst_status(self):
+        """Return worst status in queryset."""
+        return self.get_queryset().worst_status()
 
 
 class Service(TimeStampedModel):
@@ -38,6 +51,13 @@ class Service(TimeStampedModel):
         verbose_name_plural = _("services")
 
 
+SERVICEGROUP_COLLAPSE_OPTIONS = (
+    (0, _('Never collapse')),
+    (1, _('Always collapse')),
+    (2, _('Collapse when all the services are operational')),
+)
+
+
 class ServiceGroupQuerySet(models.QuerySet):
     def position_sorted(self):
         return self.order_by('position', 'name')
@@ -55,10 +75,23 @@ class ServiceGroup(TimeStampedModel):
     name = models.CharField(max_length=255, unique=True, verbose_name=_("name"))
     collapse = models.BooleanField(default=True)
     position = models.PositiveIntegerField(default=0)
+    collapse = models.IntegerField(choices=SERVICEGROUP_COLLAPSE_OPTIONS,
+                                   default=0)
     objects = ServiceGroupManager()
 
     def worst_service(self):
         return self.services.all().latest('status')
+
+    def collapsed(self):
+        """Check if the service group should collapse or not.
+
+        Return true if a group doesn't have any service."""
+        if self.collapse == 0:
+            return False
+        elif self.collapse == 1:
+            return True
+        else:
+            return not self.services.exclude(status=0).exists()
 
     def __str__(self):
         return self.name
@@ -76,19 +109,36 @@ INCIDENT_STATUSES = (
 )
 
 
-class IncidentManager(models.Manager):
+class IncidentQuerySet(models.QuerySet):
     def occurred_in_last_n_days(self, days=7):
         threshold = timezone.now() - timezone.timedelta(days=days)
-        threshold = timezone.datetime(threshold.year,
-                                      threshold.month,
-                                      threshold.day)
-        qs = self.get_queryset().filter(occurred__gte=threshold)
-        return qs
+        threshold = threshold.replace(hour=0, minute=0, second=0)
+        return self.filter(occurred__gte=threshold)
+
+    def last_occurred(self):
+        """Return incidents occurred in last days. The number of days is defined
+        in STATUSBOARD["INCIDENT_DAYS_IN_INDEX"]."""
+        return self.occurred_in_last_n_days(statusconf.INCIDENT_DAYS_IN_INDEX)
+
+
+class IncidentManager(models.Manager):
+    def get_queryset(self):
+        return IncidentQuerySet(self.model, using=self._db)
+
+    def occurred_in_last_n_days(self, days=7):
+        return self.get_queryset().occurred_in_last_n_days(days=days)
+
+    def last_occurred(self):
+        """Return incidents occurred in last days. The number of days is defined
+        in STATUSBOARD["INCIDENT_DAYS_IN_INDEX"]."""
+        return self.get_queryset().last_occurred()
 
 
 class Incident(TimeStampedModel):
     name = models.CharField(max_length=255, verbose_name=_("name"))
     service = models.ForeignKey('Service', blank=True, null=True,
+                                related_name='incidents',
+                                related_query_name='incident',
                                 verbose_name=_("service"))
     occurred = models.DateTimeField(default=timezone.now, verbose_name=_("occurred"))
     objects = IncidentManager()
