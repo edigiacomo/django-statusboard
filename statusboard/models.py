@@ -77,6 +77,9 @@ class ServiceGroup(TimeStampedModel):
         else:
             return not self.services.exclude(status=0).exists()
 
+    def is_empty_group(self):
+        return not self.services.all().exists()
+
     def __str__(self):
         return self.name
 

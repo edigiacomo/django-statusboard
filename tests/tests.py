@@ -226,6 +226,14 @@ class TestServiceGroup(TestCase):
         g.save()
         self.assertEquals(g.worst_service(), s)
 
+    def test_is_empty_group(self):
+        g = ServiceGroup.objects.create(name="test", collapse=0)
+        self.assertTrue(g.is_empty_group())
+        s = Service.objects.create(name="s1", description="test", status=1)
+        g.services.add(s)
+        g.save()
+        self.assertFalse(g.is_empty_group())
+
 
 class TestSettings(TestCase):
     def test_default(self):
