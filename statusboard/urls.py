@@ -9,11 +9,11 @@ from . import views
 
 
 router = routers.DefaultRouter()
-router.register(r'servicegroups', views.ServiceGroupViewSet)
-router.register(r'services', views.ServiceViewSet)
-router.register(r'incidents', views.IncidentViewSet)
-router.register(r'incidentupdates', views.IncidentUpdateViewSet)
-router.register(r'maintenances', views.MaintenanceViewSet)
+router.register(r'servicegroup', views.ServiceGroupViewSet)
+router.register(r'service', views.ServiceViewSet)
+router.register(r'incident', views.IncidentViewSet)
+router.register(r'incidentupdate', views.IncidentUpdateViewSet)
+router.register(r'maintenance', views.MaintenanceViewSet)
 
 app_name = "statusboard"
 
@@ -73,10 +73,10 @@ incident_urls = [
 
 urlpatterns = [
     url(r'^$', views.index, name="index"),
-    url(r'^services/', include(service_urls, namespace="service")),
-    url(r'^servicegroups/', include(servicegroup_urls, namespace="servicegroup")),
-    url(r'^incidents/', include(incident_urls, namespace="incident")),
-    url(r'^maintenances/', include(maintenance_urls, namespace="maintenance")),
+    url(r'^service/', include(service_urls, namespace="service")),
+    url(r'^servicegroup/', include(servicegroup_urls, namespace="servicegroup")),
+    url(r'^incident/', include(incident_urls, namespace="incident")),
+    url(r'^maintenance/', include(maintenance_urls, namespace="maintenance")),
     url(r'^api/(?P<version>v0\.1)/', include(router.urls, namespace="api")),
     url(r'^login/$', auth_views.login, {
         "template_name": "statusboard/login.html",
