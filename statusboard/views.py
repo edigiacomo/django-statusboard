@@ -31,7 +31,7 @@ def index(request):
     return render(request, "statusboard/index.html", {
         "statusgroups": ServiceGroup.objects.annotate(services_count=Count('service')).filter(services_count__gt=0),
         "worst_status": Service.objects.worst_status(),
-        "incidents": Incident.objects.occurred_in_last_n_days(7).order_by('-modified'),
+        "incidents": Incident.objects.last_occurred().order_by('-occurred'),
         "maintenances": Maintenance.objects.filter(scheduled__gt=timezone.now()).order_by('-scheduled'),
     })
 
