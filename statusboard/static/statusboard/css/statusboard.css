@@ -48,3 +48,8 @@ div.servicegroup a.servicegroup-name.collapsed:before {
 .dot.dot-danger {
     background-color: #D9534F;
 }
+
+.form-signin {
+    max-width: 330px;
+    margin: 0 auto;
+}
