@@ -22,7 +22,7 @@ class Settings(object):
             raise RuntimeError(("{} is not a valid statusboard "
                                 "setting").format(name))
         s = getattr(settings, "STATUSBOARD", {})
-        return getattr(s, name, DEFAULTS[name])
+        return s.get(name, DEFAULTS[name])
 
 
 statusconf = Settings()

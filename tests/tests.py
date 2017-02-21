@@ -215,6 +215,19 @@ class TestServiceGroup(TestCase):
 
 class TestSettings(TestCase):
     def test_default(self):
-        from statusboard.settings import conf
-        self.assertIsNotNone(getattr(conf, "INCIDENT_DAYS_IN_INDEX"))
-        self.assertTrue(hasattr(conf, "INCIDENT_DAYS_IN_INDEX"))
+        from django.conf import settings
+        from statusboard.settings import statusconf
+
+        self.assertIsNotNone(getattr(statusconf, "INCIDENT_DAYS_IN_INDEX"))
+        self.assertTrue(hasattr(statusconf, "INCIDENT_DAYS_IN_INDEX"))
+
+    def test_modified(self):
+        from django.conf import settings
+        from statusboard.settings import statusconf
+
+        with self.settings(STATUSBOARD={
+            "INCIDENT_DAYS_IN_INDEX": 30,
+        }):
+            self.assertEquals(statusconf.INCIDENT_DAYS_IN_INDEX, 30)
+            self.assertEquals(settings.STATUSBOARD["INCIDENT_DAYS_IN_INDEX"],
+                              statusconf.INCIDENT_DAYS_IN_INDEX)
