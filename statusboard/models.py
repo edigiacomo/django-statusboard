@@ -6,6 +6,8 @@ from django.utils.translation import ugettext_lazy as _
 
 from model_utils.models import TimeStampedModel
 
+from .settings import statusconf
+
 
 SERVICE_STATUSES = (
     (0, _('Operational')),
@@ -99,6 +101,11 @@ class IncidentQuerySet(models.QuerySet):
                                       threshold.day)
         return self.filter(occurred__gte=threshold)
 
+    def last_occurred(self):
+        """Return incidents occurred in last days. The number of days is defined
+        in STATUSBOARD["INCIDENT_DAYS_IN_INDEX"]."""
+        return self.occurred_in_last_n_days(statusconf.INCIDENT_DAYS_IN_INDEX)
+
 
 class IncidentManager(models.Manager):
     def get_queryset(self):
@@ -106,6 +113,11 @@ class IncidentManager(models.Manager):
 
     def occurred_in_last_n_days(self, days=7):
         return self.get_queryset().occurred_in_last_n_days(days=days)
+
+    def last_occurred(self):
+        """Return incidents occurred in last days. The number of days is defined
+        in STATUSBOARD["INCIDENT_DAYS_IN_INDEX"]."""
+        return self.get_queryset().last_occurred()
 
 
 class Incident(TimeStampedModel):

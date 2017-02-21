@@ -155,15 +155,29 @@ class IncidentEdit(TestCase):
 
 
 class TestIncidentManager(TestCase):
-    def test_occurred_in_last_n_days(self):
-        """Test for django 1.8 compatibility"""
+    def setUp(self):
         dt = timezone.datetime.now()
-        days = 3
+        days = 30
         s = Service.objects.create(name="service", description="test", status=0)
         Incident.objects.create(name="a", service=s, occurred=dt)
         Incident.objects.create(name="a", service=s, occurred=dt - timezone.timedelta(days=days))
-        self.assertTrue(Incident.objects.occurred_in_last_n_days(days-1).count(), 1)
-        self.assertTrue(Incident.objects.occurred_in_last_n_days(days).count(), 2)
+        self.days = days
+
+    def test_occurred_in_last_n_days(self):
+        """Test for django 1.8 compatibility"""
+        self.assertTrue(Incident.objects.occurred_in_last_n_days(self.days-1).count(), 1)
+        self.assertTrue(Incident.objects.occurred_in_last_n_days(self.days).count(), 2)
+
+    def test_last_occurred(self):
+        with self.settings(STATUSBOARD={
+            "INCIDENT_DAYS_IN_INDEX": self.days-1,
+        }):
+            self.assertEquals(Incident.objects.last_occurred().count(), 1)
+
+        with self.settings(STATUSBOARD={
+            "INCIDENT_DAYS_IN_INDEX": self.days,
+        }):
+            self.assertEquals(Incident.objects.last_occurred().count(), 2)
 
 
 class TestTemplateTags(TestCase):
