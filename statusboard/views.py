@@ -30,6 +30,7 @@ def index(request):
     from django.db.models import Count
     return render(request, "statusboard/index.html", {
         "servicegroups": ServiceGroup.objects.all(),
+        "uncategorized": Service.objects.uncategorized(),
         "worst_status": Service.objects.worst_status(),
         "incidents": Incident.objects.last_occurred().order_by('-occurred'),
         "maintenances": Maintenance.objects.filter(scheduled__gt=timezone.now()).order_by('-scheduled'),

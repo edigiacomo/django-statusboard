@@ -22,6 +22,12 @@ class ServiceQuerySet(models.QuerySet):
         """Return worst status in queryset."""
         return self.aggregate(models.Max('status'))['status__max']
 
+    def worst_service(self):
+        return self.latest('status')
+
+    def uncategorized(self):
+        return self.annotate(group_count=models.Count('groups')).filter(group_count=0)
+
 
 class ServiceManager(models.Manager):
     def get_queryset(self):
@@ -30,6 +36,9 @@ class ServiceManager(models.Manager):
     def worst_status(self):
         """Return worst status in queryset."""
         return self.get_queryset().worst_status()
+
+    def uncategorized(self):
+        return self.get_queryset().uncategorized()
 
 
 class Service(TimeStampedModel):

@@ -27,7 +27,7 @@
         {{ worst_status|service_status_summary_text:"" }}
     </div>
     {% endif %}
-    {% include "statusboard/servicegroup/list_snippet.html" with servicegroups=servicegroups perms=perms only %}
+    {% include "statusboard/servicegroup/list_snippet.html" with servicegroups=servicegroups uncategorized=uncategorized perms=perms only %}
     {% if incidents %}
     <div class="incidents">
         <h2>
