@@ -37,35 +37,35 @@ class TestApiPermission(TestCase):
 
     def test_servicegroup(self):
         """Test service group API permissions"""
-        response = self.anon_client.get("/statusboard/api/v0.1/servicegroups/")
+        response = self.anon_client.get("/statusboard/api/v0.1/servicegroup/")
         self.assertEquals(response.status_code, 200)
-        response = self.anon_client.post("/statusboard/api/v0.1/servicegroups/")
+        response = self.anon_client.post("/statusboard/api/v0.1/servicegroup/")
         self.assertEquals(response.status_code, 403)
 
-        response = self.create_client.post("/statusboard/api/v0.1/servicegroups/", {
+        response = self.create_client.post("/statusboard/api/v0.1/servicegroup/", {
             "name": "test",
         })
         self.assertEquals(response.status_code, 201)
         self.assertTrue(ServiceGroup.objects.get(name="test") is not None)
 
-        response = self.delete_client.patch("/statusboard/api/v0.1/servicegroups/1/", {
+        response = self.delete_client.patch("/statusboard/api/v0.1/servicegroup/1/", {
             "name": "t",
         })
         self.assertEquals(response.status_code, 403)
         self.assertTrue(ServiceGroup.objects.get(name="test") is not None)
 
-        response = self.edit_client.patch("/statusboard/api/v0.1/servicegroups/1/", {
+        response = self.edit_client.patch("/statusboard/api/v0.1/servicegroup/1/", {
             "name": "t",
         })
         self.assertEquals(response.status_code, 200)
         self.assertTrue(ServiceGroup.objects.get(name="t") is not None)
 
 
-        response = self.create_client.delete("/statusboard/api/v0.1/servicegroups/1/")
+        response = self.create_client.delete("/statusboard/api/v0.1/servicegroup/1/")
         self.assertEquals(response.status_code, 403)
         self.assertEquals(ServiceGroup.objects.filter(pk=1).count(), 1)
 
-        response = self.delete_client.delete("/statusboard/api/v0.1/servicegroups/1/")
+        response = self.delete_client.delete("/statusboard/api/v0.1/servicegroup/1/")
         self.assertEquals(response.status_code, 204)
         self.assertEquals(ServiceGroup.objects.filter(pk=1).count(), 0)
 
@@ -85,7 +85,7 @@ class TestTemplate(TestCase):
     def test_service_create(self):
         client = Client()
         client.login(username="admin", password="admin")
-        response = client.get('/statusboard/services/create/')
+        response = client.get('/statusboard/service/create/')
         self.assertEquals(response.status_code, 200)
         templates = [t.name for t in response.templates]
         self.assertTrue('statusboard/base.html' in templates)
@@ -95,7 +95,7 @@ class TestTemplate(TestCase):
     def test_maintenance_create(self):
         client = Client()
         client.login(username="admin", password="admin")
-        response = client.get('/statusboard/maintenances/create/')
+        response = client.get('/statusboard/maintenance/create/')
         self.assertEquals(response.status_code, 200)
         templates = [t.name for t in response.templates]
         self.assertTrue('statusboard/base.html' in templates)
@@ -124,7 +124,7 @@ class IncidentEdit(TestCase):
     def test_edit(self):
         client = Client()
         client.login(username="admin", password="admin")
-        response = client.post('/statusboard/incidents/1/edit/', {
+        response = client.post('/statusboard/incident/1/edit/', {
             'name': 'incident',
             'occurred': '2010-01-01 00:00:00',
             'service': 1,
@@ -140,7 +140,7 @@ class IncidentEdit(TestCase):
     def test_valid_status(self):
         client = Client()
         client.login(username="admin", password="admin")
-        response = client.post('/statusboard/incidents/1/edit/', {
+        response = client.post('/statusboard/incident/1/edit/', {
             'name': 'incident',
             'occurred': '2010-01-01 00:00:00',
             'service': 1,
