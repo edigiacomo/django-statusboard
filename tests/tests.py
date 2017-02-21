@@ -211,3 +211,10 @@ class TestServiceGroup(TestCase):
         g.services.add(s)
         g.save()
         self.assertEquals(g.worst_service(), s)
+
+
+class TestSettings(TestCase):
+    def test_default(self):
+        from statusboard.settings import conf
+        self.assertIsNotNone(getattr(conf, "INCIDENT_DAYS_IN_INDEX"))
+        self.assertTrue(hasattr(conf, "INCIDENT_DAYS_IN_INDEX"))
