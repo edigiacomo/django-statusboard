@@ -48,6 +48,8 @@ STATUSBOARD = {
 }
 ```
 
+* `INCIDENT_DAYS_IN_INDEX`: number of days to show in index (1 = today).
+
 ## Customize pages
 
 The following blocks are customizable in `statusboard/base.html`:

@@ -160,24 +160,43 @@ class TestIncidentManager(TestCase):
         days = 30
         s = Service.objects.create(name="service", description="test", status=0)
         Incident.objects.create(name="a", service=s, occurred=dt)
-        Incident.objects.create(name="a", service=s, occurred=dt - timezone.timedelta(days=days))
+        Incident.objects.create(name="a", service=s, occurred=dt-timezone.timedelta(days=days))
         self.days = days
 
     def test_occurred_in_last_n_days(self):
-        """Test for django 1.8 compatibility"""
-        self.assertTrue(Incident.objects.occurred_in_last_n_days(self.days-1).count(), 1)
-        self.assertTrue(Incident.objects.occurred_in_last_n_days(self.days).count(), 2)
+        self.assertEquals(Incident.objects.occurred_in_last_n_days(self.days-1).count(), 1)
+        self.assertEquals(Incident.objects.occurred_in_last_n_days(self.days).count(), 1)
 
     def test_last_occurred(self):
+        with self.settings(STATUSBOARD={
+            "INCIDENT_DAYS_IN_INDEX": self.days+2,
+        }):
+            self.assertEquals(Incident.objects.last_occurred().count(), 2)
+
+        with self.settings(STATUSBOARD={
+            "INCIDENT_DAYS_IN_INDEX": self.days+1,
+        }):
+            self.assertEquals(Incident.objects.last_occurred().count(), 2)
+
+        with self.settings(STATUSBOARD={
+            "INCIDENT_DAYS_IN_INDEX": self.days,
+        }):
+            self.assertEquals(Incident.objects.last_occurred().count(), 1)
+
         with self.settings(STATUSBOARD={
             "INCIDENT_DAYS_IN_INDEX": self.days-1,
         }):
             self.assertEquals(Incident.objects.last_occurred().count(), 1)
 
         with self.settings(STATUSBOARD={
-            "INCIDENT_DAYS_IN_INDEX": self.days,
+            "INCIDENT_DAYS_IN_INDEX": 1,
         }):
-            self.assertEquals(Incident.objects.last_occurred().count(), 2)
+            self.assertEquals(Incident.objects.last_occurred().count(), 1)
+
+        with self.settings(STATUSBOARD={
+            "INCIDENT_DAYS_IN_INDEX": 0,
+        }):
+            self.assertEquals(Incident.objects.last_occurred().count(), 0)
 
 
 class TestTemplateTags(TestCase):

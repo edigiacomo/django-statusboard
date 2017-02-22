@@ -107,8 +107,9 @@ INCIDENT_STATUSES = (
 
 class IncidentQuerySet(models.QuerySet):
     def occurred_in_last_n_days(self, days=7):
-        threshold = timezone.now() - timezone.timedelta(days=days)
-        threshold = threshold.replace(hour=0, minute=0, second=0)
+        """Return incidents occurred in last N days (1 = today)."""
+        threshold = timezone.now() - timezone.timedelta(days=days-1)
+        threshold = threshold.replace(hour=0, minute=0, second=0, microsecond=0)
         return self.filter(occurred__gte=threshold)
 
     def last_occurred(self):
@@ -122,6 +123,7 @@ class IncidentManager(models.Manager):
         return IncidentQuerySet(self.model, using=self._db)
 
     def occurred_in_last_n_days(self, days=7):
+        """Return incidents occurred in last N days (1 = today)."""
         return self.get_queryset().occurred_in_last_n_days(days=days)
 
     def last_occurred(self):
