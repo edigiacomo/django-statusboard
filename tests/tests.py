@@ -11,6 +11,7 @@ from rest_framework.test import APIClient
 from statusboard.models import Service
 from statusboard.models import ServiceGroup
 from statusboard.models import Incident
+from statusboard.models import IncidentUpdate
 
 
 class TestApiPermission(TestCase):
@@ -159,8 +160,11 @@ class TestIncidentManager(TestCase):
         dt = timezone.datetime.now()
         days = 30
         s = Service.objects.create(name="service", description="test", status=0)
-        Incident.objects.create(name="a", service=s, occurred=dt)
-        Incident.objects.create(name="a", service=s, occurred=dt-timezone.timedelta(days=days))
+        i = Incident.objects.create(name="a", service=s, occurred=dt)
+        IncidentUpdate.objects.create(incident=i, status=0, description="test")
+        IncidentUpdate.objects.create(incident=i, status=3, description="test")
+        i = Incident.objects.create(name="b", service=s, occurred=dt-timezone.timedelta(days=days))
+        IncidentUpdate.objects.create(incident=i, status=0, description="test")
         self.days = days
 
     def test_occurred_in_last_n_days(self):
@@ -197,6 +201,30 @@ class TestIncidentManager(TestCase):
             "INCIDENT_DAYS_IN_INDEX": 0,
         }):
             self.assertEquals(Incident.objects.last_occurred().count(), 0)
+
+    def test_not_fixed(self):
+        self.assertEquals(Incident.objects.not_fixed().count(), 1)
+
+    def test_in_index(self):
+        self.assertEquals(Incident.objects.in_index().count(), 2)
+
+        with self.settings(STATUSBOARD={
+            "OPEN_INCIDENT_IN_INDEX": True,
+            "INCIDENT_DAYS_IN_INDEX": self.days+1,
+        }):
+            self.assertEquals(Incident.objects.in_index().count(), 2)
+
+        with self.settings(STATUSBOARD={
+            "OPEN_INCIDENT_IN_INDEX": True,
+            "INCIDENT_DAYS_IN_INDEX": 0,
+        }):
+            self.assertEquals(Incident.objects.in_index().count(), 1)
+
+        with self.settings(STATUSBOARD={
+            "OPEN_INCIDENT_IN_INDEX": False,
+            "INCIDENT_DAYS_IN_INDEX": 0,
+        }):
+            self.assertEquals(Incident.objects.in_index().count(), 0)
 
 
 class TestTemplateTags(TestCase):

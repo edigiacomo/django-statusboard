@@ -106,16 +106,37 @@ INCIDENT_STATUSES = (
 
 
 class IncidentQuerySet(models.QuerySet):
-    def occurred_in_last_n_days(self, days=7):
-        """Return incidents occurred in last N days (1 = today)."""
+    def occurred_in_last_n_days_q(self, days):
+        """Q obects for the incidents occurred in last N days (1 = today)."""
         threshold = timezone.now() - timezone.timedelta(days=days-1)
         threshold = threshold.replace(hour=0, minute=0, second=0, microsecond=0)
-        return self.filter(occurred__gte=threshold)
+        return models.Q(occurred__gte=threshold)
+
+    def not_fixed_q(self):
+        return ~models.Q(update__status=3)
+
+    def last_occurred_q(self):
+        return self.occurred_in_last_n_days_q(statusconf.INCIDENT_DAYS_IN_INDEX)
+
+    def occurred_in_last_n_days(self, days=7):
+        """Return incidents occurred in last N days (1 = today)."""
+        return self.filter(self.occurred_in_last_n_days_q(days))
 
     def last_occurred(self):
         """Return incidents occurred in last days. The number of days is defined
         in STATUSBOARD["INCIDENT_DAYS_IN_INDEX"]."""
-        return self.occurred_in_last_n_days(statusconf.INCIDENT_DAYS_IN_INDEX)
+        return self.filter(self.last_occurred_q())
+
+    def not_fixed(self):
+        """Return incidents not fixed."""
+        return self.filter(self.not_fixed_q())
+
+    def in_index(self):
+        q = self.last_occurred_q()
+        if statusconf.OPEN_INCIDENT_IN_INDEX:
+            q = q | self.not_fixed_q()
+
+        return self.filter(q)
 
 
 class IncidentManager(models.Manager):
@@ -130,6 +151,13 @@ class IncidentManager(models.Manager):
         """Return incidents occurred in last days. The number of days is defined
         in STATUSBOARD["INCIDENT_DAYS_IN_INDEX"]."""
         return self.get_queryset().last_occurred()
+
+    def not_fixed(self):
+        """Return incidents not fixed."""
+        return self.get_queryset().not_fixed()
+
+    def in_index(self):
+        return self.get_queryset().in_index()
 
 
 class Incident(TimeStampedModel):
