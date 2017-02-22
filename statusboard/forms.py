@@ -20,7 +20,7 @@ class ServiceGroupForm(forms.ModelForm):
 class ServiceForm(forms.ModelForm):
     class Meta:
         model = Service
-        fields = ['name', 'href', 'description', 'status', 'groups']
+        fields = ['name', 'href', 'description', 'status', 'position', 'groups']
 
 
 class MaintenanceForm(forms.ModelForm):

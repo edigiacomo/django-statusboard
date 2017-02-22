@@ -9,7 +9,7 @@ class ServiceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Service
         fields = ('id', 'name', 'description', 'href', 'status', 'groups',
-                  'created', 'modified')
+                  'position', 'created', 'modified')
 
 
 class ServiceGroupSerializer(serializers.ModelSerializer):
