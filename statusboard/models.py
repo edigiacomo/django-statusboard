@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
+from django.dispatch import receiver
 
 from model_utils.models import TimeStampedModel
 
@@ -112,9 +113,6 @@ class IncidentQuerySet(models.QuerySet):
         threshold = threshold.replace(hour=0, minute=0, second=0, microsecond=0)
         return models.Q(occurred__gte=threshold)
 
-    def not_fixed_q(self):
-        return ~models.Q(update__status=3)
-
     def last_occurred_q(self):
         return self.occurred_in_last_n_days_q(statusconf.INCIDENT_DAYS_IN_INDEX)
 
@@ -127,14 +125,10 @@ class IncidentQuerySet(models.QuerySet):
         in STATUSBOARD["INCIDENT_DAYS_IN_INDEX"]."""
         return self.filter(self.last_occurred_q())
 
-    def not_fixed(self):
-        """Return incidents not fixed."""
-        return self.filter(self.not_fixed_q())
-
     def in_index(self):
         q = self.last_occurred_q()
         if statusconf.OPEN_INCIDENT_IN_INDEX:
-            q = q | self.not_fixed_q()
+            q = q | models.Q(closed=False)
 
         return self.filter(q)
 
@@ -152,10 +146,6 @@ class IncidentManager(models.Manager):
         in STATUSBOARD["INCIDENT_DAYS_IN_INDEX"]."""
         return self.get_queryset().last_occurred()
 
-    def not_fixed(self):
-        """Return incidents not fixed."""
-        return self.get_queryset().not_fixed()
-
     def in_index(self):
         return self.get_queryset().in_index()
 
@@ -167,6 +157,7 @@ class Incident(TimeStampedModel):
                                 related_query_name='incident',
                                 verbose_name=_("service"))
     occurred = models.DateTimeField(default=timezone.now, verbose_name=_("occurred"))
+    closed = models.BooleanField(default=False)
     objects = IncidentManager()
 
     def worst_status(self):
@@ -209,3 +200,13 @@ class Maintenance(TimeStampedModel):
     class Meta:
         verbose_name = _("maintenance")
         verbose_name_plural = _("maintenances")
+
+
+@receiver(models.signals.post_save, sender=IncidentUpdate)
+@receiver(models.signals.post_delete, sender=IncidentUpdate)
+def update_incident_close_field(sender, instance, **kwargs):
+    try:
+        instance.incident.closed = instance.incident.updates.latest("created").status == 3
+        instance.incident.save()
+    except IncidentUpdate.DoesNotExist:
+        pass

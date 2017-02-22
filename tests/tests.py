@@ -202,9 +202,6 @@ class TestIncidentManager(TestCase):
         }):
             self.assertEquals(Incident.objects.last_occurred().count(), 0)
 
-    def test_not_fixed(self):
-        self.assertEquals(Incident.objects.not_fixed().count(), 1)
-
     def test_in_index(self):
         self.assertEquals(Incident.objects.in_index().count(), 2)
 
@@ -225,6 +222,19 @@ class TestIncidentManager(TestCase):
             "INCIDENT_DAYS_IN_INDEX": 0,
         }):
             self.assertEquals(Incident.objects.in_index().count(), 0)
+
+
+class TestIncident(TestCase):
+    def test_closed(self):
+        s = Service.objects.create(name="service", description="test", status=0)
+        i = Incident.objects.create(name="incident", service=s)
+        self.assertFalse(i.closed)
+        IncidentUpdate.objects.create(incident=i, status=0, description="test")
+        self.assertFalse(i.closed)
+        IncidentUpdate.objects.create(incident=i, status=3, description="test")
+        self.assertTrue(i.closed)
+        IncidentUpdate.objects.create(incident=i, status=0, description="test")
+        self.assertFalse(i.closed)
 
 
 class TestTemplateTags(TestCase):
