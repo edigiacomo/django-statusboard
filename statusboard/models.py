@@ -112,10 +112,17 @@ class IncidentQuerySet(models.QuerySet):
         threshold = threshold.replace(hour=0, minute=0, second=0, microsecond=0)
         return self.filter(occurred__gte=threshold)
 
+    def not_fixed_q(self):
+        return ~models.Q(update__status=3)
+
     def last_occurred(self):
         """Return incidents occurred in last days. The number of days is defined
         in STATUSBOARD["INCIDENT_DAYS_IN_INDEX"]."""
         return self.occurred_in_last_n_days(statusconf.INCIDENT_DAYS_IN_INDEX)
+
+    def not_fixed(self):
+        """Return incidents not fixed."""
+        return self.filter(self.not_fixed_q())
 
 
 class IncidentManager(models.Manager):
@@ -130,6 +137,10 @@ class IncidentManager(models.Manager):
         """Return incidents occurred in last days. The number of days is defined
         in STATUSBOARD["INCIDENT_DAYS_IN_INDEX"]."""
         return self.get_queryset().last_occurred()
+
+    def not_fixed(self):
+        """Return incidents not fixed."""
+        return self.get_queryset().not_fixed()
 
 
 class Incident(TimeStampedModel):
