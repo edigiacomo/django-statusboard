@@ -30,9 +30,10 @@ from .forms import IncidentForm, IncidentUpdateFormSet, ServiceGroupForm, Servic
 def index(request):
     from django.db.models import Count
     return render(request, "statusboard/index.html", {
-        "statusgroups": ServiceGroup.objects.annotate(services_count=Count('service')).filter(services_count__gt=0),
+        "servicegroups": ServiceGroup.objects.position_sorted(),
+        "uncategorized": Service.objects.uncategorized(),
         "worst_status": Service.objects.worst_status(),
-        "incidents": Incident.objects.last_occurred().order_by('-occurred'),
+        "incidents": Incident.objects.in_index().order_by('-occurred'),
         "maintenances": Maintenance.objects.filter(scheduled__gt=timezone.now()).order_by('-scheduled'),
     })
 

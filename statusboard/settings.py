@@ -11,7 +11,10 @@ The settings for the app can be set in the project settings, e.g.:
 
 
 DEFAULTS = {
+    # Number of incidents in index (1 = today, 0 = deactivate)
     "INCIDENT_DAYS_IN_INDEX": 7,
+    # Show or not all the open incidents in index
+    "OPEN_INCIDENT_IN_INDEX": True,
 }
 
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Django Statusboard\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-20 08:14+0100\n"
+"POT-Creation-Date: 2017-02-21 14:22+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Emanuele Di Giacomo <emanuele@digiacomo.cc>\n"
 "Language-Team: Italian\n"
@@ -17,111 +17,111 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: models.py:9
+#: models.py:13
 msgid "Operational"
 msgstr "Operativo"
 
-#: models.py:10
+#: models.py:14
 msgid "Performance issues"
 msgstr "Problemi di performance"
 
-#: models.py:11
+#: models.py:15
 msgid "Partial outage"
 msgstr "Interruzione parziale"
 
-#: models.py:12
+#: models.py:16
 msgid "Major outage"
 msgstr "Interruzione totale"
 
-#: models.py:23 models.py:49 models.py:94 models.py:133
+#: models.py:45 models.py:71 models.py:134 models.py:173
 msgid "name"
 msgstr "nome"
 
-#: models.py:24 models.py:121 models.py:134
+#: models.py:46 models.py:161 models.py:174
 msgid "description"
 msgstr "descrizione"
 
-#: models.py:26 models.py:120
+#: models.py:48 models.py:160
 msgid "status"
 msgstr "status"
 
-#: models.py:30
+#: models.py:52
 msgid "groups"
 msgstr "gruppi"
 
-#: models.py:37 models.py:98
+#: models.py:59 models.py:138
 msgid "service"
 msgstr "servizio"
 
-#: models.py:38
+#: models.py:60
 msgid "services"
 msgstr "servizi"
 
-#: models.py:42
+#: models.py:64
 msgid "Never collapse"
 msgstr "Non compattare mai"
 
-#: models.py:43
+#: models.py:65
 msgid "Always collapse"
 msgstr "Compatta sempre"
 
-#: models.py:44
+#: models.py:66
 msgid "Collapse when all the services are operational"
 msgstr "Compatta quando tutti i servizi sono operativi"
 
-#: models.py:71
+#: models.py:96
 msgid "service group"
 msgstr "gruppo dei servizi"
 
-#: models.py:72
+#: models.py:97
 msgid "service groups"
 msgstr "gruppi dei servizi"
 
-#: models.py:76
+#: models.py:101
 msgid "Investigating"
 msgstr "In studio"
 
-#: models.py:77
+#: models.py:102
 msgid "Identified"
 msgstr "Identificato"
 
-#: models.py:78
+#: models.py:103
 msgid "Watching"
 msgstr "In esame"
 
-#: models.py:79
+#: models.py:104
 msgid "Fixed"
 msgstr "Risolto"
 
-#: models.py:99 templates/statusboard/incident/list_snippet.html:23
+#: models.py:139 templates/statusboard/incident/list_snippet.html:23
 msgid "occurred"
 msgstr "avvenuto"
 
-#: models.py:112 models.py:119
+#: models.py:152 models.py:159
 msgid "incident"
 msgstr "incidente"
 
-#: models.py:113
+#: models.py:153
 msgid "incidents"
 msgstr "incidenti"
 
-#: models.py:127
+#: models.py:167
 msgid "incident update"
 msgstr "aggiornamento dell'incidente"
 
-#: models.py:128
+#: models.py:168
 msgid "incident updates"
 msgstr "aggiornamenti dell'incidente"
 
-#: models.py:132
+#: models.py:172
 msgid "scheduled"
 msgstr "pianificato"
 
-#: models.py:140
+#: models.py:180
 msgid "maintenance"
 msgstr "manutenzione"
 
-#: models.py:141
+#: models.py:181
 msgid "maintenances"
 msgstr "manutenzioni"
 
@@ -157,7 +157,7 @@ msgstr "Crea una nuova manutenzione"
 msgid "Sign out"
 msgstr "Esci"
 
-#: templates/statusboard/base.html:69 templates/statusboard/login.html:50
+#: templates/statusboard/base.html:69 templates/statusboard/login.html:48
 msgid "Sign in"
 msgstr "Entra"
 
@@ -196,8 +196,10 @@ msgstr "Modifica l'incidente"
 #: templates/statusboard/incident/edit.html:10
 #: templates/statusboard/incident/form.html:46
 #: templates/statusboard/incident/list_snippet.html:18
-#: templates/statusboard/index.html:14 templates/statusboard/index.html:36
-#: templates/statusboard/index.html:55
+#: templates/statusboard/index.html:14
+#: templates/statusboard/servicegroup/list_snippet.html:12
+#: templates/statusboard/servicegroup/list_snippet.html:31
+#: templates/statusboard/servicegroup/list_snippet.html:67
 msgid "delete"
 msgstr "elimina"
 
@@ -221,8 +223,10 @@ msgid "Submit"
 msgstr "Invia"
 
 #: templates/statusboard/incident/list_snippet.html:21
-#: templates/statusboard/index.html:17 templates/statusboard/index.html:39
-#: templates/statusboard/index.html:58
+#: templates/statusboard/index.html:17
+#: templates/statusboard/servicegroup/list_snippet.html:15
+#: templates/statusboard/servicegroup/list_snippet.html:34
+#: templates/statusboard/servicegroup/list_snippet.html:70
 msgid "edit"
 msgstr "modifica"
 
@@ -234,11 +238,11 @@ msgstr "ultimo aggiornamento"
 msgid "scheduled in"
 msgstr "programmato tra"
 
-#: templates/statusboard/index.html:75
+#: templates/statusboard/index.html:34
 msgid "Past Incidents"
 msgstr "Incidenti passati"
 
-#: templates/statusboard/index.html:77
+#: templates/statusboard/index.html:36
 msgid "create"
 msgstr "crea"
 
@@ -287,11 +291,11 @@ msgstr ""
 "            Per favore effettua l'accesso\n"
 "            "
 
-#: templates/statusboard/login.html:42
+#: templates/statusboard/login.html:40
 msgid "Username"
 msgstr "Nome utente"
 
-#: templates/statusboard/login.html:46
+#: templates/statusboard/login.html:44
 msgid "Password"
 msgstr "Password"
 
@@ -344,18 +348,22 @@ msgstr "Crea un nuovo gruppo di servizi"
 msgid "Edit service group"
 msgstr "Modifica un gruppo di servizi"
 
-#: templatetags/statusboard.py:19
+#: templates/statusboard/servicegroup/list_snippet.html:52
+msgid "Uncategorized"
+msgstr "Non categorizzati"
+
+#: templatetags/statusboard.py:22
 msgid "All systems are operational"
 msgstr "Tutti i sistemi sono operativi"
 
-#: templatetags/statusboard.py:20
+#: templatetags/statusboard.py:23
 msgid "Some systems suffer of performance issues"
 msgstr "Qualche sistema soffre di problemi di prestazioni"
 
-#: templatetags/statusboard.py:21
+#: templatetags/statusboard.py:24
 msgid "Some systems suffer of minor outage"
 msgstr "Qualche sistema soffre di interruzione parziale"
 
-#: templatetags/statusboard.py:22
+#: templatetags/statusboard.py:25
 msgid "Some systems suffer of major outage"
 msgstr "Qualche sistema soffre di interruzione totale"

@@ -11,6 +11,7 @@ from rest_framework.test import APIClient
 from statusboard.models import Service
 from statusboard.models import ServiceGroup
 from statusboard.models import Incident
+from statusboard.models import IncidentUpdate
 
 
 class TestApiPermission(TestCase):
@@ -176,27 +177,81 @@ class TestIncidentManager(TestCase):
         dt = timezone.datetime.now()
         days = 30
         s = Service.objects.create(name="service", description="test", status=0)
-        Incident.objects.create(name="a", service=s, occurred=dt)
-        Incident.objects.create(name="a", service=s, occurred=dt - timezone.timedelta(days=days))
-        self.assertTrue(Incident.objects.occurred_in_last_n_days(days-1).count(), 1)
-        self.assertTrue(Incident.objects.occurred_in_last_n_days(days).count(), 2)
+        i = Incident.objects.create(name="a", service=s, occurred=dt)
+        IncidentUpdate.objects.create(incident=i, status=0, description="test")
+        IncidentUpdate.objects.create(incident=i, status=3, description="test")
+        i = Incident.objects.create(name="b", service=s, occurred=dt-timezone.timedelta(days=days))
+        IncidentUpdate.objects.create(incident=i, status=0, description="test")
         self.days = days
 
     def test_occurred_in_last_n_days(self):
-        """Test for django 1.8 compatibility"""
-        self.assertTrue(Incident.objects.occurred_in_last_n_days(self.days-1).count(), 1)
-        self.assertTrue(Incident.objects.occurred_in_last_n_days(self.days).count(), 2)
+        self.assertEquals(Incident.objects.occurred_in_last_n_days(self.days-1).count(), 1)
+        self.assertEquals(Incident.objects.occurred_in_last_n_days(self.days).count(), 1)
 
     def test_last_occurred(self):
+        with self.settings(STATUSBOARD={
+            "INCIDENT_DAYS_IN_INDEX": self.days+2,
+        }):
+            self.assertEquals(Incident.objects.last_occurred().count(), 2)
+
+        with self.settings(STATUSBOARD={
+            "INCIDENT_DAYS_IN_INDEX": self.days+1,
+        }):
+            self.assertEquals(Incident.objects.last_occurred().count(), 2)
+
+        with self.settings(STATUSBOARD={
+            "INCIDENT_DAYS_IN_INDEX": self.days,
+        }):
+            self.assertEquals(Incident.objects.last_occurred().count(), 1)
+
         with self.settings(STATUSBOARD={
             "INCIDENT_DAYS_IN_INDEX": self.days-1,
         }):
             self.assertEquals(Incident.objects.last_occurred().count(), 1)
 
         with self.settings(STATUSBOARD={
-            "INCIDENT_DAYS_IN_INDEX": self.days,
+            "INCIDENT_DAYS_IN_INDEX": 1,
         }):
-            self.assertEquals(Incident.objects.last_occurred().count(), 2)
+            self.assertEquals(Incident.objects.last_occurred().count(), 1)
+
+        with self.settings(STATUSBOARD={
+            "INCIDENT_DAYS_IN_INDEX": 0,
+        }):
+            self.assertEquals(Incident.objects.last_occurred().count(), 0)
+
+    def test_in_index(self):
+        self.assertEquals(Incident.objects.in_index().count(), 2)
+
+        with self.settings(STATUSBOARD={
+            "OPEN_INCIDENT_IN_INDEX": True,
+            "INCIDENT_DAYS_IN_INDEX": self.days+1,
+        }):
+            self.assertEquals(Incident.objects.in_index().count(), 2)
+
+        with self.settings(STATUSBOARD={
+            "OPEN_INCIDENT_IN_INDEX": True,
+            "INCIDENT_DAYS_IN_INDEX": 0,
+        }):
+            self.assertEquals(Incident.objects.in_index().count(), 1)
+
+        with self.settings(STATUSBOARD={
+            "OPEN_INCIDENT_IN_INDEX": False,
+            "INCIDENT_DAYS_IN_INDEX": 0,
+        }):
+            self.assertEquals(Incident.objects.in_index().count(), 0)
+
+
+class TestIncident(TestCase):
+    def test_closed(self):
+        s = Service.objects.create(name="service", description="test", status=0)
+        i = Incident.objects.create(name="incident", service=s)
+        self.assertFalse(i.closed)
+        IncidentUpdate.objects.create(incident=i, status=0, description="test")
+        self.assertFalse(i.closed)
+        IncidentUpdate.objects.create(incident=i, status=3, description="test")
+        self.assertTrue(i.closed)
+        IncidentUpdate.objects.create(incident=i, status=0, description="test")
+        self.assertFalse(i.closed)
 
 
 class TestTemplateTags(TestCase):
@@ -244,6 +299,14 @@ class TestServiceGroup(TestCase):
         g.services.add(s)
         g.save()
         self.assertEquals(g.worst_service(), s)
+
+    def test_is_empty_group(self):
+        g = ServiceGroup.objects.create(name="test", collapse=0)
+        self.assertTrue(g.is_empty_group())
+        s = Service.objects.create(name="s1", description="test", status=1)
+        g.services.add(s)
+        g.save()
+        self.assertFalse(g.is_empty_group())
 
 
 class TestSettings(TestCase):

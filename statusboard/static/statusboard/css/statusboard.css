@@ -26,6 +26,13 @@ div.servicegroup a.servicegroup-name.collapsed:before {
     content: "\e080 ";
 }
 
+div.servicegroup.servicegroup-empty {
+    opacity: 0.3;
+}
+div.servicegroup.servicegroup-empty a.servicegroup-name:before {
+    content: "";
+}
+
 .dot {
     display: inline-block;
     border-radius: 50%;

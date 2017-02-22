@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
+from django.dispatch import receiver
 
 from model_utils.models import TimeStampedModel
 
@@ -22,6 +23,12 @@ class ServiceQuerySet(models.QuerySet):
         """Return worst status in queryset."""
         return self.aggregate(models.Max('status'))['status__max']
 
+    def worst_service(self):
+        return self.latest('status')
+
+    def uncategorized(self):
+        return self.annotate(group_count=models.Count('groups')).filter(group_count=0)
+
 
 class ServiceManager(models.Manager):
     def get_queryset(self):
@@ -30,6 +37,9 @@ class ServiceManager(models.Manager):
     def worst_status(self):
         """Return worst status in queryset."""
         return self.get_queryset().worst_status()
+
+    def uncategorized(self):
+        return self.get_queryset().uncategorized()
 
 
 class Service(TimeStampedModel):
@@ -93,6 +103,9 @@ class ServiceGroup(TimeStampedModel):
         else:
             return not self.services.exclude(status=0).exists()
 
+    def is_empty_group(self):
+        return not self.services.all().exists()
+
     def __str__(self):
         return self.name
 
@@ -110,15 +123,30 @@ INCIDENT_STATUSES = (
 
 
 class IncidentQuerySet(models.QuerySet):
+    def occurred_in_last_n_days_q(self, days):
+        """Q obects for the incidents occurred in last N days (1 = today)."""
+        threshold = timezone.now() - timezone.timedelta(days=days-1)
+        threshold = threshold.replace(hour=0, minute=0, second=0, microsecond=0)
+        return models.Q(occurred__gte=threshold)
+
+    def last_occurred_q(self):
+        return self.occurred_in_last_n_days_q(statusconf.INCIDENT_DAYS_IN_INDEX)
+
     def occurred_in_last_n_days(self, days=7):
-        threshold = timezone.now() - timezone.timedelta(days=days)
-        threshold = threshold.replace(hour=0, minute=0, second=0)
-        return self.filter(occurred__gte=threshold)
+        """Return incidents occurred in last N days (1 = today)."""
+        return self.filter(self.occurred_in_last_n_days_q(days))
 
     def last_occurred(self):
         """Return incidents occurred in last days. The number of days is defined
         in STATUSBOARD["INCIDENT_DAYS_IN_INDEX"]."""
-        return self.occurred_in_last_n_days(statusconf.INCIDENT_DAYS_IN_INDEX)
+        return self.filter(self.last_occurred_q())
+
+    def in_index(self):
+        q = self.last_occurred_q()
+        if statusconf.OPEN_INCIDENT_IN_INDEX:
+            q = q | models.Q(closed=False)
+
+        return self.filter(q)
 
 
 class IncidentManager(models.Manager):
@@ -126,12 +154,16 @@ class IncidentManager(models.Manager):
         return IncidentQuerySet(self.model, using=self._db)
 
     def occurred_in_last_n_days(self, days=7):
+        """Return incidents occurred in last N days (1 = today)."""
         return self.get_queryset().occurred_in_last_n_days(days=days)
 
     def last_occurred(self):
         """Return incidents occurred in last days. The number of days is defined
         in STATUSBOARD["INCIDENT_DAYS_IN_INDEX"]."""
         return self.get_queryset().last_occurred()
+
+    def in_index(self):
+        return self.get_queryset().in_index()
 
 
 class Incident(TimeStampedModel):
@@ -141,6 +173,7 @@ class Incident(TimeStampedModel):
                                 related_query_name='incident',
                                 verbose_name=_("service"))
     occurred = models.DateTimeField(default=timezone.now, verbose_name=_("occurred"))
+    closed = models.BooleanField(default=False)
     objects = IncidentManager()
 
     def worst_status(self):
@@ -183,3 +216,13 @@ class Maintenance(TimeStampedModel):
     class Meta:
         verbose_name = _("maintenance")
         verbose_name_plural = _("maintenances")
+
+
+@receiver(models.signals.post_save, sender=IncidentUpdate)
+@receiver(models.signals.post_delete, sender=IncidentUpdate)
+def update_incident_close_field(sender, instance, **kwargs):
+    try:
+        instance.incident.closed = instance.incident.updates.latest("created").status == 3
+        instance.incident.save()
+    except IncidentUpdate.DoesNotExist:
+        pass
