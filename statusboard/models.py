@@ -131,6 +131,13 @@ class IncidentQuerySet(models.QuerySet):
         """Return incidents not fixed."""
         return self.filter(self.not_fixed_q())
 
+    def in_index(self):
+        q = self.last_occurred_q()
+        if statusconf.OPEN_INCIDENT_IN_INDEX:
+            q = q | self.not_fixed_q()
+
+        return self.filter(q)
+
 
 class IncidentManager(models.Manager):
     def get_queryset(self):
@@ -148,6 +155,9 @@ class IncidentManager(models.Manager):
     def not_fixed(self):
         """Return incidents not fixed."""
         return self.get_queryset().not_fixed()
+
+    def in_index(self):
+        return self.get_queryset().in_index()
 
 
 class Incident(TimeStampedModel):
