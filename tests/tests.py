@@ -227,6 +227,19 @@ class TestIncidentManager(TestCase):
             self.assertEquals(Incident.objects.in_index().count(), 0)
 
 
+class TestIncident(TestCase):
+    def test_closed(self):
+        s = Service.objects.create(name="service", description="test", status=0)
+        i = Incident.objects.create(name="incident", service=s)
+        self.assertFalse(i.closed)
+        IncidentUpdate.objects.create(incident=i, status=0, description="test")
+        self.assertFalse(i.closed)
+        IncidentUpdate.objects.create(incident=i, status=3, description="test")
+        self.assertTrue(i.closed)
+        IncidentUpdate.objects.create(incident=i, status=0, description="test")
+        self.assertFalse(i.closed)
+
+
 class TestTemplateTags(TestCase):
     def test_servicegroup_collapse(self):
         g = ServiceGroup.objects.create(name="test", collapse=0)

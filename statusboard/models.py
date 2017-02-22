@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
+from django.dispatch import receiver
 
 from model_utils.models import TimeStampedModel
 
@@ -167,6 +168,7 @@ class Incident(TimeStampedModel):
                                 related_query_name='incident',
                                 verbose_name=_("service"))
     occurred = models.DateTimeField(default=timezone.now, verbose_name=_("occurred"))
+    closed = models.BooleanField(default=False)
     objects = IncidentManager()
 
     def worst_status(self):
@@ -209,3 +211,13 @@ class Maintenance(TimeStampedModel):
     class Meta:
         verbose_name = _("maintenance")
         verbose_name_plural = _("maintenances")
+
+
+@receiver(models.signals.post_save, sender=IncidentUpdate)
+@receiver(models.signals.post_delete, sender=IncidentUpdate)
+def update_incident_close_field(sender, instance, **kwargs):
+    try:
+        instance.incident.closed = instance.incident.updates.latest("created").status == 3
+        instance.incident.save()
+    except IncidentUpdate.DoesNotExist:
+        pass
