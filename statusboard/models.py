@@ -83,7 +83,6 @@ class ServiceGroupManager(models.Manager):
 
 class ServiceGroup(TimeStampedModel):
     name = models.CharField(max_length=255, unique=True, verbose_name=_("name"))
-    collapse = models.BooleanField(default=True)
     position = models.PositiveIntegerField(default=0)
     collapse = models.IntegerField(choices=SERVICEGROUP_COLLAPSE_OPTIONS,
                                    default=0)
