@@ -115,6 +115,9 @@ class IncidentQuerySet(models.QuerySet):
     def not_fixed_q(self):
         return ~models.Q(update__status=3)
 
+    def last_occurred_q(self):
+        return self.occurred_in_last_n_days_q(statusconf.INCIDENT_DAYS_IN_INDEX)
+
     def occurred_in_last_n_days(self, days=7):
         """Return incidents occurred in last N days (1 = today)."""
         return self.filter(self.occurred_in_last_n_days_q(days))
@@ -122,7 +125,7 @@ class IncidentQuerySet(models.QuerySet):
     def last_occurred(self):
         """Return incidents occurred in last days. The number of days is defined
         in STATUSBOARD["INCIDENT_DAYS_IN_INDEX"]."""
-        return self.occurred_in_last_n_days(statusconf.INCIDENT_DAYS_IN_INDEX)
+        return self.filter(self.last_occurred_q())
 
     def not_fixed(self):
         """Return incidents not fixed."""
