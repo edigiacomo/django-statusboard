@@ -106,14 +106,18 @@ INCIDENT_STATUSES = (
 
 
 class IncidentQuerySet(models.QuerySet):
-    def occurred_in_last_n_days(self, days=7):
-        """Return incidents occurred in last N days (1 = today)."""
+    def occurred_in_last_n_days_q(self, days):
+        """Q obects for the incidents occurred in last N days (1 = today)."""
         threshold = timezone.now() - timezone.timedelta(days=days-1)
         threshold = threshold.replace(hour=0, minute=0, second=0, microsecond=0)
-        return self.filter(occurred__gte=threshold)
+        return models.Q(occurred__gte=threshold)
 
     def not_fixed_q(self):
         return ~models.Q(update__status=3)
+
+    def occurred_in_last_n_days(self, days=7):
+        """Return incidents occurred in last N days (1 = today)."""
+        return self.filter(self.occurred_in_last_n_days_q(days))
 
     def last_occurred(self):
         """Return incidents occurred in last days. The number of days is defined
