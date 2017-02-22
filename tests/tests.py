@@ -202,9 +202,6 @@ class TestIncidentManager(TestCase):
         }):
             self.assertEquals(Incident.objects.last_occurred().count(), 0)
 
-    def test_not_fixed(self):
-        self.assertEquals(Incident.objects.not_fixed().count(), 1)
-
     def test_in_index(self):
         self.assertEquals(Incident.objects.in_index().count(), 2)
 

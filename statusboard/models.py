@@ -113,9 +113,6 @@ class IncidentQuerySet(models.QuerySet):
         threshold = threshold.replace(hour=0, minute=0, second=0, microsecond=0)
         return models.Q(occurred__gte=threshold)
 
-    def not_fixed_q(self):
-        return ~models.Q(update__status=3)
-
     def last_occurred_q(self):
         return self.occurred_in_last_n_days_q(statusconf.INCIDENT_DAYS_IN_INDEX)
 
@@ -128,14 +125,10 @@ class IncidentQuerySet(models.QuerySet):
         in STATUSBOARD["INCIDENT_DAYS_IN_INDEX"]."""
         return self.filter(self.last_occurred_q())
 
-    def not_fixed(self):
-        """Return incidents not fixed."""
-        return self.filter(self.not_fixed_q())
-
     def in_index(self):
         q = self.last_occurred_q()
         if statusconf.OPEN_INCIDENT_IN_INDEX:
-            q = q | self.not_fixed_q()
+            q = q | models.Q(closed=False)
 
         return self.filter(q)
 
@@ -152,10 +145,6 @@ class IncidentManager(models.Manager):
         """Return incidents occurred in last days. The number of days is defined
         in STATUSBOARD["INCIDENT_DAYS_IN_INDEX"]."""
         return self.get_queryset().last_occurred()
-
-    def not_fixed(self):
-        """Return incidents not fixed."""
-        return self.get_queryset().not_fixed()
 
     def in_index(self):
         return self.get_queryset().in_index()
