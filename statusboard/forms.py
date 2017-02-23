@@ -32,12 +32,12 @@ class MaintenanceForm(forms.ModelForm):
 class IncidentForm(forms.ModelForm):
 
     service_status = forms.ChoiceField(choices=SERVICE_STATUSES,
-                                       label='Service status',
+                                       label='Services status',
                                        required=False)
 
     class Meta:
         model = Incident
-        fields = ['name', 'occurred', 'service', 'service_status']
+        fields = ['name', 'occurred', 'services', 'service_status']
 
     def __init__(self, *args, **kwargs):
         super(IncidentForm, self).__init__(*args, **kwargs)
@@ -48,12 +48,7 @@ class IncidentForm(forms.ModelForm):
         model = super(IncidentForm, self).save(commit=False)
         status = self.cleaned_data['service_status']
         if status is not None:
-            if model.service:
-                model.service.status = status
-                model.service.save()
-            else:
-                # model.service = Service()
-                pass
+            model.services.update(status=stats)
 
         if commit:
             model.save()
