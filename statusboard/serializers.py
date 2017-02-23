@@ -21,7 +21,7 @@ class ServiceGroupSerializer(serializers.ModelSerializer):
 class IncidentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Incident
-        fields = ('id', 'name', 'service', 'occurred', 'created', 'modified',
+        fields = ('id', 'name', 'services', 'occurred', 'created', 'modified',
                   'updates', 'closed')
         read_only_fields = ('closed',)
 

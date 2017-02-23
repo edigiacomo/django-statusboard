@@ -32,31 +32,32 @@ class MaintenanceForm(forms.ModelForm):
 class IncidentForm(forms.ModelForm):
 
     service_status = forms.ChoiceField(choices=SERVICE_STATUSES,
-                                       label='Service status',
+                                       label='Services status',
                                        required=False)
 
     class Meta:
         model = Incident
-        fields = ['name', 'occurred', 'service', 'service_status']
+        fields = ['name', 'occurred', 'services', 'service_status']
 
     def __init__(self, *args, **kwargs):
+        """Create an incident form. When the form is populated, the initial
+        value of `service_status` is the worst status of the services
+        involved."""
         super(IncidentForm, self).__init__(*args, **kwargs)
-        if self.instance and self.instance.service:
-            self.fields['service_status'].initial = self.instance.service.status
+        if self.instance and self.instance.services.exists():
+            self.fields['service_status'].initial = self.instance.services.latest('status').status
 
     def save(self, commit=True):
         model = super(IncidentForm, self).save(commit=False)
         status = self.cleaned_data['service_status']
-        if status is not None:
-            if model.service:
-                model.service.status = status
-                model.service.save()
-            else:
-                # model.service = Service()
-                pass
 
         if commit:
             model.save()
+        else:
+            self.save_m2m()
+
+        if status is not None:
+            model.services.update(status=status)
 
         return model
 
