@@ -40,9 +40,12 @@ class IncidentForm(forms.ModelForm):
         fields = ['name', 'occurred', 'services', 'service_status']
 
     def __init__(self, *args, **kwargs):
+        """Create an incident form. When the form is populated, the initial
+        value of `service_status` is the worst status of the services
+        involved."""
         super(IncidentForm, self).__init__(*args, **kwargs)
-        if self.instance and self.instance.service:
-            self.fields['service_status'].initial = self.instance.service.status
+        if self.instance and self.instance.services.exists():
+            self.fields['service_status'].initial = self.instance.services.latest('status').status
 
     def save(self, commit=True):
         model = super(IncidentForm, self).save(commit=False)
