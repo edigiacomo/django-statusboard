@@ -30,9 +30,6 @@ service_urls = [
 ]
 
 servicegroup_urls = [
-    url('^$',
-        views.ServiceGroupList.as_view(),
-        name="list"),
     url('^create/$',
         views.ServiceGroupCreate.as_view(),
         name="create"),

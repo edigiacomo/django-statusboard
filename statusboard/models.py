@@ -29,8 +29,8 @@ class ServiceQuerySet(models.QuerySet):
     def uncategorized(self):
         return self.annotate(group_count=models.Count('groups')).filter(group_count=0)
 
-    def position_sorted(self):
-        return self.order_by('position', 'name')
+    def priority_sorted(self):
+        return self.order_by('priority', 'name')
 
 
 class ServiceManager(models.Manager):
@@ -44,8 +44,8 @@ class ServiceManager(models.Manager):
     def uncategorized(self):
         return self.get_queryset().uncategorized()
 
-    def position_sorted(self):
-        return self.get_queryset().position_sorted()
+    def priority_sorted(self):
+        return self.get_queryset().priority_sorted()
 
 
 class Service(TimeStampedModel):
@@ -53,7 +53,7 @@ class Service(TimeStampedModel):
     description = models.TextField(verbose_name=_("description"))
     href = models.URLField(blank=True)
     status = models.IntegerField(choices=SERVICE_STATUSES, verbose_name=_("status"))
-    position = models.PositiveIntegerField(default=0)
+    priority = models.PositiveIntegerField(default=0)
     groups = models.ManyToManyField('ServiceGroup',
                                     related_name='services',
                                     related_query_name='service',
@@ -76,21 +76,21 @@ SERVICEGROUP_COLLAPSE_OPTIONS = (
 
 
 class ServiceGroupQuerySet(models.QuerySet):
-    def position_sorted(self):
-        return self.order_by('position', 'name')
+    def priority_sorted(self):
+        return self.order_by('priority', 'name')
 
 
 class ServiceGroupManager(models.Manager):
     def get_queryset(self):
         return ServiceGroupQuerySet(self.model, using=self._db)
 
-    def position_sorted(self):
-        return self.get_queryset().position_sorted()
+    def priority_sorted(self):
+        return self.get_queryset().priority_sorted()
 
 
 class ServiceGroup(TimeStampedModel):
     name = models.CharField(max_length=255, unique=True, verbose_name=_("name"))
-    position = models.PositiveIntegerField(default=0)
+    priority = models.PositiveIntegerField(default=0)
     collapse = models.IntegerField(choices=SERVICEGROUP_COLLAPSE_OPTIONS,
                                    default=0)
     objects = ServiceGroupManager()

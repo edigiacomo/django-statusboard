@@ -14,13 +14,13 @@ from .models import SERVICE_STATUSES
 class ServiceGroupForm(forms.ModelForm):
     class Meta:
         model = ServiceGroup
-        fields = ['name', 'collapse', 'position']
+        fields = ['name', 'collapse', 'priority']
 
 
 class ServiceForm(forms.ModelForm):
     class Meta:
         model = Service
-        fields = ['name', 'href', 'description', 'status', 'position', 'groups']
+        fields = ['name', 'href', 'description', 'status', 'priority', 'groups']
 
 
 class MaintenanceForm(forms.ModelForm):

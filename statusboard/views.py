@@ -30,24 +30,12 @@ from .forms import IncidentForm, IncidentUpdateFormSet, ServiceGroupForm, Servic
 def index(request):
     from django.db.models import Count
     return render(request, "statusboard/index.html", {
-        "servicegroups": ServiceGroup.objects.position_sorted(),
+        "servicegroups": ServiceGroup.objects.priority_sorted(),
         "uncategorized": Service.objects.uncategorized(),
         "worst_status": Service.objects.worst_status(),
         "incidents": Incident.objects.in_index().order_by('-occurred'),
         "maintenances": Maintenance.objects.filter(scheduled__gt=timezone.now()).order_by('-scheduled'),
     })
-
-
-class ServiceGroupList(ListView):
-    model = ServiceGroup
-    template_name = "statusboard/servicegroup/list.html"
-    context_object_name = 'servicegroups'
-
-    def get_context_data(self, **kwargs):
-        from django.db.models import Count
-        context = super(ServiceGroupList, self).get_context_data(**kwargs)
-        context['orphan_services'] = Service.objects.annotate(group_count=Count('groups')).filter(group_count=0)
-        return context
 
 
 class ServiceGroupCreate(PermissionRequiredMixin, CreateView):
