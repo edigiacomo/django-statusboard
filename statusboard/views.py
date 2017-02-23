@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect
 from django.http import Http404
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse_lazy, reverse
+from django.views.generic import ListView
 from django.views.generic.dates import MonthArchiveView
 from django.views.generic.edit import CreateView
 from django.views.generic.edit import UpdateView
@@ -29,7 +30,7 @@ from .forms import IncidentForm, IncidentUpdateFormSet, ServiceGroupForm, Servic
 def index(request):
     from django.db.models import Count
     return render(request, "statusboard/index.html", {
-        "servicegroups": ServiceGroup.objects.all(),
+        "servicegroups": ServiceGroup.objects.priority_sorted(),
         "uncategorized": Service.objects.uncategorized(),
         "worst_status": Service.objects.worst_status(),
         "incidents": Incident.objects.in_index().order_by('-occurred'),

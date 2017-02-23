@@ -19,7 +19,7 @@
             </div>
         </div>
         <ul id="servicegroup-{{ grp.id}}-panel-body" class="list-group collapse {% if not grp.collapsed %}in{% endif %}">
-            {% for srv in grp.services.all %}
+            {% for srv in grp.services.priority_sorted %}
             <li class="list-group-item clearfix">
                 {% if srv.href %}
                 <a href="{{ srv.href }}">{{ srv.name }}</a>

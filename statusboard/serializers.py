@@ -9,13 +9,13 @@ class ServiceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Service
         fields = ('id', 'name', 'description', 'href', 'status', 'groups',
-                  'created', 'modified')
+                  'priority', 'created', 'modified')
 
 
 class ServiceGroupSerializer(serializers.ModelSerializer):
     class Meta:
         model = ServiceGroup
-        fields = ('id', 'name', 'collapse', 'services', 'created', 'modified')
+        fields = ('id', 'name', 'collapse', 'priority', 'services', 'created', 'modified')
 
 
 class IncidentSerializer(serializers.ModelSerializer):

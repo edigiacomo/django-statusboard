@@ -175,6 +175,23 @@ class IncidentEdit(TestCase):
         self.assertEquals(s.status, 2)
 
 
+class TestServiceGroup(TestCase):
+    def test_priority_order(self):
+        s0 = ServiceGroup.objects.create(name="s0", priority=1)
+        s1 = ServiceGroup.objects.create(name="s1", priority=0)
+        self.assertEquals(ServiceGroup.objects.all()[0], s0)
+        self.assertEquals(ServiceGroup.objects.all()[1], s1)
+        self.assertEquals(ServiceGroup.objects.priority_sorted()[0], s1)
+        self.assertEquals(ServiceGroup.objects.priority_sorted()[1], s0)
+        # When two groups have the same priority, order by name
+        s2 = ServiceGroup.objects.create(name="s2", priority=0)
+        self.assertEquals(ServiceGroup.objects.priority_sorted()[0], s1)
+        self.assertEquals(ServiceGroup.objects.priority_sorted()[1], s2)
+        self.assertEquals(ServiceGroup.objects.priority_sorted()[2], s0)
+        # Filter queryset object
+        self.assertEquals(ServiceGroup.objects.filter(name="s1").priority_sorted()[0], s1)
+
+
 class TestIncidentManager(TestCase):
     def setUp(self):
         dt = timezone.datetime.now()
