@@ -53,7 +53,7 @@ class Service(TimeStampedModel):
     description = models.TextField(verbose_name=_("description"))
     href = models.URLField(blank=True)
     status = models.IntegerField(choices=SERVICE_STATUSES, verbose_name=_("status"))
-    priority = models.PositiveIntegerField(default=0)
+    priority = models.PositiveIntegerField(default=0, verbose_name=_("priority"))
     groups = models.ManyToManyField('ServiceGroup',
                                     related_name='services',
                                     related_query_name='service',
@@ -90,7 +90,7 @@ class ServiceGroupManager(models.Manager):
 
 class ServiceGroup(TimeStampedModel):
     name = models.CharField(max_length=255, unique=True, verbose_name=_("name"))
-    priority = models.PositiveIntegerField(default=0)
+    priority = models.PositiveIntegerField(default=0, verbose_name=_("priority"))
     collapse = models.IntegerField(choices=SERVICEGROUP_COLLAPSE_OPTIONS,
                                    default=0)
     objects = ServiceGroupManager()
