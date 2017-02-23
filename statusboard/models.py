@@ -166,6 +166,12 @@ class Incident(TimeStampedModel):
     def updates_by_ctime(self):
         return self.updates.order_by('-created')
 
+    def should_be_closed(self):
+        try:
+            return self.updates.latest("created").status == 3
+        except IncidentUpdate.DoesNotExist:
+            return False
+
     def __str__(self):
         return self.name
 
@@ -206,7 +212,7 @@ class Maintenance(TimeStampedModel):
 @receiver(models.signals.post_delete, sender=IncidentUpdate)
 def update_incident_close_field(sender, instance, **kwargs):
     try:
-        instance.incident.closed = instance.incident.updates.latest("created").status == 3
+        instance.incident.closed = instance.incident.should_be_closed()
         instance.incident.save()
     except IncidentUpdate.DoesNotExist:
         pass
