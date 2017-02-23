@@ -55,6 +55,8 @@ class IncidentForm(forms.ModelForm):
 
         if commit:
             model.save()
+        else:
+            self.save_m2m()
 
         return model
 

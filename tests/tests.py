@@ -115,10 +115,13 @@ class IncidentEdit(TestCase):
                                               email="admin@admin")
         admin.save()
 
-        s = Service(name="service", description="test", status=2)
-        s.full_clean()
-        s.save()
-        i = Incident(name="incident", service=s)
+        s1 = Service.objects.create(name="s1", description="s1", status=2)
+        s2 = Service.objects.create(name="s2", description="s2", status=2)
+        i = Incident(name="incident")
+        i.full_clean()
+        i.save()
+        i.services.add(s1)
+        i.services.add(s2)
         i.full_clean()
         i.save()
 
@@ -128,15 +131,15 @@ class IncidentEdit(TestCase):
         response = client.post('/statusboard/incident/1/edit/', {
             'name': 'incident',
             'occurred': '2010-01-01 00:00:00',
-            'service': 1,
+            'services': [1, 2],
             'service_status': 0,
             'updates-INITIAL_FORMS': 0,
             'updates-TOTAL_FORMS': 0,
             'updates-MAX_NUM_FORMS': 0,
             'updates-MIN_NUM_FORMS': 0,
         })
-        s = Incident.objects.get(pk=1).service
-        self.assertEquals(s.status, 0)
+        for s in Incident.objects.get(pk=1).services.all():
+            self.assertEquals(s.status, 0)
 
     def test_valid_status(self):
         client = Client()
@@ -144,14 +147,14 @@ class IncidentEdit(TestCase):
         response = client.post('/statusboard/incident/1/edit/', {
             'name': 'incident',
             'occurred': '2010-01-01 00:00:00',
-            'service': 1,
+            'services': 1,
             'service_status': 33,
             'updates-INITIAL_FORMS': 0,
             'updates-TOTAL_FORMS': 0,
             'updates-MAX_NUM_FORMS': 0,
             'updates-MIN_NUM_FORMS': 0,
         })
-        s = Incident.objects.get(pk=1).service
+        s = Incident.objects.get(pk=1).services.first()
         self.assertEquals(s.status, 2)
 
 
@@ -159,11 +162,10 @@ class TestIncidentManager(TestCase):
     def setUp(self):
         dt = timezone.datetime.now()
         days = 30
-        s = Service.objects.create(name="service", description="test", status=0)
-        i = Incident.objects.create(name="a", service=s, occurred=dt)
+        i = Incident.objects.create(name="a", occurred=dt)
         IncidentUpdate.objects.create(incident=i, status=0, description="test")
         IncidentUpdate.objects.create(incident=i, status=3, description="test")
-        i = Incident.objects.create(name="b", service=s, occurred=dt-timezone.timedelta(days=days))
+        i = Incident.objects.create(name="b", occurred=dt-timezone.timedelta(days=days))
         IncidentUpdate.objects.create(incident=i, status=0, description="test")
         self.days = days
 
@@ -226,8 +228,7 @@ class TestIncidentManager(TestCase):
 
 class TestIncident(TestCase):
     def test_closed(self):
-        s = Service.objects.create(name="service", description="test", status=0)
-        i = Incident.objects.create(name="incident", service=s)
+        i = Incident.objects.create(name="incident")
         self.assertFalse(i.closed)
         IncidentUpdate.objects.create(incident=i, status=0, description="test")
         self.assertFalse(i.closed)
