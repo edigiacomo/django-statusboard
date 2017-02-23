@@ -26,7 +26,9 @@
                 {% else %}
                 <span>{{ srv.name }}</span>
                 {% endif %}
-
+                {% if srv.description %}
+                <span class="glyphicon glyphicon-question-sign service-tooltip" aria-hidden="true" data-toggle="tooltip" title="{{ srv.description }}"></span>
+                {% endif %}
                 {% if perms.statusboard.delete_service %}
                 <small><a href="{% url 'statusboard:service:delete' pk=srv.id %}">{% trans 'delete' %}</a></small>
                 {% endif %}
@@ -45,6 +47,12 @@
     {% endif %}
 </div>
 {% endfor %}
+<script type="text/javascript">
+$(".service-tooltip").tooltip({
+    "placement": "right",
+    "trigger": "hover click"
+});
+</script>
 {% if uncategorized.count %}
 <div class="servicegroup">
     <div class="panel panel-default">

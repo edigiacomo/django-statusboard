@@ -33,6 +33,11 @@ div.servicegroup.servicegroup-empty a.servicegroup-name:before {
     content: "";
 }
 
+.service-tooltip {
+    cursor: help;
+    color: gray;
+}
+
 .dot {
     display: inline-block;
     border-radius: 50%;
