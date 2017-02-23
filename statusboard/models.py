@@ -50,7 +50,7 @@ class ServiceManager(models.Manager):
 
 class Service(TimeStampedModel):
     name = models.CharField(max_length=255, unique=True, verbose_name=_("name"))
-    description = models.TextField(verbose_name=_("description"))
+    description = models.TextField(verbose_name=_("description"), blank=True)
     href = models.URLField(blank=True)
     status = models.IntegerField(choices=SERVICE_STATUSES, verbose_name=_("status"))
     priority = models.PositiveIntegerField(default=0, verbose_name=_("priority"))
