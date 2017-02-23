@@ -147,14 +147,16 @@ class IncidentEdit(TestCase):
         response = client.post('/statusboard/incident/1/edit/', {
             'name': 'incident',
             'occurred': '2010-01-01 00:00:00',
-            'services': 1,
+            'services': [1],
             'service_status': 33,
             'updates-INITIAL_FORMS': 0,
             'updates-TOTAL_FORMS': 0,
             'updates-MAX_NUM_FORMS': 0,
             'updates-MIN_NUM_FORMS': 0,
         })
-        s = Incident.objects.get(pk=1).services.first()
+        i = Incident.objects.get(pk=1)
+        self.assertEquals(i.services.count(), 1)
+        s = i.services.first()
         self.assertEquals(s.status, 2)
 
 
