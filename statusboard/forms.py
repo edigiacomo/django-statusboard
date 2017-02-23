@@ -44,7 +44,7 @@ class IncidentForm(forms.ModelForm):
         value of `service_status` is the worst status of the services
         involved."""
         super(IncidentForm, self).__init__(*args, **kwargs)
-        if self.instance and self.instance.services.exists():
+        if self.instance.pk is not None and self.instance.services.exists():
             self.fields['service_status'].initial = self.instance.services.latest('status').status
 
     def save(self, commit=True):
@@ -53,10 +53,9 @@ class IncidentForm(forms.ModelForm):
 
         if commit:
             model.save()
-        else:
-            self.save_m2m()
 
-        if status is not None:
+        if model.pk is not None and status is not None:
+            self.save_m2m()
             model.services.update(status=status)
 
         return model
