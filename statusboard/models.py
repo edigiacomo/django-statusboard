@@ -30,7 +30,7 @@ class ServiceQuerySet(models.QuerySet):
         return self.annotate(group_count=models.Count('groups')).filter(group_count=0)
 
     def priority_sorted(self):
-        return self.order_by('priority', 'name')
+        return self.order_by('-priority', 'name')
 
 
 class ServiceManager(models.Manager):
@@ -77,7 +77,7 @@ SERVICEGROUP_COLLAPSE_OPTIONS = (
 
 class ServiceGroupQuerySet(models.QuerySet):
     def priority_sorted(self):
-        return self.order_by('priority', 'name')
+        return self.order_by('-priority', 'name')
 
 
 class ServiceGroupManager(models.Manager):
