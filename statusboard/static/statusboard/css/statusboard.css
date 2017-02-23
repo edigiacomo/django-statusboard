@@ -65,3 +65,7 @@ div.servicegroup.servicegroup-empty a.servicegroup-name:before {
     max-width: 330px;
     margin: 0 auto;
 }
+
+div.form-group.required label.control-label:after {
+    content: "*";
+}

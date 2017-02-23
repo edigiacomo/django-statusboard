@@ -4,7 +4,7 @@
 {% include "statusboard/raw_data_form_errors.html" with errors=form.non_field_errors only %}
 
 {% for field in form %}
-<div class="form-group {% if field.errors %}has-error{% endif %}">
+<div class="form-group {% if field.errors %}has-error{% endif %} {% if field.field.required %}required{% endif %}">
     {% include "statusboard/raw_data_form_errors.html" with errors=field.errors only %}
     {{ field.label_tag|add_class:"col-sm-2 control-label" }}
     <div class="col-sm-10">
