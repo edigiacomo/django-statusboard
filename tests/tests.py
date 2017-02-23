@@ -141,14 +141,14 @@ class IncidentEdit(TestCase):
         for s in Incident.objects.get(pk=1).services.all():
             self.assertEquals(s.status, 0)
 
-    def test_valid_status(self):
+    def test_edit_remove_service(self):
         client = Client()
         client.login(username="admin", password="admin")
         response = client.post('/statusboard/incident/1/edit/', {
             'name': 'incident',
             'occurred': '2010-01-01 00:00:00',
-            'services': [1],
-            'service_status': 33,
+            'services': 1,
+            'service_status': 0,
             'updates-INITIAL_FORMS': 0,
             'updates-TOTAL_FORMS': 0,
             'updates-MAX_NUM_FORMS': 0,
@@ -156,6 +156,21 @@ class IncidentEdit(TestCase):
         })
         i = Incident.objects.get(pk=1)
         self.assertEquals(i.services.count(), 1)
+
+    def test_valid_status(self):
+        client = Client()
+        client.login(username="admin", password="admin")
+        response = client.post('/statusboard/incident/1/edit/', {
+            'name': 'incident',
+            'occurred': '2010-01-01 00:00:00',
+            'services': [1, 2],
+            'service_status': 33,
+            'updates-INITIAL_FORMS': 0,
+            'updates-TOTAL_FORMS': 0,
+            'updates-MAX_NUM_FORMS': 0,
+            'updates-MIN_NUM_FORMS': 0,
+        })
+        i = Incident.objects.get(pk=1)
         s = i.services.first()
         self.assertEquals(s.status, 2)
 
