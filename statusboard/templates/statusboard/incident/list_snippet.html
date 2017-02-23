@@ -10,9 +10,6 @@
 {% endifchanged %}
 <div class="panel panel-default">
     <div class="panel-heading">
-        {% if incident.service %}
-        <span class="label label-default">{{ incident.service.name }}</span>
-        {% endif %}
         <strong>{{ incident.name }}</strong>
         {% if perms.statusboard.delete_incident %}
         <small><a href="{% url 'statusboard:incident:delete' pk=incident.id %}">{% trans 'delete' %}</a></small>
@@ -20,7 +17,10 @@
         {% if perms.statusboard.edit_incident %}
         <small><a href="{% url 'statusboard:incident:edit' pk=incident.id %}">{% trans 'edit' %}</a></small>
         {% endif %}
-        <br/><small class="timeinfo">{% trans "occurred" %} <abbr title="{{ incident.occurred|date:"r" }}">{{ incident.occurred|naturaltime }}</abbr></small>
+        <br/>
+        {% for s in incident.services.all %}
+        <span class="label label-default">{{ s.name }}</span>
+        {% endfor %}
     </div>
     <ul class="list-group">
         {% for update in incident.updates_by_ctime %}
@@ -36,6 +36,7 @@
         {% endfor %}
     </ul>
     <div class="panel-footer">
+        <small class="timeinfo">{% trans "occurred" %} <abbr title="{{ incident.occurred|date:"r" }}">{{ incident.occurred|naturaltime }}</abbr></small>
     </div>
 </div>
 {% endfor %}
