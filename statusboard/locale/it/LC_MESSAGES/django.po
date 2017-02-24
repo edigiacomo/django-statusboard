@@ -243,8 +243,8 @@ msgid "scheduled in"
 msgstr "programmato tra"
 
 #: templates/statusboard/index.html:34
-msgid "Past Incidents"
-msgstr "Incidenti passati"
+msgid "Recent incidents"
+msgstr "Incidenti recenti"
 
 #: templates/statusboard/index.html:36
 msgid "create"

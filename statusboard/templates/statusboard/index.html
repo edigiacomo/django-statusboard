@@ -31,7 +31,7 @@
     {% if incidents %}
     <div class="incidents">
         <h2>
-            {% trans 'Past Incidents' %}
+            {% trans 'Recent incidents' %}
             {% if perms.statusboard.incident_create %}
             <small><a href="{% url "statusboard:incident:create" %}">{% trans 'create' %}</a></small>
             {% endif %}
