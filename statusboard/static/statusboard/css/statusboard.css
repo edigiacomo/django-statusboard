@@ -8,6 +8,8 @@ div.incidents {
 
 small.timeinfo {
     opacity: 0.7;
+    margin: 0.2em 0;
+    display: block;
 }
 
 div.servicegroup a.servicegroup-name {

@@ -39,7 +39,7 @@
                 <div class="pull-right">
                     <span class="label label-{{ srv.status|service_status_class:"" }}">{{ srv.get_status_display }}</span>
                 </div>
-                <br/><small class="timeinfo">{% trans "last update" %} <abbr title="{{ srv.modified|date:"r" }}">{{ srv.modified|naturaltime }}</abbr></small>
+                <small class="timeinfo">{% trans "last update" %} <abbr title="{{ srv.modified|date:"r" }}">{{ srv.modified|naturaltime }}</abbr></small>
             </li>
             {% endfor %}
         </ul>
@@ -81,7 +81,7 @@ $(".service-tooltip").tooltip({
                 <div class="pull-right">
                     <span class="label label-{{ srv.status|service_status_class:"" }}">{{ srv.get_status_display }}</span>
                 </div>
-                <br/><small class="timeinfo">{% trans "last update" %} <abbr title="{{ srv.modified|date:"r" }}">{{ srv.modified|naturaltime }}</abbr></small>
+                <small class="timeinfo">{% trans "last update" %} <abbr title="{{ srv.modified|date:"r" }}">{{ srv.modified|naturaltime }}</abbr></small>
             </li>
             {% endfor %}
         </ul>

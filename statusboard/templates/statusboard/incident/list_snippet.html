@@ -29,7 +29,7 @@
                 <strong class="col-xs-4 col-md-2">{{ update.get_status_display }}</strong>
                 <div class="col-xs-8 col-md-10">
                     <span>{{ update.description|linebreaksbr }}</span>
-                    <br/><small class="timeinfo">{% trans "last update" %} <abbr title="{{ update.modified|date:"r" }}">{{ update.modified|naturaltime }}</abbr></small>
+                    <small class="timeinfo">{% trans "last update" %} <abbr title="{{ update.modified|date:"r" }}">{{ update.modified|naturaltime }}</abbr></small>
                 </div>
             </div>
         </li>
