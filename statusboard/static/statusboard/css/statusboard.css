@@ -34,7 +34,7 @@ div.servicegroup.servicegroup-empty a.servicegroup-name:before {
 }
 
 .service-tooltip {
-    cursor: help;
+    cursor: default;
     color: gray;
 }
 
