@@ -44,8 +44,8 @@ You can configure the app using the dict `STATUSBOARD` in `settings.py`:
 
 ```
 STATUSBOARD = {
-    INCIDENT_DAYS_IN_INDEX: 7,
-    OPEN_INCIDENT_IN_INDEX: True,
+    "INCIDENT_DAYS_IN_INDEX": 7,
+    "OPEN_INCIDENT_IN_INDEX": True,
 }
 ```
 
