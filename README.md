@@ -42,7 +42,7 @@ Update your database
 
 You can configure the app using the dict `STATUSBOARD` in `settings.py`:
 
-```
+```python
 STATUSBOARD = {
     "INCIDENT_DAYS_IN_INDEX": 7,
     "OPEN_INCIDENT_IN_INDEX": True,
