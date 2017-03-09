@@ -63,6 +63,15 @@ class Service(TimeStampedModel):
     def __str__(self):
         return self.name
 
+    def __init__(self, *args, **kwargs):
+        super(Service, self).__init__(*args, **kwargs)
+        self._status = self.status
+
+    def save(self, *args, **kwargs):
+        # When the instance is saved, the original status is updated
+        super(Service, self).save(*args, **kwargs)
+        self._status = self.status
+
     class Meta:
         verbose_name = _("service")
         verbose_name_plural = _("services")

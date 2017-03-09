@@ -304,6 +304,29 @@ class TestService(TestCase):
         # ServiceQuerySet
         self.assertEquals(Service.objects.all().worst_status(), None)
 
+    def test_previous_status(self):
+        from django.db.models.signals import post_save
+
+        def check_different(sender, instance, **kwargs):
+            check_different.is_different = (instance._status != instance.status)
+
+        check_different.is_different = None
+
+        post_save.connect(check_different)
+
+        s = Service(name="service", description="test", status=0)
+        s.save()
+        self.assertFalse(check_different.is_different)
+        s.status = 0
+        s.save()
+        self.assertFalse(check_different.is_different)
+        s.status = 1
+        s.save()
+        self.assertIsNotNone(check_different.is_different)
+        self.assertTrue(check_different.is_different)
+
+        post_save.disconnect(check_different)
+
 
 class TestServiceGroup(TestCase):
     def test_worst_service(self):
