@@ -91,3 +91,26 @@ ACME, Inc.
 <a class="navbar-brand" href="{% url 'statusboard:index' %}">ACME status</a>
 {% endblock %}
 ```
+
+## Notifications
+
+`django-statusboard` doesn't provide an out-of-the-box notification system, but
+it's easy to implement using [django signals](https://docs.djangoproject.com/en/dev/topics/signals/).
+
+Moreover, `django-statusboard` tracks the previous status of a service
+(`Service._status`).
+
+```python
+from django.dispatch import receiver
+from django.db.models.signals import post_save
+from django.core.mail import mail_admins
+
+from statusboard import Service
+
+@receiver(post_save, sender=Service)
+def notify_service_update(sender, instance, **kwargs):
+    # Send an email to admins if the service is getting worse, otherwise do nothing.
+    if instance.status > instance._status:
+    mail_admins("Alert",
+                "Service {} is {}".format(instance.name, instance.get_status_display()))
+```
