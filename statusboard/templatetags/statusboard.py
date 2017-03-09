@@ -20,9 +20,9 @@ def service_status_text(value, arg):
 def service_status_summary_text(value, arg):
     return {
         "0": _("All systems are operational"),
-        "1": _("Some systems suffer of performance issues"),
-        "2": _("Some systems suffer of minor outage"),
-        "3": _("Some systems suffer of major outage"),
+        "1": _("Some systems are experiencing performance issues"),
+        "2": _("Some systems are experiencing partial outages"),
+        "3": _("Some systems are experiencing major outages"),
     }.get(str(value), arg)
 
 

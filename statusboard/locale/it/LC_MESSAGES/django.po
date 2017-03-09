@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Django Statusboard\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-23 15:41+0100\n"
+"POT-Creation-Date: 2017-03-09 10:55+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Emanuele Di Giacomo <emanuele@digiacomo.cc>\n"
 "Language-Team: Italian\n"
@@ -202,8 +202,8 @@ msgstr "Modifica l'incidente"
 #: templates/statusboard/incident/list_snippet.html:15
 #: templates/statusboard/index.html:14
 #: templates/statusboard/servicegroup/list_snippet.html:12
-#: templates/statusboard/servicegroup/list_snippet.html:31
-#: templates/statusboard/servicegroup/list_snippet.html:67
+#: templates/statusboard/servicegroup/list_snippet.html:33
+#: templates/statusboard/servicegroup/list_snippet.html:75
 msgid "delete"
 msgstr "elimina"
 
@@ -229,12 +229,14 @@ msgstr "Invia"
 #: templates/statusboard/incident/list_snippet.html:18
 #: templates/statusboard/index.html:17
 #: templates/statusboard/servicegroup/list_snippet.html:15
-#: templates/statusboard/servicegroup/list_snippet.html:34
-#: templates/statusboard/servicegroup/list_snippet.html:70
+#: templates/statusboard/servicegroup/list_snippet.html:36
+#: templates/statusboard/servicegroup/list_snippet.html:78
 msgid "edit"
 msgstr "modifica"
 
 #: templates/statusboard/incident/list_snippet.html:32
+#: templates/statusboard/servicegroup/list_snippet.html:42
+#: templates/statusboard/servicegroup/list_snippet.html:84
 msgid "last update"
 msgstr "ultimo aggiornamento"
 
@@ -352,7 +354,7 @@ msgstr "Crea un nuovo gruppo di servizi"
 msgid "Edit service group"
 msgstr "Modifica un gruppo di servizi"
 
-#: templates/statusboard/servicegroup/list_snippet.html:52
+#: templates/statusboard/servicegroup/list_snippet.html:60
 msgid "Uncategorized"
 msgstr "Non categorizzati"
 
@@ -361,13 +363,13 @@ msgid "All systems are operational"
 msgstr "Tutti i sistemi sono operativi"
 
 #: templatetags/statusboard.py:23
-msgid "Some systems suffer of performance issues"
+msgid "Some systems are experiencing performance issues"
 msgstr "Qualche sistema soffre di problemi di prestazioni"
 
 #: templatetags/statusboard.py:24
-msgid "Some systems suffer of minor outage"
+msgid "Some systems are experiencing partial outages"
 msgstr "Qualche sistema soffre di interruzione parziale"
 
 #: templatetags/statusboard.py:25
-msgid "Some systems suffer of major outage"
+msgid "Some systems are experiencing major outages"
 msgstr "Qualche sistema soffre di interruzione totale"
