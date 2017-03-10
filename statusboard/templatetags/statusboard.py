@@ -12,7 +12,8 @@ from statusboard.models import SERVICE_STATUSES
 register = template.Library()
 
 
-def service_status_text(value, arg):
+@register.filter
+def service_get_status_display(value, arg):
     return dict(SERVICE_STATUSES).get(int(value), arg)
 
 
