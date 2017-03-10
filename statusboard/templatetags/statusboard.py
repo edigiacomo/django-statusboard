@@ -13,7 +13,7 @@ register = template.Library()
 
 
 @register.filter
-def service_get_status_display(value, arg):
+def service_get_status_display(value, arg=""):
     return dict(SERVICE_STATUSES).get(int(value), arg)
 
 
