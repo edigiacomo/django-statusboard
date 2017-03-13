@@ -18,10 +18,14 @@ install:
     - pip install tox
     - pip install -r requirements/requirements.txt
     - pip install -r requirements/requirements-packaging.txt
+    - pip install -r requirements/requirements-documentation.txt
+before_script:
+    - mkdocs build --clean
 script:
     - tox -e $TOX_ENV
 deploy:
     provider: pypi
+    docs_dir: site
     user: edg
     password:
         secure: XogAE9WAZRqznoZlEoQ+amBZJPtYRZWx/VbXMeEvD4mi00xHJewOuPqcBhjTGlYsRtGUJ+j4OF/LT8tIELSGRbZY4fVz4f3x9Co9CVlB8cZI1r+HxRYV0EJxhYu8t0R5tCUYnLTSWTvG5qcmYyX8iYRHunBPcTbyhtA/DO5JJah8FMx1AsHVgHQRuVhPll2E5jMASccBTZv3aCfch8S023qQ3BoW+kKI0KOyvibtUbABUGzZg3CHXt0KSFI3B7BrZQi6oKih4ckgf1Wi71LrUsLxDkT2n+ghEKewmRhKMHLKy9aPUVHGGS/55Mg4kpBreCqtVxKkG830vXsUdV/NsVRS1ndJpfKL1e/ZhQloTpkdEuOzB4CaJP0ChQSxpuEm3WAIEr6/AlFtc2igbYE4r4RvMXFP0Hoo05Don9qixBQV9lOOaMiOGThZvqEEFDtCXV5z03onfc3X+x2oSPEX9m1zD3yAjVFPG1bEUUIJUj0OmPhwLYSqBtMZxk8jczV04yAvcruQv/MzMv2/cPgEEntJLFZ0+Z1xWM0CqgbS534Ito9CAsWpYlUJeTN53+tI2iqbtxPlAfxgUHJhSIa98S6V23IfWna9pFgI2DRj39ntPQF+v+QKp61QGtepKgGJd0Lm3IH93O8MkOrQqbFFVNFcIyCyEiBITRXcIHfNVEo=
