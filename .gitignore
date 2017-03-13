@@ -8,4 +8,5 @@
 /django_statusboard.egg-info/
 /manage.py
 /mysite
+/site
 __pycache__
