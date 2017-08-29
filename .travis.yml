@@ -43,4 +43,5 @@ deploy:
     on:
         tags: true
         branch: master
-        condition: $TOX_ENV = py35-110
+        python: 3.6
+        condition: "$DJANGO = 1.11"
