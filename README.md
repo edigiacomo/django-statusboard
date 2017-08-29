@@ -111,6 +111,5 @@ from statusboard import Service
 def notify_service_update(sender, instance, **kwargs):
     # Send an email to admins if the service is getting worse, otherwise do nothing.
     if instance.status > instance._status:
-    mail_admins("Alert",
-                "Service {} is {}".format(instance.name, instance.get_status_display()))
+        mail_admins("Alert", "Service {} is {}".format(instance.name, instance.get_status_display()))
 ```
