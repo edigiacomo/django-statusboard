@@ -76,7 +76,7 @@ and edit the file.
 #### Django >= 1.9
 
 In Django >= 1.9, the templates can be extended recursively (see
-https://docs.djangoproject.com/en/1.10/releases/1.9/).
+https://docs.djangoproject.com/en/1.9/releases/1.9/#templates).
 
 Create a `statusboard/base.html` in one of your templates dir:
 
