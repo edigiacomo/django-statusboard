@@ -108,6 +108,39 @@ class TestTemplate(TestCase):
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
 ], STATIC_URL='/static/')
+class IncidentCreate(TestCase):
+    def setUp(self):
+        admin = User.objects.create_superuser(username="admin",
+                                              password="admin",
+                                              email="admin@admin")
+        admin.save()
+
+        s1 = Service.objects.create(name="s1", description="s1", status=2)
+        s2 = Service.objects.create(name="s2", description="s2", status=2)
+
+    def test_create(self):
+        client = Client()
+        client.login(username="admin", password="admin")
+        response = client.post('/statusboard/incident/create/', {
+            'name': 'incident',
+            'occurred': '2010-01-01 00:00:00',
+            'services': [1, 2],
+            'service_status': 0,
+            'updates-INITIAL_FORMS': 0,
+            'updates-TOTAL_FORMS': 0,
+            'updates-MAX_NUM_FORMS': 0,
+            'updates-MIN_NUM_FORMS': 0,
+        })
+        incident = Incident.objects.get(pk=1)
+        self.assertEquals(incident.services.count(), 2)
+        for s in incident.services.all():
+            self.assertEquals(s.status, 0)
+
+
+@override_settings(MIDDLEWARE_CLASSES=[
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+], STATIC_URL='/static/')
 class IncidentEdit(TestCase):
     def setUp(self):
         admin = User.objects.create_superuser(username="admin",
@@ -138,7 +171,9 @@ class IncidentEdit(TestCase):
             'updates-MAX_NUM_FORMS': 0,
             'updates-MIN_NUM_FORMS': 0,
         })
-        for s in Incident.objects.get(pk=1).services.all():
+        incident = Incident.objects.get(pk=1)
+        self.assertEquals(incident.services.count(), 2)
+        for s in incident.services.all():
             self.assertEquals(s.status, 0)
 
     def test_edit_remove_service(self):
