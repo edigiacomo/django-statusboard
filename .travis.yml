@@ -1,28 +1,40 @@
 language: python
-python: 3.5
-cache: pip
+
+sudo: true
+
+python:
+    - "2.7"
+    - "3.4"
+    - "3.5"
+    - "3.6"
+
 env:
-    - TOX_ENV=py27-18
-    - TOX_ENV=py27-19
-    - TOX_ENV=py27-110
-    - TOX_ENV=py33-18
-    - TOX_ENV=py34-18
-    - TOX_ENV=py34-19
-    - TOX_ENV=py34-110
-    - TOX_ENV=py35-18
-    - TOX_ENV=py35-19
-    - TOX_ENV=py35-110
+    - DJANGO=1.8
+    - DJANGO=1.9
+    - DJANGO=1.10
+    - DJANGO=1.11
+
+matrix:
+    fast_finish: true
+    include:
+        - python: "3.3"
+          env: DJANGO=1.8
+
 before_install:
     - sudo apt-get install -y pandoc
+
 install:
-    - pip install tox
+    - pip install tox tox-travis
     - pip install -r requirements/requirements.txt
     - pip install -r requirements/requirements-packaging.txt
     - pip install -r requirements/requirements-documentation.txt
+
 before_script:
     - mkdocs build --clean
+
 script:
-    - tox -e $TOX_ENV
+    - tox
+
 deploy:
     provider: pypi
     user: edg
