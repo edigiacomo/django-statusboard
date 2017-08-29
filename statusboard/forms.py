@@ -53,10 +53,9 @@ class IncidentForm(forms.ModelForm):
 
         if commit:
             model.save()
-
-        if model.pk is not None and status is not None:
-            self.save_m2m()
-            model.services.update(status=status)
+            if status is not None:
+                self.save_m2m()
+                model.services.update(status=status)
 
         return model
 

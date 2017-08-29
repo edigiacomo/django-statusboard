@@ -117,7 +117,7 @@ def incident_create(request):
             incident = form.save(commit=False)
             incident_updates = IncidentUpdateFormSet(request.POST, instance=incident)
             if incident_updates.is_valid():
-                incident.save()
+                form.save()
                 incident_updates.save()
                 return HttpResponseRedirect(reverse('statusboard:index'))
 
@@ -139,7 +139,7 @@ def incident_edit(request, pk):
             incident = form.save(commit=False)
             incident_updates = IncidentUpdateFormSet(request.POST, request.FILES, instance=incident)
             if incident_updates.is_valid():
-                incident.save()
+                form.save()
                 incident_updates.save()
                 return HttpResponseRedirect(reverse('statusboard:index'))
 
