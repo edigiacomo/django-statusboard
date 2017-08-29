@@ -36,7 +36,7 @@ setup(
                       'pytz'],
     test_suite="runtests.runtests",
     classifiers=[
-        'Development Status :: 5 - Beta',
+        'Development Status :: 4 - Beta',
         'Environment :: Web Environment',
         'License :: OSI Approved :: GNU General Public License v2 or later (GPLv2+)',
         'Framework :: Django',
