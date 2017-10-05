@@ -12,6 +12,7 @@ from statusboard.models import Service
 from statusboard.models import ServiceGroup
 from statusboard.models import Incident
 from statusboard.models import IncidentUpdate
+from statusboard.models import Maintenance
 
 
 class TestApiPermission(TestCase):
@@ -403,3 +404,35 @@ class TestSettings(TestCase):
             self.assertEquals(statusconf.INCIDENT_DAYS_IN_INDEX, 30)
             self.assertEquals(settings.STATUSBOARD["INCIDENT_DAYS_IN_INDEX"],
                               statusconf.INCIDENT_DAYS_IN_INDEX)
+
+
+@override_settings(MIDDLEWARE_CLASSES=[
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+], STATIC_URL='/static/')
+class MaintenanceEdit(TestCase):
+    def setUp(self):
+        admin = User.objects.create_superuser(username="admin",
+                                              password="admin",
+                                              email="admin@admin")
+        admin.save()
+
+        m = Maintenance(scheduled=timezone.datetime.now(),
+                        name="test",
+                        description="test")
+        m.full_clean()
+        m.save()
+
+    def test_edit(self):
+        client = Client()
+        client.login(username="admin", password="admin")
+        dt = timezone.datetime.now()
+        response = client.post('/statusboard/maintenance/1/edit/', {
+            'scheduled': dt,
+            'name': 'modified name',
+            'description': 'modified description',
+        })
+        m = Maintenance.objects.get(pk=1)
+        self.assertEquals(m.scheduled, dt)
+        self.assertEquals(m.name, "modified name")
+        self.assertEquals(m.description, "modified description")
