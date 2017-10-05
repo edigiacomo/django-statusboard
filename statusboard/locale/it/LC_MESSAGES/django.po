@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Django Statusboard\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-09 10:55+0100\n"
+"POT-Creation-Date: 2017-10-05 08:55+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Emanuele Di Giacomo <emanuele@digiacomo.cc>\n"
 "Language-Team: Italian\n"
@@ -33,19 +33,19 @@ msgstr "Interruzione parziale"
 msgid "Major outage"
 msgstr "Interruzione totale"
 
-#: models.py:52 models.py:92 models.py:176 models.py:222
+#: models.py:52 models.py:101 models.py:185 models.py:231
 msgid "name"
 msgstr "nome"
 
-#: models.py:53 models.py:210 models.py:223
+#: models.py:53 models.py:219 models.py:232
 msgid "description"
 msgstr "descrizione"
 
-#: models.py:55 models.py:209
+#: models.py:55 models.py:218
 msgid "status"
 msgstr "status"
 
-#: models.py:56 models.py:93
+#: models.py:56 models.py:102
 msgid "priority"
 msgstr "priorità"
 
@@ -53,79 +53,79 @@ msgstr "priorità"
 msgid "groups"
 msgstr "gruppi"
 
-#: models.py:67
+#: models.py:76
 msgid "service"
 msgstr "servizio"
 
-#: models.py:68 models.py:180
+#: models.py:77 models.py:189
 msgid "services"
 msgstr "servizi"
 
-#: models.py:72
+#: models.py:81
 msgid "Never collapse"
 msgstr "Non compattare mai"
 
-#: models.py:73
+#: models.py:82
 msgid "Always collapse"
 msgstr "Compatta sempre"
 
-#: models.py:74
+#: models.py:83
 msgid "Collapse when all the services are operational"
 msgstr "Compatta quando tutti i servizi sono operativi"
 
-#: models.py:119
+#: models.py:128
 msgid "service group"
 msgstr "gruppo dei servizi"
 
-#: models.py:120
+#: models.py:129
 msgid "service groups"
 msgstr "gruppi dei servizi"
 
-#: models.py:124
+#: models.py:133
 msgid "Investigating"
 msgstr "In studio"
 
-#: models.py:125
+#: models.py:134
 msgid "Identified"
 msgstr "Identificato"
 
-#: models.py:126
+#: models.py:135
 msgid "Watching"
 msgstr "In esame"
 
-#: models.py:127
+#: models.py:136
 msgid "Fixed"
 msgstr "Risolto"
 
-#: models.py:181 templates/statusboard/incident/list_snippet.html:39
+#: models.py:190 templates/statusboard/incident/list_snippet.html:39
 msgid "occurred"
 msgstr "avvenuto"
 
-#: models.py:201 models.py:208
+#: models.py:210 models.py:217
 msgid "incident"
 msgstr "incidente"
 
-#: models.py:202
+#: models.py:211
 msgid "incidents"
 msgstr "incidenti"
 
-#: models.py:216
+#: models.py:225
 msgid "incident update"
 msgstr "aggiornamento dell'incidente"
 
-#: models.py:217
+#: models.py:226
 msgid "incident updates"
 msgstr "aggiornamenti dell'incidente"
 
-#: models.py:221
+#: models.py:230
 msgid "scheduled"
 msgstr "pianificato"
 
-#: models.py:229
+#: models.py:238
 msgid "maintenance"
 msgstr "manutenzione"
 
-#: models.py:230
+#: models.py:239
 msgid "maintenances"
 msgstr "manutenzioni"
 
@@ -318,6 +318,12 @@ msgstr "Sei sicuro che vuoi eliminare la manutenzione \"%(maintenance)s\"?"
 msgid "Create a new maintenance"
 msgstr "Crea una nuova manutenzione"
 
+#: templates/statusboard/maintenance/edit.html:9
+#, fuzzy
+#| msgid "maintenance"
+msgid "Edit maintenance"
+msgstr "Modifica la manutenzione"
+
 #: templates/statusboard/service/confirm_delete.html:9
 msgid "Delete a service"
 msgstr "Elimina un servizio"
@@ -358,18 +364,18 @@ msgstr "Modifica un gruppo di servizi"
 msgid "Uncategorized"
 msgstr "Non categorizzati"
 
-#: templatetags/statusboard.py:22
+#: templatetags/statusboard.py:23
 msgid "All systems are operational"
 msgstr "Tutti i sistemi sono operativi"
 
-#: templatetags/statusboard.py:23
+#: templatetags/statusboard.py:24
 msgid "Some systems are experiencing performance issues"
 msgstr "Qualche sistema soffre di problemi di prestazioni"
 
-#: templatetags/statusboard.py:24
+#: templatetags/statusboard.py:25
 msgid "Some systems are experiencing partial outages"
 msgstr "Qualche sistema soffre di interruzione parziale"
 
-#: templatetags/statusboard.py:25
+#: templatetags/statusboard.py:26
 msgid "Some systems are experiencing major outages"
 msgstr "Qualche sistema soffre di interruzione totale"
