@@ -9,7 +9,7 @@
     {% for m in maintenances %}
     <div class="alert alert-info" role="alert">
         <p>
-        <strong>{{ m.name }} - {% trans 'scheduled in' %} <abbr title="{{ m.scheduled|date:"r" }}">{{ m.scheduled|naturaltime }}</abbr></strong>
+        <strong>{{ m.name }} - {% trans 'scheduled' %} <abbr title="{{ m.scheduled|date:"r" }}">{{ m.scheduled|naturaltime }}</abbr></strong>
         {% if perms.statusboard.delete_maintenance %}
         <small><a href="{% url 'statusboard:maintenance:delete' pk=m.id %}">{% trans 'delete' %}</a></small>
         {% endif %}

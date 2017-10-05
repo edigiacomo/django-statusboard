@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Django Statusboard\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-05 08:55+0000\n"
+"POT-Creation-Date: 2017-10-05 09:24+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Emanuele Di Giacomo <emanuele@digiacomo.cc>\n"
 "Language-Team: Italian\n"
@@ -117,7 +117,7 @@ msgstr "aggiornamento dell'incidente"
 msgid "incident updates"
 msgstr "aggiornamenti dell'incidente"
 
-#: models.py:230
+#: models.py:230 templates/statusboard/index.html:12
 msgid "scheduled"
 msgstr "pianificato"
 
@@ -239,10 +239,6 @@ msgstr "modifica"
 #: templates/statusboard/servicegroup/list_snippet.html:84
 msgid "last update"
 msgstr "ultimo aggiornamento"
-
-#: templates/statusboard/index.html:12
-msgid "scheduled in"
-msgstr "programmato tra"
 
 #: templates/statusboard/index.html:34
 msgid "Recent incidents"
