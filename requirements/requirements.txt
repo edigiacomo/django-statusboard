@@ -1,4 +1,3 @@
-django
 django-model-utils
 djangorestframework
 pytz
