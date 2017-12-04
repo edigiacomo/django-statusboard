@@ -27,9 +27,6 @@ before_install:
 install:
     - pip install tox tox-travis
 
-before_script:
-    - mkdocs build --clean
-
 script:
     - tox
 
