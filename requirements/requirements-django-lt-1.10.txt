@@ -1,0 +1,3 @@
+django-model-utils
+djangorestframework<3.7
+pytz
