@@ -213,7 +213,7 @@ class Incident(TimeStampedModel):
 
 class IncidentUpdate(TimeStampedModel):
     incident = models.ForeignKey(Incident, related_name='updates',
-                                 on_delete=django.db.models.deletion.CASCADE,
+                                 on_delete=models.deletion.CASCADE,
                                  related_query_name='update',
                                  verbose_name=_("incident"))
     status = models.IntegerField(choices=INCIDENT_STATUSES, verbose_name=_("status"))
