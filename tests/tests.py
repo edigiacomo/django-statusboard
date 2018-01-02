@@ -419,3 +419,27 @@ class MaintenanceEdit(TestCase):
         self.assertEquals(m.scheduled, dt)
         self.assertEquals(m.name, "modified name")
         self.assertEquals(m.description, "modified description")
+
+
+class ReverseAndResolve(TestCase):
+    def test_maintenance(self):
+        try:
+            from django.urls import reverse, resolve
+        except ImportError:
+            # Django < 1.10
+            from django.core.urlresolvers import reverse, resolve
+        from statusboard.views import MaintenanceCreate
+
+        self.assertEquals(
+            reverse('statusboard:maintenance:create'),
+            '/statusboard/maintenance/create/',
+        )
+        resolver = resolve('/statusboard/maintenance/create/')
+        self.assertEquals(
+            resolver.namespaces,
+            ['statusboard', 'maintenance'],
+        )
+        self.assertEquals(
+            resolver.view_name,
+            'statusboard:maintenance:create',
+        )
