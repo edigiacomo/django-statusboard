@@ -309,7 +309,7 @@ class TestTemplateTags(TestCase):
         self.assertTrue(g.collapsed())
 
         s = Service.objects.create(name="service", description="test", status=0)
-        s.groups = [g]
+        s.groups.add(g)
         s.save()
         g.collapse = 2
         g.save()
