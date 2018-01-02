@@ -3,7 +3,11 @@ from __future__ import unicode_literals
 from django.shortcuts import render, redirect
 from django.http import Http404
 from django.http import HttpResponseRedirect
-from django.core.urlresolvers import reverse_lazy, reverse
+try:
+    from django.urls import reverse_lazy, reverse
+except ImportError:
+    # Django < 1.10
+    from django.core.urlresolvers import reverse_lazy, reverse
 from django.views.generic import ListView
 from django.views.generic.dates import MonthArchiveView
 from django.views.generic.edit import CreateView
