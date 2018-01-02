@@ -2,7 +2,6 @@ from __future__ import unicode_literals
 
 from django.test import TestCase
 from django.test import Client
-from django.test import override_settings
 from django.contrib.auth.models import User, Permission
 from django.utils import timezone
 
@@ -72,10 +71,6 @@ class TestApiPermission(TestCase):
         self.assertEquals(ServiceGroup.objects.filter(pk=1).count(), 0)
 
 
-@override_settings(MIDDLEWARE_CLASSES=[
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-], STATIC_URL='/static/')
 class TestTemplate(TestCase):
     def setUp(self):
         admin = User.objects.create_superuser(username="admin",
@@ -105,10 +100,6 @@ class TestTemplate(TestCase):
         self.assertTrue('statusboard/maintenance/form.html' in templates)
 
 
-@override_settings(MIDDLEWARE_CLASSES=[
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-], STATIC_URL='/static/')
 class IncidentCreate(TestCase):
     def setUp(self):
         admin = User.objects.create_superuser(username="admin",
@@ -138,10 +129,6 @@ class IncidentCreate(TestCase):
             self.assertEquals(s.status, 0)
 
 
-@override_settings(MIDDLEWARE_CLASSES=[
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-], STATIC_URL='/static/')
 class IncidentEdit(TestCase):
     def setUp(self):
         admin = User.objects.create_superuser(username="admin",
@@ -406,10 +393,6 @@ class TestSettings(TestCase):
                               statusconf.INCIDENT_DAYS_IN_INDEX)
 
 
-@override_settings(MIDDLEWARE_CLASSES=[
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-], STATIC_URL='/static/')
 class MaintenanceEdit(TestCase):
     def setUp(self):
         admin = User.objects.create_superuser(username="admin",

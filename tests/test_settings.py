@@ -42,3 +42,13 @@ DATABASES = {
         'NAME': ":memory:"
     }
 }
+
+MIDDLEWARE = [
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+]
+
+# Django < 1.10
+MIDDLEWARE_CLASSES = MIDDLEWARE
+
+STATIC_URL = '/static/'
