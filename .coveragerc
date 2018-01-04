@@ -1,3 +1,4 @@
 [run]
 source = statusboard
 omit = statusboard/migrations/*.py
+branch = True
