@@ -34,6 +34,9 @@ after_success:
     - pip install codecov
     - codecov
 
+before_deploy:
+    - pip install -r requirements/requirements-packaging.txt
+
 deploy:
     provider: pypi
     user: edg
