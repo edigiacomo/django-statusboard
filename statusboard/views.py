@@ -8,12 +8,10 @@ try:
 except ImportError:
     # Django < 1.10
     from django.core.urlresolvers import reverse_lazy, reverse
-from django.views.generic import ListView
 from django.views.generic.dates import MonthArchiveView
 from django.views.generic.edit import CreateView
 from django.views.generic.edit import UpdateView
 from django.views.generic.edit import DeleteView
-from django.db import transaction
 from django.utils import timezone
 from django.contrib.auth.decorators import permission_required
 try:
@@ -32,7 +30,6 @@ from .forms import IncidentForm, IncidentUpdateFormSet, ServiceGroupForm, Servic
 
 
 def index(request):
-    from django.db.models import Count
     return render(request, "statusboard/index.html", {
         "servicegroups": ServiceGroup.objects.priority_sorted(),
         "uncategorized": Service.objects.uncategorized(),

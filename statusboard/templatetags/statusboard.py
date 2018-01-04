@@ -5,7 +5,6 @@ from django import template
 from django import forms
 from django.utils.translation import ugettext as _
 
-from statusboard.models import Service
 from statusboard.models import SERVICE_STATUSES
 
 
