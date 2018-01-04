@@ -24,9 +24,17 @@ from rest_framework import viewsets
 from rest_framework import permissions
 from rest_framework import versioning
 
-from .models import Service, ServiceGroup, Incident, IncidentUpdate, Maintenance
-from .serializers import ServiceSerializer, ServiceGroupSerializer, IncidentSerializer, IncidentUpdateSerializer, MaintenanceSerializer
-from .forms import IncidentForm, IncidentUpdateFormSet, ServiceGroupForm, ServiceForm, MaintenanceForm
+from .models import (
+    Service, ServiceGroup, Incident, IncidentUpdate, Maintenance,
+)
+from .serializers import (
+    ServiceSerializer, ServiceGroupSerializer, IncidentSerializer,
+    IncidentUpdateSerializer, MaintenanceSerializer,
+)
+from .forms import (
+    IncidentForm, IncidentUpdateFormSet, ServiceGroupForm, ServiceForm,
+    MaintenanceForm,
+)
 
 
 def index(request):
@@ -35,7 +43,9 @@ def index(request):
         "uncategorized": Service.objects.uncategorized(),
         "worst_status": Service.objects.worst_status(),
         "incidents": Incident.objects.in_index().order_by('-occurred'),
-        "maintenances": Maintenance.objects.filter(scheduled__gt=timezone.now()).order_by('-scheduled'),
+        "maintenances": Maintenance.objects.filter(
+            scheduled__gt=timezone.now()
+        ).order_by('-scheduled'),
     })
 
 
@@ -116,7 +126,8 @@ def incident_create(request):
         form = IncidentForm(request.POST)
         if form.is_valid():
             incident = form.save(commit=False)
-            incident_updates = IncidentUpdateFormSet(request.POST, instance=incident)
+            incident_updates = IncidentUpdateFormSet(request.POST,
+                                                     instance=incident)
             if incident_updates.is_valid():
                 form.save()
                 incident_updates.save()
@@ -138,7 +149,9 @@ def incident_edit(request, pk):
         form = IncidentForm(request.POST or None, instance=incident)
         if form.is_valid():
             incident = form.save(commit=False)
-            incident_updates = IncidentUpdateFormSet(request.POST, request.FILES, instance=incident)
+            incident_updates = IncidentUpdateFormSet(request.POST,
+                                                     request.FILES,
+                                                     instance=incident)
             if incident_updates.is_valid():
                 form.save()
                 incident_updates.save()
@@ -178,7 +191,9 @@ class IncidentMonthArchiveView(MonthArchiveView):
             return super(IncidentMonthArchiveView, self).get_year()
         except Http404:
             try:
-                return str(self.get_queryset().latest(self.date_field).occurred.year)
+                return str(
+                    self.get_queryset().latest(self.date_field).occurred.year
+                )
             except Incident.DoesNotExist:
                 # List is empty
                 return str(timezone.now().year)
@@ -188,7 +203,9 @@ class IncidentMonthArchiveView(MonthArchiveView):
             return super(IncidentMonthArchiveView, self).get_month()
         except Http404:
             try:
-                return str(self.get_queryset().latest(self.date_field).occurred.month)
+                return str(
+                    self.get_queryset().latest(self.date_field).occurred.month
+                )
             except Incident.DoesNotExist:
                 # List is empty
                 return str(timezone.now().month)

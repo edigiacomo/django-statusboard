@@ -20,7 +20,8 @@ class ServiceGroupForm(forms.ModelForm):
 class ServiceForm(forms.ModelForm):
     class Meta:
         model = Service
-        fields = ['name', 'href', 'description', 'status', 'priority', 'groups']
+        fields = ['name', 'href', 'description', 'status', 'priority',
+                  'groups']
 
 
 class MaintenanceForm(forms.ModelForm):
@@ -45,7 +46,8 @@ class IncidentForm(forms.ModelForm):
         involved."""
         super(IncidentForm, self).__init__(*args, **kwargs)
         if self.instance.pk is not None and self.instance.services.exists():
-            self.fields['service_status'].initial = self.instance.services.latest('status').status
+            last_status = self.instance.services.latest('status').status
+            self.fields['service_status'].initial = last_status
 
     def save(self, commit=True):
         model = super(IncidentForm, self).save(commit=False)

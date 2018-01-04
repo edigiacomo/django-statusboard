@@ -2,7 +2,9 @@ from __future__ import unicode_literals
 
 from rest_framework import serializers
 
-from .models import Service, ServiceGroup, Incident, IncidentUpdate, Maintenance
+from .models import (
+    Service, ServiceGroup, Incident, IncidentUpdate, Maintenance,
+)
 
 
 class ServiceSerializer(serializers.ModelSerializer):
@@ -15,7 +17,8 @@ class ServiceSerializer(serializers.ModelSerializer):
 class ServiceGroupSerializer(serializers.ModelSerializer):
     class Meta:
         model = ServiceGroup
-        fields = ('id', 'name', 'collapse', 'priority', 'services', 'created', 'modified')
+        fields = ('id', 'name', 'collapse', 'priority', 'services', 'created',
+                  'modified')
 
 
 class IncidentSerializer(serializers.ModelSerializer):

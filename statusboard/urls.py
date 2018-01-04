@@ -86,10 +86,14 @@ urlpatterns = [
 if django.VERSION[0:2] < (1, 9):
     urlpatterns += [
         url(r'^service/', include(service_urls, namespace="service")),
-        url(r'^servicegroup/', include(servicegroup_urls, namespace="servicegroup")),
-        url(r'^incident/', include(incident_urls, namespace="incident")),
-        url(r'^maintenance/', include(maintenance_urls, namespace="maintenance")),
-        url(r'^api/(?P<version>v0\.1)/', include(router.urls, namespace="api")),
+        url(r'^servicegroup/', include(servicegroup_urls,
+                                       namespace="servicegroup")),
+        url(r'^incident/', include(incident_urls,
+                                   namespace="incident")),
+        url(r'^maintenance/', include(maintenance_urls,
+                                      namespace="maintenance")),
+        url(r'^api/(?P<version>v0\.1)/', include(router.urls,
+                                                 namespace="api")),
     ]
 else:
     urlpatterns += [
