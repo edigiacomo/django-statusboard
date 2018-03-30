@@ -26,12 +26,12 @@ before_install:
 
 install:
     - pip install tox tox-travis
+    - pip install codecov
 
 script:
     - tox
 
 after_success:
-    - pip install codecov
     - codecov
 
 before_deploy:
