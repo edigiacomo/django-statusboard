@@ -451,3 +451,19 @@ class TestSettings(TestCase):
 
         with self.assertRaises(RuntimeError):
             v = statusconf.THIS_IS_A_MISSING_APP_SETTING
+
+
+class TestPermissionRequiredView(TestCase):
+    def test_permission_required(self):
+        try:
+            from django.urls import reverse, resolve
+        except ImportError:
+            # Django < 1.10
+            from django.core.urlresolvers import reverse, resolve
+
+        with self.settings(LOGIN_URL='/login'):
+            client = Client()
+            response = client.get('/statusboard/service/create/')
+            self.assertRedirects(response,
+                                 '/login?next=/statusboard/service/create/',
+                                 fetch_redirect_response=False)
