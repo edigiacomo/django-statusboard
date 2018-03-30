@@ -393,7 +393,7 @@ class TestSettings(TestCase):
                               statusconf.INCIDENT_DAYS_IN_INDEX)
 
 
-class MaintenanceEdit(TestCase):
+class TestMaintenanceEdit(TestCase):
     def setUp(self):
         admin = User.objects.create_superuser(username="admin",
                                               password="admin",
@@ -421,7 +421,7 @@ class MaintenanceEdit(TestCase):
         self.assertEquals(m.description, "modified description")
 
 
-class ReverseAndResolve(TestCase):
+class TestReverseAndResolve(TestCase):
     def test_maintenance(self):
         try:
             from django.urls import reverse, resolve
