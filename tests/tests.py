@@ -443,3 +443,11 @@ class TestReverseAndResolve(TestCase):
             resolver.view_name,
             'statusboard:maintenance:create',
         )
+
+
+class TestSettings(TestCase):
+    def test_missing_default(self):
+        from statusboard.settings import statusconf
+
+        with self.assertRaises(RuntimeError):
+            v = statusconf.THIS_IS_A_MISSING_APP_SETTING
