@@ -10,6 +10,10 @@
     {% endif %}
 {% endblock %}
 
+{% block favicon %}
+<link rel="icon" href="{{ favicon }}">
+{% endblock %}
+
 {% block content %}
 <div class="container">
     {% for m in maintenances %}

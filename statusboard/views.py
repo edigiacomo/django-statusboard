@@ -39,15 +39,20 @@ from .settings import statusconf
 
 
 def index(request):
+    worst_status = Service.objects.worst_status()
     return render(request, "statusboard/index.html", {
         "servicegroups": ServiceGroup.objects.priority_sorted(),
         "uncategorized": Service.objects.uncategorized(),
-        "worst_status": Service.objects.worst_status(),
+        "worst_status": worst_status,
         "incidents": Incident.objects.in_index().order_by('-occurred'),
         "maintenances": Maintenance.objects.filter(
             scheduled__gt=timezone.now()
         ).order_by('-scheduled'),
         "auto_refresh": statusconf.AUTO_REFRESH_HOME_SECONDS,
+        "favicon": statusconf.FAVICON_INDEX_DICT.get(
+            worst_status,
+            statusconf.FAVICON_DEFAULT,
+        ),
     })
 
 

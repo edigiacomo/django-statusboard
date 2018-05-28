@@ -18,6 +18,7 @@ Add the following applications to your Django projects
 ```python
 INSTALLED_APPS += [
     'django.contrib.humanize',
+    'django.contrib.staticfiles',
     'rest_framework',
     'statusboard',
 ]
@@ -43,16 +44,28 @@ Update your database
 You can configure the app using the dict `STATUSBOARD` in `settings.py`:
 
 ```python
+from django.contrib.staticfiles.templatetags.staticfiles import static
+
 STATUSBOARD = {
     "INCIDENT_DAYS_IN_INDEX": 7,
     "OPEN_INCIDENT_IN_INDEX": True,
     "AUTO_REFRESH_HOME_SECONDS": 0,
+    "FAVICON_DEFAULT": static('statusboard/images/statusboard-icon-default.png'),
+    "FAVICON_INDEX_DICT": {
+        0: static('statusboard/images/statusboard-icon-operational.png'),
+        1: static('statusboard/images/statusboard-icon-performance.png'),
+        2: static('statusboard/images/statusboard-icon-partial.png'),
+        3: static('statusboard/images/statusboard-icon-major.png'),
+    },
 }
 ```
 
 * `INCIDENT_DAYS_IN_INDEX`: number of days to show in index (1 = today).
 * `OPEN_INCIDENT_IN_INDEX`: show not fixed incidents in index.
 * `AUTO_REFRESH_HOME_SECONDS`: auto refresh home page every N seconds (0 = disabled).
+* `FAVICON_DEFAULT`: default favicon.
+* `FAVICON_INDEX_DICT`: favicon for index, based on the worst status (default:
+  `FAVICON_DEFAULT`).
 
 ## Customize pages
 

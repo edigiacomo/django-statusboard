@@ -118,6 +118,52 @@ class TestTemplate(TestCase):
             response = client.get('/statusboard/')
             self.assertContains(response, text='<meta http-equiv="refresh" content="1">')
 
+    def test_index_favicon(self):
+        from statusboard.settings import statusconf
+
+        client = Client()
+        # Test default favicons
+        response = client.get('/statusboard/')
+        self.assertContains(response, status_code=200, text=statusconf.FAVICON_DEFAULT)
+
+        s1 = Service.objects.create(name="s1", description="test", status=0)
+        for status in (0, 1, 2, 3):
+            s1.status = status
+            s1.save()
+            response = client.get('/statusboard/')
+            self.assertContains(response, status_code=200, text=statusconf.FAVICON_INDEX_DICT[status])
+
+        # This service is always operational so it doesn't affect the icon
+        # image
+        s2 = Service.objects.create(name="s2", description="test", status=0)
+
+        # Test custom favicons
+        with self.settings(STATUSBOARD={
+            'FAVICON_DEFAULT': 'default',
+            'FAVICON_INDEX_DICT': {
+                0: '0',
+                1: '1',
+                2: '2',
+                3: '3',
+            },
+        }):
+            for status in (0, 1, 2, 3):
+                s1.status = status
+                s1.save()
+                response = client.get('/statusboard/')
+                self.assertContains(response, status_code=200, text=statusconf.FAVICON_INDEX_DICT[status])
+
+        # Test custom favicons (default only)
+        with self.settings(STATUSBOARD={
+            'FAVICON_DEFAULT': 'default',
+            'FAVICON_INDEX_DICT': {}
+        }):
+            for status in (0, 1, 2, 3):
+                s1.status = status
+                s1.save()
+                response = client.get('/statusboard/')
+                self.assertContains(response, status_code=200, text=statusconf.FAVICON_DEFAULT)
+
 
 class IncidentCreate(TestCase):
     def setUp(self):
