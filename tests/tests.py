@@ -107,13 +107,13 @@ class TestTemplate(TestCase):
         self.assertNotContains(response, text='<meta http-equiv="refresh"')
 
         with self.settings(STATUSBOARD={
-            "AUTO_REFRESH_HOME_SECONDS": 0
+            "AUTO_REFRESH_INDEX_SECONDS": 0
         }):
             response = client.get('/statusboard/')
             self.assertNotContains(response, text='<meta http-equiv="refresh"')
 
         with self.settings(STATUSBOARD={
-            "AUTO_REFRESH_HOME_SECONDS": 1
+            "AUTO_REFRESH_INDEX_SECONDS": 1
         }):
             response = client.get('/statusboard/')
             self.assertContains(response, text='<meta http-equiv="refresh" content="1">')

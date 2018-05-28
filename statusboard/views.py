@@ -48,7 +48,7 @@ def index(request):
         "maintenances": Maintenance.objects.filter(
             scheduled__gt=timezone.now()
         ).order_by('-scheduled'),
-        "auto_refresh": statusconf.AUTO_REFRESH_HOME_SECONDS,
+        "auto_refresh": statusconf.AUTO_REFRESH_INDEX_SECONDS,
         "favicon": statusconf.FAVICON_INDEX_DICT.get(
             worst_status,
             statusconf.FAVICON_DEFAULT,
