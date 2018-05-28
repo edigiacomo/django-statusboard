@@ -35,6 +35,7 @@ from .forms import (
     IncidentForm, IncidentUpdateFormSet, ServiceGroupForm, ServiceForm,
     MaintenanceForm,
 )
+from .settings import statusconf
 
 
 def index(request):
@@ -46,6 +47,7 @@ def index(request):
         "maintenances": Maintenance.objects.filter(
             scheduled__gt=timezone.now()
         ).order_by('-scheduled'),
+        "auto_refresh": statusconf.AUTO_REFRESH_HOME_SECONDS,
     })
 
 

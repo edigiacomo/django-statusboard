@@ -15,6 +15,8 @@ DEFAULTS = {
     "INCIDENT_DAYS_IN_INDEX": 7,
     # Show or not all the open incidents in index
     "OPEN_INCIDENT_IN_INDEX": True,
+    # Automatic refresth the home page in seconds (disable with 0)
+    "AUTO_REFRESH_HOME_SECONDS": 0,
 }
 
 
