@@ -17,13 +17,13 @@ DEFAULTS = {
     # Show or not all the open incidents in index
     "OPEN_INCIDENT_IN_INDEX": True,
     # Default favicon
-    "FAVICON_DEFAULT": static('statusboard/images/statusboard-icon-default.png'),
+    "FAVICON_DEFAULT": static('statusboard/favicons/statusboard-icon-default.ico'),
     # Favicons for index
     "FAVICON_INDEX_DICT": {
-        0: static('statusboard/images/statusboard-icon-operational.png'),
-        1: static('statusboard/images/statusboard-icon-performance.png'),
-        2: static('statusboard/images/statusboard-icon-partial.png'),
-        3: static('statusboard/images/statusboard-icon-major.png'),
+        0: static('statusboard/favicons/statusboard-icon-operational.ico'),
+        1: static('statusboard/favicons/statusboard-icon-performance.ico'),
+        2: static('statusboard/favicons/statusboard-icon-partial.ico'),
+        3: static('statusboard/favicons/statusboard-icon-major.ico'),
     }
 }
 
