@@ -17,9 +17,6 @@ env:
 
 matrix:
     fast_finish: true
-    include:
-        - python: "3.3"
-          env: DJANGO=1.8
 
 before_install:
     - sudo apt-get install -y pandoc
