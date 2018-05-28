@@ -106,12 +106,17 @@ class TestTemplate(TestCase):
         # Test default favicons
         response = client.get('/statusboard/')
         self.assertContains(response, status_code=200, text=statusconf.FAVICON_DEFAULT)
-        s = Service.objects.create(name="s1", description="test", status=0)
+
+        s1 = Service.objects.create(name="s1", description="test", status=0)
         for status in (0, 1, 2, 3):
-            s.status = status
-            s.save()
+            s1.status = status
+            s1.save()
             response = client.get('/statusboard/')
             self.assertContains(response, status_code=200, text=statusconf.FAVICON_INDEX_DICT[status])
+
+        # This service is always operational so it doesn't affect the icon
+        # image
+        s2 = Service.objects.create(name="s2", description="test", status=0)
 
         # Test custom favicons
         with self.settings(STATUSBOARD={
@@ -124,8 +129,8 @@ class TestTemplate(TestCase):
             },
         }):
             for status in (0, 1, 2, 3):
-                s.status = status
-                s.save()
+                s1.status = status
+                s1.save()
                 response = client.get('/statusboard/')
                 self.assertContains(response, status_code=200, text=statusconf.FAVICON_INDEX_DICT[status])
 
@@ -135,11 +140,10 @@ class TestTemplate(TestCase):
             'FAVICON_INDEX_DICT': {}
         }):
             for status in (0, 1, 2, 3):
-                s.status = status
-                s.save()
+                s1.status = status
+                s1.save()
                 response = client.get('/statusboard/')
                 self.assertContains(response, status_code=200, text=statusconf.FAVICON_DEFAULT)
-
 
 
 class IncidentCreate(TestCase):
