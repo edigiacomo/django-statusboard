@@ -18,6 +18,7 @@ Add the following applications to your Django projects
 ```python
 INSTALLED_APPS += [
     'django.contrib.humanize',
+    'django.contrib.staticfiles',
     'rest_framework',
     'statusboard',
 ]
