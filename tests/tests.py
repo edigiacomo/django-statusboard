@@ -99,6 +99,25 @@ class TestTemplate(TestCase):
         self.assertTrue('statusboard/maintenance/create.html' in templates)
         self.assertTrue('statusboard/maintenance/form.html' in templates)
 
+    def test_index_refresh(self):
+        client = Client()
+
+        # Default: no refresh
+        response = client.get('/statusboard/')
+        self.assertNotContains(response, text='<meta http-equiv="refresh"')
+
+        with self.settings(STATUSBOARD={
+            "AUTO_REFRESH_HOME_SECONDS": 0
+        }):
+            response = client.get('/statusboard/')
+            self.assertNotContains(response, text='<meta http-equiv="refresh"')
+
+        with self.settings(STATUSBOARD={
+            "AUTO_REFRESH_HOME_SECONDS": 1
+        }):
+            response = client.get('/statusboard/')
+            self.assertContains(response, text='<meta http-equiv="refresh" content="1">')
+
 
 class IncidentCreate(TestCase):
     def setUp(self):

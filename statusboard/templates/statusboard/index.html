@@ -4,6 +4,12 @@
 {% load statusboard %}
 {% load i18n %}
 
+{% block meta_extra %}
+    {% if auto_refresh > 0 %}
+<meta http-equiv="refresh" content="{{ auto_refresh }}">
+    {% endif %}
+{% endblock %}
+
 {% block content %}
 <div class="container">
     {% for m in maintenances %}
