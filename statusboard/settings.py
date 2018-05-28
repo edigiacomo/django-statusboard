@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.contrib.staticfiles.templatetags.staticfiles import static
 
 
 """
@@ -15,6 +16,15 @@ DEFAULTS = {
     "INCIDENT_DAYS_IN_INDEX": 7,
     # Show or not all the open incidents in index
     "OPEN_INCIDENT_IN_INDEX": True,
+    # Default favicon
+    "FAVICON_DEFAULT": static('statusboard/images/statusboard-icon-default.png'),
+    # Favicons for index
+    "FAVICON_INDEX_DICT": {
+        0: static('statusboard/images/statusboard-icon-operational.png'),
+        1: static('statusboard/images/statusboard-icon-performance.png'),
+        2: static('statusboard/images/statusboard-icon-partial.png'),
+        3: static('statusboard/images/statusboard-icon-major.png'),
+    }
 }
 
 

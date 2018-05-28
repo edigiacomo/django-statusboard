@@ -4,6 +4,10 @@
 {% load statusboard %}
 {% load i18n %}
 
+{% block favicon %}
+<link rel="icon" type="image/png" url="{{ favicon }}">
+{% endblock %}
+
 {% block content %}
 <div class="container">
     {% for m in maintenances %}
