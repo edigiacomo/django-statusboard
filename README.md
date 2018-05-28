@@ -46,11 +46,13 @@ You can configure the app using the dict `STATUSBOARD` in `settings.py`:
 STATUSBOARD = {
     "INCIDENT_DAYS_IN_INDEX": 7,
     "OPEN_INCIDENT_IN_INDEX": True,
+    "AUTO_REFRESH_HOME_SECONDS": 0,
 }
 ```
 
 * `INCIDENT_DAYS_IN_INDEX`: number of days to show in index (1 = today).
 * `OPEN_INCIDENT_IN_INDEX`: show not fixed incidents in index.
+* `AUTO_REFRESH_HOME_SECONDS`: auto refresh home page every N seconds (0 = disabled).
 
 ## Customize pages
 
