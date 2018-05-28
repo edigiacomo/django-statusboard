@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.5.5 (2018-05-28)
 
 * Added some tests
 * Added settings for automatic refresh of the index
