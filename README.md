@@ -61,7 +61,8 @@ STATUSBOARD = {
 ```
 
 * `INCIDENT_DAYS_IN_INDEX`: number of days to show in index (1 = today).
-* `OPEN_INCIDENT_IN_INDEX`: show not fixed incidents in index.
+* `OPEN_INCIDENT_IN_INDEX`: show not fixed incidents in index, whether or not
+  the incident is older than `INCIDENT_DAYS_IN_INDEX`.
 * `AUTO_REFRESH_INDEX_SECONDS`: auto refresh home page every N seconds (0 = disabled).
 * `FAVICON_DEFAULT`: default favicon.
 * `FAVICON_INDEX_DICT`: favicon for index, based on the worst status (default:
