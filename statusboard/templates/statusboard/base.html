@@ -81,6 +81,12 @@
         {% endblock %}
 
         {% block content %} {% endblock %}
-        {% block footer %} {% endblock %}
+        {% block footer %}
+        <footer class="footer">
+            <div class="container">
+                <span class="text-muted">Powered by <a href="https://github.com/edigiacomo/django-statusboard">django-statusboard</span>
+            </div>
+        </footer>
+        {% endblock %}
     </body>
 </html>
