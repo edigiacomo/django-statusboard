@@ -76,7 +76,7 @@ urlpatterns = [
     url(r'^$', views.index, name="index"),
 ]
 
-if django.VERSION[0:2] < (1.11):
+if django.VERSION[0:2] < (1, 11):
     urlpatterns += [
         url(r'^login/$', auth_views.login, {
             "template_name": "statusboard/login.html",
