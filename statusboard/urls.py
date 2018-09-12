@@ -74,13 +74,26 @@ incident_urls = [
 
 urlpatterns = [
     url(r'^$', views.index, name="index"),
-    url(r'^login/$', auth_views.login, {
-        "template_name": "statusboard/login.html",
-    }, name="login"),
-    url(r'^logout/$', auth_views.logout, {
-        "template_name": "statusboard/login.html",
-    }, name="logout"),
 ]
+
+if django.VERSION[0:2] < (1.11):
+    urlpatterns += [
+        url(r'^login/$', auth_views.login, {
+            "template_name": "statusboard/login.html",
+        }, name="login"),
+        url(r'^logout/$', auth_views.logout, {
+            "template_name": "statusboard/login.html",
+        }, name="logout"),
+    ]
+else:
+    urlpatterns += [
+        url(r'^login/$', auth_views.LoginView.as_view(
+            template_name="statusboard/login.html",
+        ), name="login"),
+        url(r'^logout/$', auth_views.LogoutView.as_view(
+            template_name="statusboard/login.html",
+        ), name="logout"),
+    ]
 
 
 if django.VERSION[0:2] < (1, 9):
