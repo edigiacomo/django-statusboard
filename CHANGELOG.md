@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.6.1 (2018-09-12)
+
+* Added Python 3.7 support
+* Added Django 2.1 support
+* Added default footer
+
 ## 0.5.6 (2018-05-28)
 
 * Added favicons to dist
