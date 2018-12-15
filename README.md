@@ -66,7 +66,7 @@ STATUSBOARD = {
 * `AUTO_REFRESH_INDEX_SECONDS`: auto refresh home page every N seconds (0 = disabled).
 * `FAVICON_DEFAULT`: default favicon.
 * `FAVICON_INDEX_DICT`: favicon for index, based on the worst status (default:
-  `FAVICON_DEFAULT`).
+  `FAVICON_DEFAULT`). The keys `(0, 1, 2, 3)` are the status values (see `SERVICE_STATUSES` in `statusboard/models.py`).
 
 ## Customize pages
 
