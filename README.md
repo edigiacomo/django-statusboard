@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/edigiacomo/django-statusboard.svg?branch=master)](https://travis-ci.org/edigiacomo/django-statusboard)
 [![Pypi](https://img.shields.io/pypi/v/django-statusboard.svg)](https://pypi.python.org/pypi/django-statusboard/)
 
-Status page application.
+Status page application with browser and REST API interface.
 
 ## Installation
 
@@ -129,3 +129,7 @@ def notify_service_update(sender, instance, **kwargs):
     if instance.status > instance._status:
         mail_admins("Alert", "Service {} is {}".format(instance.name, instance.get_status_display()))
 ```
+
+## REST API
+
+`django-statusboard` comes with a set of REST API to admin its models, based on [Django REST Framework](https://www.django-rest-framework.org/) `ModelViewSet`.
