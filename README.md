@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.org/edigiacomo/django-statusboard.svg?branch=master)](https://travis-ci.org/edigiacomo/django-statusboard)
 [![Pypi](https://img.shields.io/pypi/v/django-statusboard.svg)](https://pypi.python.org/pypi/django-statusboard/)
+[![codecov](https://codecov.io/gh/edigiacomo/django-statusboard/branch/master/graph/badge.svg)](https://codecov.io/gh/edigiacomo/django-statusboard)
 
 Status page application with browser and REST API interface.
 
