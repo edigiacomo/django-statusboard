@@ -69,7 +69,7 @@ class ServiceGroupUpdate(PermissionRequiredMixin, UpdateView):
     form_class = ServiceGroupForm
     template_name = "statusboard/servicegroup/edit.html"
     success_url = reverse_lazy('statusboard:index')
-    permission_required = 'statusboard.edit_servicegroup'
+    permission_required = 'statusboard.change_servicegroup'
 
 
 class ServiceGroupDelete(PermissionRequiredMixin, DeleteView):
@@ -92,7 +92,7 @@ class ServiceUpdate(PermissionRequiredMixin, UpdateView):
     form_class = ServiceForm
     template_name = "statusboard/service/edit.html"
     success_url = reverse_lazy('statusboard:index')
-    permission_required = 'statusboard.edit_service'
+    permission_required = 'statusboard.change_service'
 
 
 class ServiceDelete(PermissionRequiredMixin, DeleteView):
@@ -115,7 +115,7 @@ class MaintenanceUpdate(PermissionRequiredMixin, UpdateView):
     form_class = MaintenanceForm
     template_name = "statusboard/maintenance/edit.html"
     success_url = reverse_lazy('statusboard:index')
-    permission_required = 'statusboard.edit_maintenance'
+    permission_required = 'statusboard.change_maintenance'
 
 
 class MaintenanceDelete(PermissionRequiredMixin, DeleteView):

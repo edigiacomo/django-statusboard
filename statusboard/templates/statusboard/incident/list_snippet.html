@@ -14,7 +14,7 @@
         {% if perms.statusboard.delete_incident %}
         <small><a href="{% url 'statusboard:incident:delete' pk=incident.id %}">{% trans 'delete' %}</a></small>
         {% endif %}
-        {% if perms.statusboard.edit_incident %}
+        {% if perms.statusboard.change_incident %}
         <small><a href="{% url 'statusboard:incident:edit' pk=incident.id %}">{% trans 'edit' %}</a></small>
         {% endif %}
         <br/>

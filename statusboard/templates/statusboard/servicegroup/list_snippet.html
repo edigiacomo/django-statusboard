@@ -4,14 +4,14 @@
 
 {% for grp in servicegroups %}
 <div class="servicegroup {% if grp.is_empty_group %}servicegroup-empty{% endif %}">
-    {% if grp.is_empty_group != True or perms.statusboard.edit_servicegroup or perms.statusboard.delete_servicegroup %}
+    {% if grp.is_empty_group != True or perms.statusboard.change_servicegroup or perms.statusboard.delete_servicegroup %}
     <div class="panel panel-default">
         <div class="panel-heading">
             <strong><a class="servicegroup-name {% if grp.collapsed %}collapsed{% endif %}" data-toggle="collapse" data-target="#servicegroup-{{ grp.id}}-panel-body">{{ grp.name }}</a></strong>
             {% if perms.statusboard.delete_servicegroup %}
             <small><a href="{% url 'statusboard:servicegroup:delete' pk=grp.id %}">{% trans 'delete' %}</a></small>
             {% endif %}
-            {% if perms.statusboard.edit_servicegroup %}
+            {% if perms.statusboard.change_servicegroup %}
             <small><a href="{% url 'statusboard:servicegroup:edit' pk=grp.id %}">{% trans 'edit' %}</a></small>
             {% endif %}
             <div class="pull-right">
@@ -32,7 +32,7 @@
                 {% if perms.statusboard.delete_service %}
                 <small><a href="{% url 'statusboard:service:delete' pk=srv.id %}">{% trans 'delete' %}</a></small>
                 {% endif %}
-                {% if perms.statusboard.edit_service %}
+                {% if perms.statusboard.change_service %}
                 <small><a href="{% url 'statusboard:service:edit' pk=srv.id %}">{% trans 'edit' %}</a></small>
                 {% endif %}
 
@@ -74,7 +74,7 @@ $(".service-tooltip").tooltip({
                 {% if perms.statusboard.delete_service %}
                 <small><a href="{% url 'statusboard:service:delete' pk=srv.id %}">{% trans 'delete' %}</a></small>
                 {% endif %}
-                {% if perms.statusboard.edit_service %}
+                {% if perms.statusboard.change_service %}
                 <small><a href="{% url 'statusboard:service:edit' pk=srv.id %}">{% trans 'edit' %}</a></small>
                 {% endif %}
 
