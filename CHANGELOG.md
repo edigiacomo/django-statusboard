@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.7.0
+
+* Updated documentation
+* Fixed change permissions (#45)
+
 ## 0.6.1 (2018-09-12)
 
 * Added Python 3.7 support
