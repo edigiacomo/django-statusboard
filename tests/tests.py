@@ -536,11 +536,11 @@ class TestPermissionRequiredView(TestCase):
 
 class TestChangePermission(TestCase):
     def setUp(self):
-        edituser = User.objects.create_user(username="edit")
+        edituser = User.objects.create_user(username="edit", password="edit")
         edituser.user_permissions.add(Permission.objects.get(codename="change_service"))
         edituser.save()
         self.client = Client()
-        self.client.force_login(edituser)
+        self.client.login(username='edit', password='edit')
 
         self.servicegroup = ServiceGroup.objects.create(name="g1")
         self.service = Service.objects.create(name="s1", description="s1", status=2)
