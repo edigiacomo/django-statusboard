@@ -532,3 +532,27 @@ class TestPermissionRequiredView(TestCase):
             self.assertRedirects(response,
                                  '/login?next=/statusboard/service/create/',
                                  fetch_redirect_response=False)
+
+
+class TestChangePermission(TestCase):
+    def setUp(self):
+        edituser = User.objects.create_user(username="edit")
+        edituser.user_permissions.add(Permission.objects.get(codename="change_service"))
+        edituser.save()
+        self.client = Client()
+        self.client.force_login(edituser)
+
+        self.servicegroup = ServiceGroup.objects.create(name="g1")
+        self.service = Service.objects.create(name="s1", description="s1", status=2)
+
+    def test_change_service(self):
+
+        resp = self.client.post('/statusboard/service/{}/edit/'.format(self.service.pk), {
+            'name': 's1-changed',
+            'description': self.service.description,
+            'href': self.service.href,
+            'status': self.service.status,
+            'priority': self.service.priority,
+            'groups': [self.servicegroup.pk],
+        })
+        self.assertEquals(Service.objects.get(pk=self.service.pk).name, 's1-changed')
