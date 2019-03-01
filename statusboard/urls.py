@@ -1,6 +1,5 @@
 from __future__ import unicode_literals
 
-import django
 from django.conf.urls import url, include
 from django.contrib.auth import views as auth_views
 
@@ -76,43 +75,19 @@ urlpatterns = [
     url(r'^$', views.index, name="index"),
 ]
 
-if django.VERSION[0:2] < (1, 11):
-    urlpatterns += [
-        url(r'^login/$', auth_views.login, {
-            "template_name": "statusboard/login.html",
-        }, name="login"),
-        url(r'^logout/$', auth_views.logout, {
-            "template_name": "statusboard/login.html",
-        }, name="logout"),
-    ]
-else:
-    urlpatterns += [
-        url(r'^login/$', auth_views.LoginView.as_view(
-            template_name="statusboard/login.html",
-        ), name="login"),
-        url(r'^logout/$', auth_views.LogoutView.as_view(
-            template_name="statusboard/login.html",
-        ), name="logout"),
-    ]
+urlpatterns += [
+    url(r'^login/$', auth_views.LoginView.as_view(
+        template_name="statusboard/login.html",
+    ), name="login"),
+    url(r'^logout/$', auth_views.LogoutView.as_view(
+        template_name="statusboard/login.html",
+    ), name="logout"),
+]
 
-
-if django.VERSION[0:2] < (1, 9):
-    urlpatterns += [
-        url(r'^service/', include(service_urls, namespace="service")),
-        url(r'^servicegroup/', include(servicegroup_urls,
-                                       namespace="servicegroup")),
-        url(r'^incident/', include(incident_urls,
-                                   namespace="incident")),
-        url(r'^maintenance/', include(maintenance_urls,
-                                      namespace="maintenance")),
-        url(r'^api/(?P<version>v0\.1)/', include(router.urls,
-                                                 namespace="api")),
-    ]
-else:
-    urlpatterns += [
-        url(r'^service/', include((service_urls, "service"))),
-        url(r'^servicegroup/', include((servicegroup_urls, "servicegroup"))),
-        url(r'^incident/', include((incident_urls, "incident"))),
-        url(r'^maintenance/', include((maintenance_urls, "maintenance"))),
-        url(r'^api/(?P<version>v0\.1)/', include((router.urls, "api"))),
-    ]
+urlpatterns += [
+    url(r'^service/', include((service_urls, "service"))),
+    url(r'^servicegroup/', include((servicegroup_urls, "servicegroup"))),
+    url(r'^incident/', include((incident_urls, "incident"))),
+    url(r'^maintenance/', include((maintenance_urls, "maintenance"))),
+    url(r'^api/(?P<version>v0\.1)/', include((router.urls, "api"))),
+]

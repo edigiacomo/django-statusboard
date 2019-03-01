@@ -488,11 +488,7 @@ class TestMaintenanceEdit(TestCase):
 
 class TestReverseAndResolve(TestCase):
     def test_maintenance(self):
-        try:
-            from django.urls import reverse, resolve
-        except ImportError:
-            # Django < 1.10
-            from django.core.urlresolvers import reverse, resolve
+        from django.urls import reverse, resolve
         from statusboard.views import MaintenanceCreate
 
         self.assertEquals(
@@ -520,11 +516,7 @@ class TestSettings(TestCase):
 
 class TestPermissionRequiredView(TestCase):
     def test_permission_required(self):
-        try:
-            from django.urls import reverse, resolve
-        except ImportError:
-            # Django < 1.10
-            from django.core.urlresolvers import reverse, resolve
+        from django.urls import reverse, resolve
 
         with self.settings(LOGIN_URL='/login'):
             client = Client()

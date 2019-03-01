@@ -3,22 +3,14 @@ from __future__ import unicode_literals
 from django.shortcuts import render, redirect
 from django.http import Http404
 from django.http import HttpResponseRedirect
-try:
-    from django.urls import reverse_lazy, reverse
-except ImportError:
-    # Django < 1.10
-    from django.core.urlresolvers import reverse_lazy, reverse
+from django.urls import reverse_lazy, reverse
 from django.views.generic.dates import MonthArchiveView
 from django.views.generic.edit import CreateView
 from django.views.generic.edit import UpdateView
 from django.views.generic.edit import DeleteView
 from django.utils import timezone
 from django.contrib.auth.decorators import permission_required
-try:
-    from django.contrib.auth.mixins import PermissionRequiredMixin
-except ImportError:
-    # Django < 1.9
-    from .utils import PermissionRequiredMixin
+from django.contrib.auth.mixins import PermissionRequiredMixin
 
 from rest_framework import viewsets
 from rest_framework import permissions
