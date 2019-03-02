@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.7.1
+
+* Removed python < 3.4 support
+* Removed django < 1.11 support
+* Added django 2.2 support
+* More coverage
+* Fixed readthedocs build (#48)
+
 ## 0.7.0
 
 * Updated documentation
