@@ -1,4 +1,7 @@
 [run]
 source = statusboard
-omit = statusboard/migrations/*.py
+omit =
+    statusboard/migrations/*.py
+    statusboard/apps.py
+    statusboard/admin.py
 branch = True

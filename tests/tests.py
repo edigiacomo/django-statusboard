@@ -538,7 +538,6 @@ class TestChangePermission(TestCase):
         self.service = Service.objects.create(name="s1", description="s1", status=2)
 
     def test_change_service(self):
-
         resp = self.client.post('/statusboard/service/{}/edit/'.format(self.service.pk), {
             'name': 's1-changed',
             'description': self.service.description,
@@ -548,3 +547,25 @@ class TestChangePermission(TestCase):
             'groups': [self.servicegroup.pk],
         })
         self.assertEquals(Service.objects.get(pk=self.service.pk).name, 's1-changed')
+
+
+class TestArchiveIncident(TestCase):
+    def test_archive_index_empty(self):
+        from django.urls import reverse
+        client = Client()
+        resp = client.get(reverse('statusboard:incident:archive-index'))
+        self.assertTrue('statusboard/incident/archive_month_empty.html' in [
+            t.name for t in resp.templates
+        ])
+
+    def test_archive_index_nonempty(self):
+        from django.urls import reverse
+        i = Incident.objects.create(name="incident")
+        client = Client()
+        resp = client.get(reverse('statusboard:incident:archive-index'))
+        self.assertRedirects(
+            resp,
+            reverse('statusboard:incident:archive-month', args=[
+                i.created.year, i.created.month
+            ])
+        )
