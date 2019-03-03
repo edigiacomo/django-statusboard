@@ -185,30 +185,6 @@ class IncidentMonthArchiveView(MonthArchiveView):
     month_format = "%m"
     template_name = "statusboard/incident/archive_month.html"
 
-    def get_year(self):
-        try:
-            return super(IncidentMonthArchiveView, self).get_year()
-        except Http404:
-            try:
-                return str(
-                    self.get_queryset().latest(self.date_field).occurred.year
-                )
-            except Incident.DoesNotExist:
-                # List is empty
-                return str(timezone.now().year)
-
-    def get_month(self):
-        try:
-            return super(IncidentMonthArchiveView, self).get_month()
-        except Http404:
-            try:
-                return str(
-                    self.get_queryset().latest(self.date_field).occurred.month
-                )
-            except Incident.DoesNotExist:
-                # List is empty
-                return str(timezone.now().month)
-
 
 class ServiceGroupViewSet(viewsets.ModelViewSet):
     serializer_class = ServiceGroupSerializer
