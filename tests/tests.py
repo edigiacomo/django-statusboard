@@ -165,7 +165,7 @@ class TestTemplate(TestCase):
                 self.assertContains(response, status_code=200, text=statusconf.FAVICON_DEFAULT)
 
 
-class IncidentCreate(TestCase):
+class TestIncidentCreate(TestCase):
     def setUp(self):
         admin = User.objects.create_superuser(username="admin",
                                               password="admin",
@@ -194,7 +194,7 @@ class IncidentCreate(TestCase):
             self.assertEquals(s.status, 0)
 
 
-class IncidentEdit(TestCase):
+class TestIncidentEdit(TestCase):
     def setUp(self):
         admin = User.objects.create_superuser(username="admin",
                                               password="admin",
