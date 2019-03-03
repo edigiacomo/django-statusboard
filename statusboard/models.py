@@ -201,9 +201,6 @@ class Incident(TimeStampedModel):
     closed = models.BooleanField(default=False)
     objects = IncidentManager()
 
-    def worst_status(self):
-        return self.updates.aggregate(worst=models.Max('status'))['worst']
-
     def updates_by_ctime(self):
         return self.updates.order_by('-created')
 
