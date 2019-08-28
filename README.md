@@ -135,3 +135,10 @@ def notify_service_update(sender, instance, **kwargs):
 ## REST API
 
 `django-statusboard` comes with a set of REST API to manage its models, based on [Django REST Framework](https://www.django-rest-framework.org/) `ModelViewSet`.
+
+
+## Contact and copyright information
+
+Copyright (C) 2019 Emanuele Di Giacomo <emanuele@digiacomo.cc>
+
+django-statusboard is licensed under GPLv2+.
