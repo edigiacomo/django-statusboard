@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.8.0
+
+* Added django 3.0 support
+* Added Python 3.8 support
+* Removed django 2.0, 2.1 support
+* load static instead of staticfiles in template
+
 ## 0.7.1
 
 * Removed python < 3.4 support
