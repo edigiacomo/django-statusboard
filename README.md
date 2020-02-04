@@ -47,6 +47,7 @@ You can configure the app using the dict `STATUSBOARD` in `settings.py`:
 
 ```python
 from django.contrib.staticfiles.templatetags.staticfiles import static
+# for Django >= 3.0: from django.templatetags.static import static
 
 STATUSBOARD = {
     "INCIDENT_DAYS_IN_INDEX": 7,
