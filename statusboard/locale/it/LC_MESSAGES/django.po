@@ -322,8 +322,6 @@ msgid "Create a new maintenance"
 msgstr "Crea una nuova manutenzione"
 
 #: statusboard/templates/statusboard/maintenance/edit.html:9
-#, fuzzy
-#| msgid "maintenance"
 msgid "Edit maintenance"
 msgstr "Modifica la manutenzione"
 
