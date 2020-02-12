@@ -251,7 +251,7 @@ class IncidentUpdate(TimeStampedModel):
 
 
 class Maintenance(TimeStampedModel):
-    scheduled = models.DateTimeField(verbose_name=_("scheduled"))
+    scheduled = models.DateTimeField(verbose_name=_("scheduled start"))
     name = models.CharField(max_length=255, verbose_name=_("name"))
     description = models.TextField(verbose_name=_("description"))
 
