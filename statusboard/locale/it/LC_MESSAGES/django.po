@@ -121,7 +121,7 @@ msgstr "aggiornamenti dell'incidente"
 
 #: statusboard/models.py:254
 msgid "scheduled start"
-msgstr "inizio pianificazione"
+msgstr "inizio previsto"
 
 #: statusboard/models.py:262
 msgid "maintenance"
