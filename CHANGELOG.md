@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.8.1
+
+* Removed Python 3.4 support
+* Added explanation of scheduled field in maintenance create/edit pages
+
 ## 0.8.0
 
 * Added django 3.0 support
