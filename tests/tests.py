@@ -208,6 +208,24 @@ class TestIncidentCreate(TestCase):
         for s in incident.services.all():
             self.assertEquals(s.status, 0)
 
+    def test_create_with_empty_service_status(self):
+        client = Client()
+        client.login(username="admin", password="admin")
+        response = client.post('/statusboard/incident/create/', {
+            'name': 'incident',
+            'occurred': '2010-01-01 00:00:00',
+            'services': [1, 2],
+            'service_status': '',
+            'updates-INITIAL_FORMS': 0,
+            'updates-TOTAL_FORMS': 0,
+            'updates-MAX_NUM_FORMS': 0,
+            'updates-MIN_NUM_FORMS': 0,
+        })
+        incident = Incident.objects.get(pk=1)
+        self.assertEquals(incident.services.count(), 2)
+        for s in incident.services.all():
+            self.assertEquals(s.status, 0)
+
 
 class TestIncidentEdit(TestCase):
     def setUp(self):

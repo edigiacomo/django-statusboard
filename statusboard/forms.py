@@ -47,10 +47,11 @@ class MaintenanceForm(forms.ModelForm):
 
 
 class IncidentForm(forms.ModelForm):
-
-    service_status = forms.ChoiceField(choices=SERVICE_STATUSES,
-                                       label=_('Services status'),
-                                       required=False)
+    service_status = forms.ChoiceField(
+        choices=tuple([('', '')] + list(SERVICE_STATUSES)),
+        label=_('Services status'),
+        required=False,
+    )
 
     class Meta:
         model = Incident
@@ -71,7 +72,7 @@ class IncidentForm(forms.ModelForm):
 
         if commit:
             model.save()
-            if status is not None:
+            if status is not in (None, ''):
                 self.save_m2m()
                 model.services.update(status=status)
 
