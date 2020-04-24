@@ -72,8 +72,8 @@ class IncidentForm(forms.ModelForm):
 
         if commit:
             model.save()
+            self.save_m2m()
             if status not in (None, ''):
-                self.save_m2m()
                 model.services.update(status=status)
 
         return model
