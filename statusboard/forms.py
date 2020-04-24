@@ -17,6 +17,7 @@ from __future__ import unicode_literals
 
 from django import forms
 from django.forms import inlineformset_factory
+from django.utils.translation import ugettext_lazy as _
 
 from .models import Incident
 from .models import Service
@@ -48,7 +49,7 @@ class MaintenanceForm(forms.ModelForm):
 class IncidentForm(forms.ModelForm):
 
     service_status = forms.ChoiceField(choices=SERVICE_STATUSES,
-                                       label='Services status',
+                                       label=_('Services status'),
                                        required=False)
 
     class Meta:
