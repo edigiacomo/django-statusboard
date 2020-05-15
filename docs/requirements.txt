@@ -1,1 +1,1 @@
-../requirements/requirements-documentation.txt
+mkdocs==1.1.2
