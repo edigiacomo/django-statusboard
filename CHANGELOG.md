@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.9.0
+
+* Removed Django 1.8 support
+* Updated italian translation
+* Updated mkdocs version (from 1.0.4 to 1.1.2)
+* Empty service status value on incident creation/update (#50)
+
 ## 0.8.1
 
 * Removed Python 3.4 support
