@@ -47,23 +47,16 @@ class MaintenanceForm(forms.ModelForm):
 
 
 class IncidentForm(forms.ModelForm):
-
-    service_status = forms.ChoiceField(choices=SERVICE_STATUSES,
-                                       label=_('Services status'),
-                                       required=False)
+    service_status = forms.ChoiceField(
+        choices=tuple([('', '---------')] + list(SERVICE_STATUSES)),
+        label=_('Services status'),
+        help_text=_('Update the status of involved services (an empty value means that they will be left unaltered)'),
+        required=False,
+    )
 
     class Meta:
         model = Incident
         fields = ['name', 'occurred', 'services', 'service_status']
-
-    def __init__(self, *args, **kwargs):
-        """Create an incident form. When the form is populated, the initial
-        value of `service_status` is the worst status of the services
-        involved."""
-        super(IncidentForm, self).__init__(*args, **kwargs)
-        if self.instance.pk is not None and self.instance.services.exists():
-            last_status = self.instance.services.latest('status').status
-            self.fields['service_status'].initial = last_status
 
     def save(self, commit=True):
         model = super(IncidentForm, self).save(commit=False)
@@ -71,8 +64,8 @@ class IncidentForm(forms.ModelForm):
 
         if commit:
             model.save()
-            if status is not None:
-                self.save_m2m()
+            self.save_m2m()
+            if status not in (None, ''):
                 model.services.update(status=status)
 
         return model

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Django Statusboard\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-24 15:49+0200\n"
+"POT-Creation-Date: 2020-05-18 10:44+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Emanuele Di Giacomo <emanuele@digiacomo.cc>\n"
 "Language-Team: Italian\n"
@@ -20,6 +20,13 @@ msgstr ""
 #: forms.py:52
 msgid "Services status"
 msgstr "Status dei servizi"
+
+#: forms.py:53
+msgid ""
+"Update the status of involved services (an empty value means that they will "
+"be left unaltered)"
+msgstr ""
+"Aggiorna lo status dei servizi coinvolti (se vuoto, saranno lasciati inalterati)"
 
 #: models.py:29
 msgid "Operational"
