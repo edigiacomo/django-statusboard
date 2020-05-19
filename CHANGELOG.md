@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.9.2
+
+* Updated bootstrap (3.4.1)
+
 ## 0.9.1
 
 * Fixed incident form: when the service list is empty, the service status
