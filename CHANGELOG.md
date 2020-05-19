@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.9.3
+
+* .css.map in dist
+
 ## 0.9.2
 
 * Updated bootstrap (3.4.1)
