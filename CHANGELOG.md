@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.9.1
+
+* Fixed incident form: when the service list is empty, the service status
+  selection is disabled
+
 ## 0.9.0
 
 * Removed Django 1.8 support
