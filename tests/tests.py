@@ -34,19 +34,25 @@ class TestApiPermission(TestCase):
         self.anon_client = APIClient()
 
         createuser = User.objects.create_user(username="create")
-        createuser.user_permissions.add(Permission.objects.get(codename="add_servicegroup"))
+        createuser.user_permissions.add(
+            Permission.objects.get(codename="add_servicegroup")
+        )
         createuser.save()
         self.create_client = APIClient()
         self.create_client.force_authenticate(createuser)
 
         deleteuser = User.objects.create_user(username="delete")
-        deleteuser.user_permissions.add(Permission.objects.get(codename="delete_servicegroup"))
+        deleteuser.user_permissions.add(
+            Permission.objects.get(codename="delete_servicegroup")
+        )
         deleteuser.save()
         self.delete_client = APIClient()
         self.delete_client.force_authenticate(deleteuser)
 
         edituser = User.objects.create_user(username="edit")
-        edituser.user_permissions.add(Permission.objects.get(codename="change_servicegroup"))
+        edituser.user_permissions.add(Permission.objects.get(
+            codename="change_servicegroup")
+        )
         edituser.save()
         self.edit_client = APIClient()
         self.edit_client.force_authenticate(edituser)
@@ -58,30 +64,39 @@ class TestApiPermission(TestCase):
         response = self.anon_client.post("/statusboard/api/v0.1/servicegroup/")
         self.assertEquals(response.status_code, 403)
 
-        response = self.create_client.post("/statusboard/api/v0.1/servicegroup/", {
-            "name": "test",
-        })
+        response = self.create_client.post(
+            "/statusboard/api/v0.1/servicegroup/", {
+                "name": "test",
+            }
+        )
         self.assertEquals(response.status_code, 201)
         self.assertTrue(ServiceGroup.objects.get(name="test") is not None)
 
-        response = self.delete_client.patch("/statusboard/api/v0.1/servicegroup/1/", {
-            "name": "t",
-        })
+        response = self.delete_client.patch(
+            "/statusboard/api/v0.1/servicegroup/1/", {
+                "name": "t",
+            }
+        )
         self.assertEquals(response.status_code, 403)
         self.assertTrue(ServiceGroup.objects.get(name="test") is not None)
 
-        response = self.edit_client.patch("/statusboard/api/v0.1/servicegroup/1/", {
-            "name": "t",
-        })
+        response = self.edit_client.patch(
+            "/statusboard/api/v0.1/servicegroup/1/", {
+                "name": "t",
+            }
+        )
         self.assertEquals(response.status_code, 200)
         self.assertTrue(ServiceGroup.objects.get(name="t") is not None)
 
-
-        response = self.create_client.delete("/statusboard/api/v0.1/servicegroup/1/")
+        response = self.create_client.delete(
+            "/statusboard/api/v0.1/servicegroup/1/"
+        )
         self.assertEquals(response.status_code, 403)
         self.assertEquals(ServiceGroup.objects.filter(pk=1).count(), 1)
 
-        response = self.delete_client.delete("/statusboard/api/v0.1/servicegroup/1/")
+        response = self.delete_client.delete(
+            "/statusboard/api/v0.1/servicegroup/1/"
+        )
         self.assertEquals(response.status_code, 204)
         self.assertEquals(ServiceGroup.objects.filter(pk=1).count(), 0)
 
@@ -92,7 +107,6 @@ class TestTemplate(TestCase):
                                               password="admin",
                                               email="admin@admin")
         admin.save()
-
 
     def test_service_create(self):
         client = Client()
@@ -131,7 +145,8 @@ class TestTemplate(TestCase):
             "AUTO_REFRESH_INDEX_SECONDS": 1
         }):
             response = client.get('/statusboard/')
-            self.assertContains(response, text='<meta http-equiv="refresh" content="1">')
+            self.assertContains(response,
+                                text='<meta http-equiv="refresh" content="1">')
 
     def test_index_favicon(self):
         from statusboard.settings import statusconf
@@ -139,18 +154,20 @@ class TestTemplate(TestCase):
         client = Client()
         # Test default favicons
         response = client.get('/statusboard/')
-        self.assertContains(response, status_code=200, text=statusconf.FAVICON_DEFAULT)
+        self.assertContains(response, status_code=200,
+                            text=statusconf.FAVICON_DEFAULT)
 
         s1 = Service.objects.create(name="s1", description="test", status=0)
         for status in (0, 1, 2, 3):
             s1.status = status
             s1.save()
             response = client.get('/statusboard/')
-            self.assertContains(response, status_code=200, text=statusconf.FAVICON_INDEX_DICT[status])
+            self.assertContains(response, status_code=200,
+                                text=statusconf.FAVICON_INDEX_DICT[status])
 
         # This service is always operational so it doesn't affect the icon
         # image
-        s2 = Service.objects.create(name="s2", description="test", status=0)
+        Service.objects.create(name="s2", description="test", status=0)
 
         # Test custom favicons
         with self.settings(STATUSBOARD={
@@ -166,7 +183,8 @@ class TestTemplate(TestCase):
                 s1.status = status
                 s1.save()
                 response = client.get('/statusboard/')
-                self.assertContains(response, status_code=200, text=statusconf.FAVICON_INDEX_DICT[status])
+                self.assertContains(response, status_code=200,
+                                    text=statusconf.FAVICON_INDEX_DICT[status])
 
         # Test custom favicons (default only)
         with self.settings(STATUSBOARD={
@@ -177,7 +195,8 @@ class TestTemplate(TestCase):
                 s1.status = status
                 s1.save()
                 response = client.get('/statusboard/')
-                self.assertContains(response, status_code=200, text=statusconf.FAVICON_DEFAULT)
+                self.assertContains(response, status_code=200,
+                                    text=statusconf.FAVICON_DEFAULT)
 
 
 class TestIncidentCreate(TestCase):
@@ -187,13 +206,13 @@ class TestIncidentCreate(TestCase):
                                               email="admin@admin")
         admin.save()
 
-        s1 = Service.objects.create(name="s1", description="s1", status=2)
-        s2 = Service.objects.create(name="s2", description="s2", status=2)
+        Service.objects.create(name="s1", description="s1", status=2)
+        Service.objects.create(name="s2", description="s2", status=2)
 
     def test_create(self):
         client = Client()
         client.login(username="admin", password="admin")
-        response = client.post('/statusboard/incident/create/', {
+        client.post('/statusboard/incident/create/', {
             'name': 'incident',
             'occurred': '2010-01-01 00:00:00',
             'services': [1, 2],
@@ -211,7 +230,7 @@ class TestIncidentCreate(TestCase):
     def test_create_without_services(self):
         client = Client()
         client.login(username="admin", password="admin")
-        response = client.post('/statusboard/incident/create/', {
+        client.post('/statusboard/incident/create/', {
             'name': 'incident',
             'occurred': '2010-01-01 00:00:00',
             'services': [],
@@ -227,7 +246,7 @@ class TestIncidentCreate(TestCase):
     def test_create_with_empty_service_status(self):
         client = Client()
         client.login(username="admin", password="admin")
-        response = client.post('/statusboard/incident/create/', {
+        client.post('/statusboard/incident/create/', {
             'name': 'incident',
             'occurred': '2010-01-01 00:00:00',
             'services': [1, 2],
@@ -263,7 +282,7 @@ class TestIncidentEdit(TestCase):
     def test_edit(self):
         client = Client()
         client.login(username="admin", password="admin")
-        response = client.post('/statusboard/incident/1/edit/', {
+        client.post('/statusboard/incident/1/edit/', {
             'name': 'incident',
             'occurred': '2010-01-01 00:00:00',
             'services': [1, 2],
@@ -281,7 +300,7 @@ class TestIncidentEdit(TestCase):
     def test_edit_with_empty_service_status(self):
         client = Client()
         client.login(username="admin", password="admin")
-        response = client.post('/statusboard/incident/1/edit/', {
+        client.post('/statusboard/incident/1/edit/', {
             'name': 'incident',
             'occurred': '2010-01-01 00:00:00',
             'services': [1, 2],
@@ -299,7 +318,7 @@ class TestIncidentEdit(TestCase):
     def test_edit_remove_service(self):
         client = Client()
         client.login(username="admin", password="admin")
-        response = client.post('/statusboard/incident/1/edit/', {
+        client.post('/statusboard/incident/1/edit/', {
             'name': 'incident',
             'occurred': '2010-01-01 00:00:00',
             'services': 1,
@@ -315,7 +334,7 @@ class TestIncidentEdit(TestCase):
     def test_valid_status(self):
         client = Client()
         client.login(username="admin", password="admin")
-        response = client.post('/statusboard/incident/1/edit/', {
+        client.post('/statusboard/incident/1/edit/', {
             'name': 'incident',
             'occurred': '2010-01-01 00:00:00',
             'services': [1, 2],
@@ -344,7 +363,29 @@ class TestServiceGroup(TestCase):
         self.assertEquals(ServiceGroup.objects.priority_sorted()[1], s2)
         self.assertEquals(ServiceGroup.objects.priority_sorted()[2], s0)
         # Filter queryset object
-        self.assertEquals(ServiceGroup.objects.filter(name="s1").priority_sorted()[0], s1)
+        self.assertEquals(
+            ServiceGroup.objects.filter(name="s1").priority_sorted()[0], s1
+        )
+
+    def test_worst_service(self):
+        g = ServiceGroup.objects.create(name="test", collapse=0)
+        self.assertRaises(Service.DoesNotExist, g.worst_service)
+        s = Service.objects.create(name="s0", description="test", status=0)
+        g.services.add(s)
+        g.save()
+        self.assertEquals(g.worst_service(), s)
+        s = Service.objects.create(name="s1", description="test", status=1)
+        g.services.add(s)
+        g.save()
+        self.assertEquals(g.worst_service(), s)
+
+    def test_is_empty_group(self):
+        g = ServiceGroup.objects.create(name="test", collapse=0)
+        self.assertTrue(g.is_empty_group())
+        s = Service.objects.create(name="s1", description="test", status=1)
+        g.services.add(s)
+        g.save()
+        self.assertFalse(g.is_empty_group())
 
 
 class TestIncidentManager(TestCase):
@@ -354,13 +395,18 @@ class TestIncidentManager(TestCase):
         i = Incident.objects.create(name="a", occurred=dt)
         IncidentUpdate.objects.create(incident=i, status=0, description="test")
         IncidentUpdate.objects.create(incident=i, status=3, description="test")
-        i = Incident.objects.create(name="b", occurred=dt-timezone.timedelta(days=days))
+        i = Incident.objects.create(name="b",
+                                    occurred=dt-timezone.timedelta(days=days))
         IncidentUpdate.objects.create(incident=i, status=0, description="test")
         self.days = days
 
     def test_occurred_in_last_n_days(self):
-        self.assertEquals(Incident.objects.occurred_in_last_n_days(self.days-1).count(), 1)
-        self.assertEquals(Incident.objects.occurred_in_last_n_days(self.days).count(), 1)
+        self.assertEquals(
+            Incident.objects.occurred_in_last_n_days(self.days-1).count(), 1
+        )
+        self.assertEquals(
+            Incident.objects.occurred_in_last_n_days(self.days).count(), 1
+        )
 
     def test_last_occurred(self):
         with self.settings(STATUSBOARD={
@@ -440,7 +486,8 @@ class TestTemplateTags(TestCase):
         g.save()
         self.assertTrue(g.collapsed())
 
-        s = Service.objects.create(name="service", description="test", status=0)
+        s = Service.objects.create(name="service", description="test",
+                                   status=0)
         s.groups.add(g)
         s.save()
         g.collapse = 2
@@ -463,7 +510,9 @@ class TestService(TestCase):
         from django.db.models.signals import post_save
 
         def check_different(sender, instance, **kwargs):
-            check_different.is_different = (instance._status != instance.status)
+            check_different.is_different = (
+                instance._status != instance.status
+            )
 
         check_different.is_different = None
 
@@ -483,31 +532,8 @@ class TestService(TestCase):
         post_save.disconnect(check_different)
 
 
-class TestServiceGroup(TestCase):
-    def test_worst_service(self):
-        g = ServiceGroup.objects.create(name="test", collapse=0)
-        self.assertRaises(Service.DoesNotExist, g.worst_service)
-        s = Service.objects.create(name="s0", description="test", status=0)
-        g.services.add(s)
-        g.save()
-        self.assertEquals(g.worst_service(), s)
-        s = Service.objects.create(name="s1", description="test", status=1)
-        g.services.add(s)
-        g.save()
-        self.assertEquals(g.worst_service(), s)
-
-    def test_is_empty_group(self):
-        g = ServiceGroup.objects.create(name="test", collapse=0)
-        self.assertTrue(g.is_empty_group())
-        s = Service.objects.create(name="s1", description="test", status=1)
-        g.services.add(s)
-        g.save()
-        self.assertFalse(g.is_empty_group())
-
-
 class TestSettings(TestCase):
     def test_default(self):
-        from django.conf import settings
         from statusboard.settings import statusconf
 
         self.assertIsNotNone(getattr(statusconf, "INCIDENT_DAYS_IN_INDEX"))
@@ -523,6 +549,12 @@ class TestSettings(TestCase):
             self.assertEquals(statusconf.INCIDENT_DAYS_IN_INDEX, 30)
             self.assertEquals(settings.STATUSBOARD["INCIDENT_DAYS_IN_INDEX"],
                               statusconf.INCIDENT_DAYS_IN_INDEX)
+
+    def test_missing_default(self):
+        from statusboard.settings import statusconf
+
+        with self.assertRaises(RuntimeError):
+            statusconf.THIS_IS_A_MISSING_APP_SETTING
 
 
 class TestMaintenanceEdit(TestCase):
@@ -542,7 +574,7 @@ class TestMaintenanceEdit(TestCase):
         client = Client()
         client.login(username="admin", password="admin")
         dt = timezone.datetime.now()
-        response = client.post('/statusboard/maintenance/1/edit/', {
+        client.post('/statusboard/maintenance/1/edit/', {
             'scheduled': dt,
             'name': 'modified name',
             'description': 'modified description',
@@ -556,7 +588,6 @@ class TestMaintenanceEdit(TestCase):
 class TestReverseAndResolve(TestCase):
     def test_maintenance(self):
         from django.urls import reverse, resolve
-        from statusboard.views import MaintenanceCreate
 
         self.assertEquals(
             reverse('statusboard:maintenance:create'),
@@ -573,18 +604,8 @@ class TestReverseAndResolve(TestCase):
         )
 
 
-class TestSettings(TestCase):
-    def test_missing_default(self):
-        from statusboard.settings import statusconf
-
-        with self.assertRaises(RuntimeError):
-            v = statusconf.THIS_IS_A_MISSING_APP_SETTING
-
-
 class TestPermissionRequiredView(TestCase):
     def test_permission_required(self):
-        from django.urls import reverse, resolve
-
         with self.settings(LOGIN_URL='/login'):
             client = Client()
             response = client.get('/statusboard/service/create/')
@@ -596,24 +617,30 @@ class TestPermissionRequiredView(TestCase):
 class TestChangePermission(TestCase):
     def setUp(self):
         edituser = User.objects.create_user(username="edit", password="edit")
-        edituser.user_permissions.add(Permission.objects.get(codename="change_service"))
+        edituser.user_permissions.add(
+            Permission.objects.get(codename="change_service")
+        )
         edituser.save()
         self.client = Client()
         self.client.login(username='edit', password='edit')
 
         self.servicegroup = ServiceGroup.objects.create(name="g1")
-        self.service = Service.objects.create(name="s1", description="s1", status=2)
+        self.service = Service.objects.create(name="s1", description="s1",
+                                              status=2)
 
     def test_change_service(self):
-        resp = self.client.post('/statusboard/service/{}/edit/'.format(self.service.pk), {
-            'name': 's1-changed',
-            'description': self.service.description,
-            'href': self.service.href,
-            'status': self.service.status,
-            'priority': self.service.priority,
-            'groups': [self.servicegroup.pk],
-        })
-        self.assertEquals(Service.objects.get(pk=self.service.pk).name, 's1-changed')
+        self.client.post(
+            '/statusboard/service/{}/edit/'.format(self.service.pk), {
+                'name': 's1-changed',
+                'description': self.service.description,
+                'href': self.service.href,
+                'status': self.service.status,
+                'priority': self.service.priority,
+                'groups': [self.servicegroup.pk],
+            }
+        )
+        self.assertEquals(Service.objects.get(pk=self.service.pk).name,
+                          's1-changed')
 
 
 class TestArchiveIncident(TestCase):

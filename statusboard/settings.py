@@ -37,7 +37,9 @@ DEFAULTS = {
     # Automatic refresth the home page in seconds (disable with 0)
     "AUTO_REFRESH_INDEX_SECONDS": 0,
     # Default favicon
-    "FAVICON_DEFAULT": static('statusboard/favicons/statusboard-icon-default.ico'),
+    "FAVICON_DEFAULT": static(
+        'statusboard/favicons/statusboard-icon-default.ico'
+    ),
     # Favicons for index
     "FAVICON_INDEX_DICT": {
         0: static('statusboard/favicons/statusboard-icon-operational.ico'),
