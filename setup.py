@@ -33,7 +33,7 @@ setup(
     author='Emanuele Di Giacomo',
     author_email="emanuele@digiacomo.cc",
     install_requires=[
-        'django', 'djangorestframework', 'django-model-utils', 'pytz'
+        'django>=2.2', 'djangorestframework', 'django-model-utils', 'pytz'
     ],
     test_suite="runtests.runtests",
     classifiers=[
