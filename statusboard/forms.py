@@ -61,6 +61,10 @@ class IncidentForm(forms.ModelForm):
         model = Incident
         fields = ['name', 'occurred', 'services', 'service_status']
 
+    def __init__(self, *args, **kwargs):
+        super(IncidentForm, self).__init__(*args, **kwargs)
+        self.fields['services'].queryset = Service.objects.order_by('name')
+
     def save(self, commit=True):
         model = super(IncidentForm, self).save(commit=False)
         status = self.cleaned_data['service_status']
