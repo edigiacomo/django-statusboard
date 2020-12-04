@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.10.0
+
+* Removed Django 1.11 support
+* Incident form with services ordered by name #54
+* Create uncategorized services from browser and API #55
+* Added Python 3.9 support
+
 ## 0.9.3
 
 * .css.map in dist
