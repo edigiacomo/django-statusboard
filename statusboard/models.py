@@ -74,6 +74,7 @@ class Service(TimeStampedModel):
     priority = models.PositiveIntegerField(default=0,
                                            verbose_name=_("priority"))
     groups = models.ManyToManyField('ServiceGroup',
+                                    blank=True,
                                     related_name='services',
                                     related_query_name='service',
                                     verbose_name=_("groups"))
