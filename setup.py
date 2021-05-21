@@ -14,7 +14,7 @@ def get_version(package):
 def read_md(path):
     try:
         import pypandoc
-        return pypandoc.convert(path, 'rst')
+        return pypandoc.convert_file(path, 'rst')
     except ImportError:
         return open(path).read()
 
