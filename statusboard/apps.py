@@ -22,4 +22,4 @@ from django.apps import AppConfig
 
 class StatusboardConfig(AppConfig):
     name = 'statusboard'
-    default_auto_field = 'django.db.models.BigAutoField'
+    default_auto_field = 'django.db.models.AutoField'
