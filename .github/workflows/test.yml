@@ -12,6 +12,8 @@ jobs:
         run: sudo apt install -y pandoc
       - name: Install Python dependencies
         run: pip install tox tox-travis flake8 codecov
+      - name: Checkout code
+        uses: actions/checkout@v2
       - name: Run tests
         run: tox -e py{{ matrix.python }}-django{{ matrix.django }}
       - name: Run codecov
