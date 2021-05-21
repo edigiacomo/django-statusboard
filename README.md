@@ -130,6 +130,22 @@ def notify_service_update(sender, instance, **kwargs):
 `django-statusboard` comes with a set of REST API to manage its models, based on [Django REST Framework](https://www.django-rest-framework.org/) `ModelViewSet`.
 
 
+## Development
+
+### Running tests
+
+```
+$ PYTHONPATH=. DJANGO_SETTINGS_MODULE=tests.test_settings django-admin test
+```
+
+### Update i18n
+
+```
+$ cd statusboard && django-admin makemessages -l LOCALE
+```
+
+
+
 ## Contact and copyright information
 
 Copyright (C) 2019 Emanuele Di Giacomo <emanuele@digiacomo.cc>
