@@ -9,7 +9,7 @@ jobs:
         django: [22, 31, 32]
     steps:
       - name: Install system dependencies
-        run: apt install -y pandoc
+        run: sudo apt install -y pandoc
       - name: Install Python dependencies
         run: pip install tox tox-travis flake8 codecov
       - name: Run tests
