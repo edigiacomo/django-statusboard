@@ -1,0 +1,18 @@
+name: Test
+on: [push]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python: [36, 37, 38, 39]
+        django: [22, 31, 32]
+    steps:
+      - name: Install system dependencies
+        run: apt install -y pandoc
+      - name: Install Python dependencies
+        run: pip install tox tox-travis flake8 codecov
+      - name: Run tests
+        run: tox -e py{{ matrix.python }}-django{{ matrix.django }}
+      - name: Run codecov
+        run: codecov
