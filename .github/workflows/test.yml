@@ -9,11 +9,13 @@ jobs:
         django: [22, 31, 32]
     steps:
       - name: Install system dependencies
-        run: sudo apt install -y pandoc
-      - name: Install Python dependencies
-        run: pip install tox tox-travis flake8 codecov
-      - name: Setup Python
+        run: |
+          sudo apt install -y pandoc
+          pip install tox tox-travis flake8 codecov
+      - name: Setup Python ${{ matrix.python }}
         uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python }}
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Run tests
