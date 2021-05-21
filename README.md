@@ -135,7 +135,7 @@ def notify_service_update(sender, instance, **kwargs):
 ### Running tests
 
 ```
-$ PYTHONPATH=. DJANGO_SETTINGS_MODULE=tests.test_settings django-admin test
+$ DJANGO_SETTINGS_MODULE=tests.test_settings python manage.py test
 ```
 
 ### Update i18n

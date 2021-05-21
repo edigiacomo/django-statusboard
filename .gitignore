@@ -7,7 +7,6 @@
 /db.sqlite3
 /dist/
 /django_statusboard.egg-info/
-/manage.py
 /mysite
 /site
 __pycache__
