@@ -5,16 +5,18 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python: [36, 37, 38, 39]
+        python: [3.6, 3.7, 3.8, 3.9]
         django: [22, 31, 32]
     steps:
       - name: Install system dependencies
         run: sudo apt install -y pandoc
       - name: Install Python dependencies
         run: pip install tox tox-travis flake8 codecov
+      - name: Setup Python
+        uses: actions/setup-python@v2
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Run tests
-        run: tox -e py${{ matrix.python }}-django${{ matrix.django }}
+        run: tox -e py-django${{ matrix.django }}
       - name: Run codecov
         run: codecov
