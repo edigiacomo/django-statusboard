@@ -96,6 +96,10 @@ extends the original base template and customize some blocks, e.g.:
 A.C.M.E. statuspage
 {% endblock %}
 
+{% block branding %}
+<a class="navbar-brand" href="{% url 'statusboard:index' %}"><img src="{% static "/images/logo.png" %}"></a>
+{% endblock %}
+
 {% block bootstrap_theme %}
 <link rel="stylesheet" href="{% static "/statusboard/css/spacelab-bootstrap.min.css" %}" />
 <link rel="stylesheet" href="{% static "/css/mystyle.css" %}" />
