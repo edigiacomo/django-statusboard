@@ -84,6 +84,24 @@ The following blocks are customizable in `statusboard/base.html`:
 * `style`: `CSS` files
 * `script`: JavaScript files
 
+To customize the default style, create the file `statusboard/base.html` that
+extends the original base template and customize some blocks, e.g.:
+
+```
+{% extends "statusboard/base.html" %}
+
+{% load static %}
+
+{% block title %}
+A.C.M.E. statuspage
+{% endblock %}
+
+{% block bootstrap_theme %}
+<link rel="stylesheet" href="{% static "/statusboard/css/spacelab-bootstrap.min.css" %}" />
+<link rel="stylesheet" href="{% static "/css/mystyle.css" %}" />
+{% endblock %}
+```
+
 ### Example: change branding and title
 
 In Django >= 1.9, the templates can be extended recursively (see
