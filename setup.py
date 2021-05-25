@@ -36,7 +36,6 @@ setup(
     install_requires=[
         'django>=2.2', 'djangorestframework', 'django-model-utils', 'pytz'
     ],
-    test_suite="runtests.runtests",
     classifiers=[
         'Development Status :: 4 - Beta',
         'Environment :: Web Environment',
