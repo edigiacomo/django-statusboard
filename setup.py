@@ -32,7 +32,7 @@ setup(
     url='http://github.com/edigiacomo/django-statusboard',
     author='Emanuele Di Giacomo',
     author_email="emanuele@digiacomo.cc",
-    python_requires=">=3.5",
+    python_requires=">=3.6",
     install_requires=[
         'django>=2.2', 'djangorestframework', 'django-model-utils', 'pytz'
     ],
