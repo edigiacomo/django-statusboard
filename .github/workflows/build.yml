@@ -1,5 +1,9 @@
 name: Build
-on: [push]
+on:
+  push:
+  pull_request:
+  schedule:
+    - cron: '0 0 * * *'
 jobs:
   build:
     name: Python ${{ matrix.python }} - Django ${{ matrix.django }}
