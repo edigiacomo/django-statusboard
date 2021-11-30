@@ -31,6 +31,7 @@ jobs:
         run: tox -e py-django${{ matrix.django }}
       - name: Run codecov
         run: |
+          pip install .
           pip install -r requirements/requirements-coverage.txt
           pip install codecov
           codecov
