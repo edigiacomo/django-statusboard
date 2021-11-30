@@ -30,54 +30,62 @@ from .models import SERVICE_STATUSES
 class ServiceGroupForm(forms.ModelForm):
     class Meta:
         model = ServiceGroup
-        fields = ['name', 'collapse', 'priority']
+        fields = ["name", "collapse", "priority"]
 
 
 class ServiceForm(forms.ModelForm):
     class Meta:
         model = Service
-        fields = ['name', 'href', 'description', 'status', 'priority',
-                  'groups']
+        fields = [
+            "name",
+            "href",
+            "description",
+            "status",
+            "priority",
+            "groups",
+        ]
 
 
 class MaintenanceForm(forms.ModelForm):
     class Meta:
         model = Maintenance
-        fields = ['name', 'description', 'scheduled']
+        fields = ["name", "description", "scheduled"]
 
 
 class IncidentForm(forms.ModelForm):
     service_status = forms.ChoiceField(
-        choices=tuple([('', '---------')] + list(SERVICE_STATUSES)),
-        label=_('Services status'),
-        help_text=_((
-            'Update the status of involved services '
-            '(an empty value means that they will be left unaltered)'
-        )),
+        choices=tuple([("", "---------")] + list(SERVICE_STATUSES)),
+        label=_("Services status"),
+        help_text=_(
+            (
+                "Update the status of involved services "
+                "(an empty value means that they will be left unaltered)"
+            )
+        ),
         required=False,
     )
 
     class Meta:
         model = Incident
-        fields = ['name', 'occurred', 'services', 'service_status']
+        fields = ["name", "occurred", "services", "service_status"]
 
     def __init__(self, *args, **kwargs):
         super(IncidentForm, self).__init__(*args, **kwargs)
-        self.fields['services'].queryset = Service.objects.order_by('name')
+        self.fields["services"].queryset = Service.objects.order_by("name")
 
     def save(self, commit=True):
         model = super(IncidentForm, self).save(commit=False)
-        status = self.cleaned_data['service_status']
+        status = self.cleaned_data["service_status"]
 
         if commit:
             model.save()
             self.save_m2m()
-            if status not in (None, ''):
+            if status not in (None, ""):
                 model.services.update(status=status)
 
         return model
 
 
-IncidentUpdateFormSet = inlineformset_factory(Incident, IncidentUpdate,
-                                              fields=('status', 'description'),
-                                              extra=1)
+IncidentUpdateFormSet = inlineformset_factory(
+    Incident, IncidentUpdate, fields=("status", "description"), extra=1
+)

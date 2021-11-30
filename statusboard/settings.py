@@ -14,6 +14,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from django.conf import settings
+
 try:
     from django.contrib.staticfiles.templatetags.staticfiles import static
 except ImportError:
@@ -38,24 +39,26 @@ DEFAULTS = {
     "AUTO_REFRESH_INDEX_SECONDS": 0,
     # Default favicon
     "FAVICON_DEFAULT": static(
-        'statusboard/favicons/statusboard-icon-default.ico'
+        "statusboard/favicons/statusboard-icon-default.ico"
     ),
     # Favicons for index
     "FAVICON_INDEX_DICT": {
-        0: static('statusboard/favicons/statusboard-icon-operational.ico'),
-        1: static('statusboard/favicons/statusboard-icon-performance.ico'),
-        2: static('statusboard/favicons/statusboard-icon-partial.ico'),
-        3: static('statusboard/favicons/statusboard-icon-major.ico'),
-    }
+        0: static("statusboard/favicons/statusboard-icon-operational.ico"),
+        1: static("statusboard/favicons/statusboard-icon-performance.ico"),
+        2: static("statusboard/favicons/statusboard-icon-partial.ico"),
+        3: static("statusboard/favicons/statusboard-icon-major.ico"),
+    },
 }
 
 
 class Settings(object):
     """Settings for internal use."""
+
     def __getattr__(self, name):
         if name not in DEFAULTS:
-            raise RuntimeError(("{} is not a valid statusboard "
-                                "setting").format(name))
+            raise RuntimeError(
+                ("{} is not a valid statusboard " "setting").format(name)
+            )
         s = getattr(settings, "STATUSBOARD", {})
         return s.get(name, DEFAULTS[name])
 

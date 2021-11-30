@@ -26,27 +26,28 @@ from .settings import statusconf
 
 
 SERVICE_STATUSES = (
-    (0, _('Operational')),
-    (1, _('Performance issues')),
-    (2, _('Partial outage')),
-    (3, _('Major outage')),
+    (0, _("Operational")),
+    (1, _("Performance issues")),
+    (2, _("Partial outage")),
+    (3, _("Major outage")),
 )
 
 
 class ServiceQuerySet(models.QuerySet):
     def worst_status(self):
         """Return worst status in queryset."""
-        return self.aggregate(models.Max('status'))['status__max']
+        return self.aggregate(models.Max("status"))["status__max"]
 
     def worst_service(self):
-        return self.latest('status')
+        return self.latest("status")
 
     def uncategorized(self):
-        return self.annotate(group_count=models.Count('groups')) \
-            .filter(group_count=0)
+        return self.annotate(group_count=models.Count("groups")).filter(
+            group_count=0
+        )
 
     def priority_sorted(self):
-        return self.order_by('-priority', 'name')
+        return self.order_by("-priority", "name")
 
 
 class ServiceManager(models.Manager):
@@ -65,19 +66,24 @@ class ServiceManager(models.Manager):
 
 
 class Service(TimeStampedModel):
-    name = models.CharField(max_length=255, unique=True,
-                            verbose_name=_("name"))
+    name = models.CharField(
+        max_length=255, unique=True, verbose_name=_("name")
+    )
     description = models.TextField(blank=True, verbose_name=_("description"))
     href = models.URLField(blank=True)
-    status = models.IntegerField(choices=SERVICE_STATUSES,
-                                 verbose_name=_("status"))
-    priority = models.PositiveIntegerField(default=0,
-                                           verbose_name=_("priority"))
-    groups = models.ManyToManyField('ServiceGroup',
-                                    blank=True,
-                                    related_name='services',
-                                    related_query_name='service',
-                                    verbose_name=_("groups"))
+    status = models.IntegerField(
+        choices=SERVICE_STATUSES, verbose_name=_("status")
+    )
+    priority = models.PositiveIntegerField(
+        default=0, verbose_name=_("priority")
+    )
+    groups = models.ManyToManyField(
+        "ServiceGroup",
+        blank=True,
+        related_name="services",
+        related_query_name="service",
+        verbose_name=_("groups"),
+    )
     objects = ServiceManager()
 
     def __str__(self):
@@ -98,15 +104,15 @@ class Service(TimeStampedModel):
 
 
 SERVICEGROUP_COLLAPSE_OPTIONS = (
-    (0, _('Never collapse')),
-    (1, _('Always collapse')),
-    (2, _('Collapse when all the services are operational')),
+    (0, _("Never collapse")),
+    (1, _("Always collapse")),
+    (2, _("Collapse when all the services are operational")),
 )
 
 
 class ServiceGroupQuerySet(models.QuerySet):
     def priority_sorted(self):
-        return self.order_by('-priority', 'name')
+        return self.order_by("-priority", "name")
 
 
 class ServiceGroupManager(models.Manager):
@@ -118,16 +124,19 @@ class ServiceGroupManager(models.Manager):
 
 
 class ServiceGroup(TimeStampedModel):
-    name = models.CharField(max_length=255, unique=True,
-                            verbose_name=_("name"))
-    priority = models.PositiveIntegerField(default=0,
-                                           verbose_name=_("priority"))
-    collapse = models.IntegerField(choices=SERVICEGROUP_COLLAPSE_OPTIONS,
-                                   default=0)
+    name = models.CharField(
+        max_length=255, unique=True, verbose_name=_("name")
+    )
+    priority = models.PositiveIntegerField(
+        default=0, verbose_name=_("priority")
+    )
+    collapse = models.IntegerField(
+        choices=SERVICEGROUP_COLLAPSE_OPTIONS, default=0
+    )
     objects = ServiceGroupManager()
 
     def worst_service(self):
-        return self.services.all().latest('status')
+        return self.services.all().latest("status")
 
     def collapsed(self):
         """Check if the service group should collapse or not.
@@ -162,9 +171,10 @@ INCIDENT_STATUSES = (
 class IncidentQuerySet(models.QuerySet):
     def occurred_in_last_n_days_q(self, days):
         """Q obects for the incidents occurred in last N days (1 = today)."""
-        threshold = timezone.now() - timezone.timedelta(days=days-1)
-        threshold = threshold.replace(hour=0, minute=0, second=0,
-                                      microsecond=0)
+        threshold = timezone.now() - timezone.timedelta(days=days - 1)
+        threshold = threshold.replace(
+            hour=0, minute=0, second=0, microsecond=0
+        )
         return models.Q(occurred__gte=threshold)
 
     def last_occurred_q(self):
@@ -208,17 +218,21 @@ class IncidentManager(models.Manager):
 
 class Incident(TimeStampedModel):
     name = models.CharField(max_length=255, verbose_name=_("name"))
-    services = models.ManyToManyField('Service', blank=True,
-                                      related_name='incidents',
-                                      related_query_name='incident',
-                                      verbose_name=_("services"))
-    occurred = models.DateTimeField(default=timezone.now,
-                                    verbose_name=_("occurred"))
+    services = models.ManyToManyField(
+        "Service",
+        blank=True,
+        related_name="incidents",
+        related_query_name="incident",
+        verbose_name=_("services"),
+    )
+    occurred = models.DateTimeField(
+        default=timezone.now, verbose_name=_("occurred")
+    )
     closed = models.BooleanField(default=False)
     objects = IncidentManager()
 
     def updates_by_ctime(self):
-        return self.updates.order_by('-created')
+        return self.updates.order_by("-created")
 
     def should_be_closed(self):
         try:
@@ -235,12 +249,16 @@ class Incident(TimeStampedModel):
 
 
 class IncidentUpdate(TimeStampedModel):
-    incident = models.ForeignKey(Incident, related_name='updates',
-                                 on_delete=models.deletion.CASCADE,
-                                 related_query_name='update',
-                                 verbose_name=_("incident"))
-    status = models.IntegerField(choices=INCIDENT_STATUSES,
-                                 verbose_name=_("status"))
+    incident = models.ForeignKey(
+        Incident,
+        related_name="updates",
+        on_delete=models.deletion.CASCADE,
+        related_query_name="update",
+        verbose_name=_("incident"),
+    )
+    status = models.IntegerField(
+        choices=INCIDENT_STATUSES, verbose_name=_("status")
+    )
     description = models.TextField(verbose_name=_("description"))
 
     def __str__(self):
