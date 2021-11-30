@@ -16,7 +16,7 @@ jobs:
       - name: Install system dependencies
         run: |
           sudo apt install -y pandoc
-          pip install tox tox-travis
+          pip install tox
       - name: Setup Python ${{ matrix.python }}
         uses: actions/setup-python@v2
         with:
@@ -24,14 +24,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Linter
-        run: |
-          pip install flake8 black
-          flake8 --extend-exclude statusboard/migrations statusboard
-          black --check --extend-exclude statusboard/migrations --line-length 79 statusboard
+        run: tox -e linter
       - name: Security check
-        run: |
-          pip install bandit
-          bandit -r statusboard
+        run: tox -e security
       - name: Run tests
         run: tox -e py-django${{ matrix.django }}
       - name: Run codecov
