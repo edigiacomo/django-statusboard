@@ -1,8 +1,8 @@
 # statusboard
 
-[![Build Status](https://github.com/edigiacomo/django-statusboard/actions/workflows/build.yml/badge.svg?branch=master)](https://github.com/edigiacomo/django-statusboard/actions/workflows/build.yml)
+[![Build Status](https://github.com/edigiacomo/django-statusboard/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/edigiacomo/django-statusboard/actions/workflows/build.yml)
 [![Pypi](https://img.shields.io/pypi/v/django-statusboard.svg)](https://pypi.python.org/pypi/django-statusboard/)
-[![codecov](https://codecov.io/gh/edigiacomo/django-statusboard/branch/master/graph/badge.svg)](https://codecov.io/gh/edigiacomo/django-statusboard)
+[![codecov](https://codecov.io/gh/edigiacomo/django-statusboard/branch/main/graph/badge.svg)](https://codecov.io/gh/edigiacomo/django-statusboard)
 [![Documentation Status](https://readthedocs.org/projects/django-statusboard/badge/?version=stable)](https://django-statusboard.readthedocs.io/en/stable/?badge=stable)
 
 Status page application with browser and REST API interface.
