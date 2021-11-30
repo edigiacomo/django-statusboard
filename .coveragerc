@@ -5,3 +5,4 @@ omit =
     statusboard/apps.py
     statusboard/admin.py
 branch = True
+plugins = django_coverage_plugin
