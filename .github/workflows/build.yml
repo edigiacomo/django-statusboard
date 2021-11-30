@@ -25,8 +25,9 @@ jobs:
         uses: actions/checkout@v2
       - name: Linter
         run: |
-          pip install flake8
+          pip install flake8 black
           flake8 --extend-exclude statusboard/migrations statusboard
+          black --check --extend-exclude statusboard/migrations --line-length 79 statusboard
       - name: Security check
         run: |
           pip install bandit
