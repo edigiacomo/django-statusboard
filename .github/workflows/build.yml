@@ -37,5 +37,6 @@ jobs:
       - name: Run codecov
         run: |
           pip install -rrequirements/requirements-coverage.txt
+          pip install codecov
           codecov
         if: matrix.python == '3.9' && matrix.django == '32'
