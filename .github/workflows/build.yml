@@ -30,5 +30,8 @@ jobs:
       - name: Run tests
         run: tox -e py-django${{ matrix.django }}
       - name: Run codecov
-        run: tox -e py-django${{ matrix.django }},codecov
+        run: |
+          pip install -r requirements/requirements-coverage.txt
+          pip install codecov
+          codecov
         if: matrix.python == '3.9' && matrix.django == '32'
