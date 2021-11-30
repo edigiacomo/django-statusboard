@@ -27,3 +27,4 @@ jobs:
         run: tox -e py-django${{ matrix.django }}
       - name: Run codecov
         run: codecov
+        if: matrix.python == '3.9' && matrix.django == '32'
