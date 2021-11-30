@@ -23,12 +23,16 @@ jobs:
           python-version: ${{ matrix.python }}
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: Run tests
-        run: tox -e py-django${{ matrix.django }}
+      - name: Linter
+        run: |
+          pip install flake8
+          flake8 --extend-exclude statusboard/migrations statusboard
       - name: Security check
         run: |
           pip install bandit
           bandit -r statusboard
+      - name: Run tests
+        run: tox -e py-django${{ matrix.django }}
       - name: Run codecov
         run: |
           pip install codecov
