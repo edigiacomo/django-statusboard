@@ -23,10 +23,6 @@ jobs:
           python-version: ${{ matrix.python }}
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: Linter
-        run: tox -e linter
-      - name: Security check
-        run: tox -e security
       - name: Run tests
         run: tox -e py-django${{ matrix.django }}
       - name: Run codecov

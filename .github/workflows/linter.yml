@@ -1,0 +1,26 @@
+name: Linter
+on:
+  push:
+  pull_request:
+  schedule:
+    - cron: '0 0 * * *'
+jobs:
+  linter:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python: ["3.6", "3.7", "3.8", "3.9", "3.10"]
+        django: [22, 31, 32]
+    steps:
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+      - name: Install system dependencies
+        run: pip install tox
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Linter
+        run: tox -e linter
+      - name: Security check
+        run: tox -e security
