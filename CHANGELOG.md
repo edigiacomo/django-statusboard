@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.11.0
+
+* Incident description list renders URLs #59
+
 ## 0.10.0
 
 * Removed Django 1.11 support
