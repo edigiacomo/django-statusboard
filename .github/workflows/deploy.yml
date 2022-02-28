@@ -12,8 +12,6 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: '3.x'
-      - name: Install pandoc
-        run: apt install -y pandoc
       - name: Install pip dependencies
         run: pip install setuptools wheel twine -r requirements/requirements-packaging.txt
       - name: Create dist

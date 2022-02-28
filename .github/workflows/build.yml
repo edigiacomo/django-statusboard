@@ -14,9 +14,7 @@ jobs:
         django: [22, 31, 32]
     steps:
       - name: Install system dependencies
-        run: |
-          sudo apt install -y pandoc
-          pip install tox
+        run: pip install tox
       - name: Setup Python ${{ matrix.python }}
         uses: actions/setup-python@v2
         with:
