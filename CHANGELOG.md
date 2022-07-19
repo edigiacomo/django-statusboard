@@ -1,5 +1,10 @@
 # Changelog
 
+## development
+
+* Removed Djago 3.1 support
+* Logout using HTTP POST request
+
 ## 0.11.0
 
 * Incident description list renders URLs #59
