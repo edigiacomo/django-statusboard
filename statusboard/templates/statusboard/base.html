@@ -69,10 +69,12 @@
                     <ul class="nav navbar-nav navbar-right">
                         {% block userlinks %}
                         {% if user.is_authenticated %}
-                        <form id="logout-form" method="post" action="{% url 'statusboard:logout' %}">
-                            {% csrf_token %}
-                            <button type="submit">{% trans 'Sign out' %}</button>
-                        </form>
+                        <li>
+                            <form id="logout-form" method="post" action="{% url 'statusboard:logout' %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-link navbar-btn">{% trans 'Sign out' %}</button>
+                            </form>
+                        </li>
                         {% else %}
                         <li><a href="{% url 'statusboard:login' %}">{% trans 'Sign in' %}</a></li>
                         {% endif %}
