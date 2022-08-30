@@ -2,11 +2,12 @@
 {% load i18n %}
 
 <!DOCTYPE html>
-<html>
+<html class="h-100">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#712cf9">
         {% block meta_extra %}{% endblock %}
         <title>{% block title %} statusboard {% endblock %}</title>
 
@@ -23,59 +24,55 @@
         {% endblock %}
 
         {% block script %}
-        <script src="{% static "statusboard/js/jquery-3.1.1.min.js" %}"></script>
-        <script src="{% static "statusboard/js/bootstrap.min.js" %}"></script>
+        <script src="{% static "statusboard/js/bootstrap.bundle.min.js" %}"></script>
         {% endblock %}
     </head>
-    <body>
+    <body class="d-flex flex-column h-100">
         {% block header %}
-        <nav class="navbar navbar-inverse navbar-fixed-top">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                        <span class="sr-only">{% trans 'Toggle navigation' %}</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    {% block branding %}
-                    <a class="navbar-brand" href="{% url 'statusboard:index' %}">Django Status Board</a>
-                    {% endblock %}
-                </div>
-                <div id="navbar" class="collapse navbar-collapse">
-                    <ul class="nav navbar-nav">
-                        <li><a href="{% url 'statusboard:incident:archive-index' %}">{% trans "Incident archive" %}</a></li>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark" aria-label="navbar">
+            <div class="container-fluid">
+                {% block branding %}
+                <a class="navbar-brand" href="{% url 'statusboard:index' %}">Django Status Board</a>
+                {% endblock %}
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="main-navbar">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'statusboard:incident:archive-index' %}">{% trans "Incident archive" %}</a>
+                        </li>
                         {% if perms.statusboard.create_servicegroup or perms.statusboard.create_service or perms.statusboard.create_incident or perms.statusboard.create_maintenance %}
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans "Manage" %}<span class="caret"></a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">{% trans "Manage" %}</a>
                             <ul class="dropdown-menu">
                                 {% if perms.statusboard.create_incident %}
-                                <li><a href="{% url 'statusboard:incident:create' %}">{% trans 'Create new incident' %}</a></li>
+                                <li><a class="dropdown-item" href="{% url 'statusboard:incident:create' %}">{% trans 'Create new incident' %}</a></li>
                                 {% endif %}
                                 {% if perms.statusboard.create_servicegroup %}
-                                <li><a href="{% url 'statusboard:servicegroup:create' %}">{% trans 'Create new service group' %}</a></li>
+                                <li><a class="dropdown-item" href="{% url 'statusboard:servicegroup:create' %}">{% trans 'Create new service group' %}</a></li>
                                 {% endif %}
                                 {% if perms.statusboard.create_service %}
-                                <li><a href="{% url 'statusboard:service:create' %}">{% trans 'Create new service' %}</a></li>
+                                <li><a class="dropdown-item" href="{% url 'statusboard:service:create' %}">{% trans 'Create new service' %}</a></li>
                                 {% endif %}
                                 {% if perms.statusboard.create_maintenance %}
-                                <li><a href="{% url 'statusboard:maintenance:create' %}">{% trans 'Create new maintenance' %}</a></li>
+                                <li><a class="dropdown-item" href="{% url 'statusboard:maintenance:create' %}">{% trans 'Create new maintenance' %}</a></li>
                                 {% endif %}
+
                             </ul>
                         </li>
                         {% endif %}
-                    </ul>
-                    <ul class="nav navbar-nav navbar-right">
                         {% block userlinks %}
                         {% if user.is_authenticated %}
-                        <li>
+                        <li class="nav-item">
                             <form id="logout-form" method="post" action="{% url 'statusboard:logout' %}">
                                 {% csrf_token %}
                                 <button type="submit" class="btn btn-link navbar-btn">{% trans 'Sign out' %}</button>
                             </form>
                         </li>
                         {% else %}
-                        <li><a href="{% url 'statusboard:login' %}">{% trans 'Sign in' %}</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{% url 'statusboard:login' %}">{% trans 'Sign in' %}</a></li>
                         {% endif %}
                         {% endblock %}
                     </ul>
@@ -84,9 +81,11 @@
         </nav>
         {% endblock %}
 
-        {% block content %} {% endblock %}
+        {% block content %}
+        {% endblock %}
+
         {% block footer %}
-        <footer class="footer">
+        <footer class="footer mt-auto py-3 bg-light">
             <div class="container">
                 <span class="text-muted">Powered by <a href="https://github.com/edigiacomo/django-statusboard">django-statusboard</a></span>
             </div>
