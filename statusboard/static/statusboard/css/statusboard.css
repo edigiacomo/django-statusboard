@@ -51,3 +51,8 @@ div.form-group.required label.form-label:after {
 .footer {
     text-align: center;
 }
+
+.form-signin {
+  max-width: 330px;
+  padding: 15px;
+}
