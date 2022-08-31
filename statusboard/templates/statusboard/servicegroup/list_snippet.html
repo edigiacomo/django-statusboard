@@ -31,7 +31,7 @@
                         <span>{{ srv.name }}</span>
                         {% endif %}
                         {% if srv.description %}
-                        <span class="glyphicon glyphicon-question-sign service-tooltip" aria-hidden="true" data-toggle="tooltip" title="{{ srv.description }}"></span>
+                        <i class="bi bi-question-circle-fill" title="{{ srv.description }}"></i>
                         {% endif %}
                         {% if perms.statusboard.delete_service %}
                         <small><a href="{% url 'statusboard:service:delete' pk=srv.id %}">{% trans 'delete' %}</a></small>
@@ -62,12 +62,6 @@
                     {% trans "Uncategorized" %}
                 </a>
             </strong>
-            {% if perms.statusboard.delete_servicegroup %}
-            <small><a href="{% url 'statusboard:servicegroup:delete' pk=grp.id %}">{% trans 'delete' %}</a></small>
-            {% endif %}
-            {% if perms.statusboard.change_servicegroup %}
-            <small><a href="{% url 'statusboard:servicegroup:edit' pk=grp.id %}">{% trans 'edit' %}</a></small>
-            {% endif %}
             <i class="bi bi-circle-fill float-end text-{{ uncategorized.worst_service.status|service_status_class:"" }}" title="{{ uncategorized.worst_service.get_status_display }}"></i>
         </div>
         <div id="servicegroup-{{ grp.id}}-panel-body" class="collapse show">
@@ -81,7 +75,7 @@
                         <span>{{ srv.name }}</span>
                         {% endif %}
                         {% if srv.description %}
-                        <span class="glyphicon glyphicon-question-sign service-tooltip" aria-hidden="true" data-toggle="tooltip" title="{{ srv.description }}"></span>
+                        <i class="bi bi-question-circle-fill" title="{{ srv.description }}"></i>
                         {% endif %}
                         {% if perms.statusboard.delete_service %}
                         <small><a href="{% url 'statusboard:service:delete' pk=srv.id %}">{% trans 'delete' %}</a></small>
