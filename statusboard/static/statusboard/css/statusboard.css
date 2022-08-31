@@ -3,10 +3,6 @@ main {
     padding-bottom: 1em;
 }
 
-div.incidents {
-    margin-top: 5em;
-}
-
 small.timeinfo {
     opacity: 0.7;
     margin: 0.2em 0;

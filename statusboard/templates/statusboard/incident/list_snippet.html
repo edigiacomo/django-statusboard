@@ -4,39 +4,39 @@
 
 {% for incident in incidents %}
 {% ifchanged incident.occurred.date %}
-<div class="page-header">
+<div class="mb-3 mt-3">
     <h3>{{ incident.occurred|date:"DATE_FORMAT" }}</h3>
-</div>
-{% endifchanged %}
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <strong>{{ incident.name }}</strong>
-        {% if perms.statusboard.delete_incident %}
-        <small><a href="{% url 'statusboard:incident:delete' pk=incident.id %}">{% trans 'delete' %}</a></small>
-        {% endif %}
-        {% if perms.statusboard.change_incident %}
-        <small><a href="{% url 'statusboard:incident:edit' pk=incident.id %}">{% trans 'edit' %}</a></small>
-        {% endif %}
-        <br/>
-        {% for s in incident.services.all %}
-        <span class="label label-default">{{ s.name }}</span>
-        {% endfor %}
-    </div>
-    <ul class="list-group">
-        {% for update in incident.updates_by_ctime %}
-        <li class="list-group-item">
-            <div class="row">
-                <strong class="col-xs-4 col-md-2">{{ update.get_status_display }}</strong>
-                <div class="col-xs-8 col-md-10">
-                    <span>{{ update.description|urlize|linebreaksbr }}</span>
-                    <small class="timeinfo">{% trans "last update" %} <abbr title="{{ update.modified|date:"r" }}">{{ update.modified|naturaltime }}</abbr></small>
+    {% endifchanged %}
+    <div class="card">
+        <div class="card-header">
+            <strong>{{ incident.name }}</strong>
+            {% if perms.statusboard.delete_incident %}
+            <small><a href="{% url 'statusboard:incident:delete' pk=incident.id %}">{% trans 'delete' %}</a></small>
+            {% endif %}
+            {% if perms.statusboard.change_incident %}
+            <small><a href="{% url 'statusboard:incident:edit' pk=incident.id %}">{% trans 'edit' %}</a></small>
+            {% endif %}
+            <br/>
+            {% for s in incident.services.all %}
+            <span class="badge bg-secondary">{{ s.name }}</span>
+            {% endfor %}
+        </div>
+        <ul class="list-group list-group-flush">
+            {% for update in incident.updates_by_ctime %}
+            <li class="list-group-item">
+                <div class="row">
+                    <strong>{{ update.get_status_display }}</strong>
+                    <div>
+                        <span>{{ update.description|urlize|linebreaksbr }}</span>
+                        <small class="timeinfo">{% trans "last update" %} <abbr title="{{ update.modified|date:"r" }}">{{ update.modified|naturaltime }}</abbr></small>
+                    </div>
                 </div>
-            </div>
-        </li>
-        {% endfor %}
-    </ul>
-    <div class="panel-footer">
-        <small class="timeinfo">{% trans "occurred" %} <abbr title="{{ incident.occurred|date:"r" }}">{{ incident.occurred|naturaltime }}</abbr></small>
+            </li>
+            {% endfor %}
+        </ul>
+        <div class="card-footer">
+            <small class="timeinfo">{% trans "occurred" %} <abbr title="{{ incident.occurred|date:"r" }}">{{ incident.occurred|naturaltime }}</abbr></small>
+        </div>
     </div>
 </div>
 {% endfor %}

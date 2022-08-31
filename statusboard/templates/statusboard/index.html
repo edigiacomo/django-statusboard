@@ -39,7 +39,7 @@
     {% endif %}
     {% include "statusboard/servicegroup/list_snippet.html" with servicegroups=servicegroups uncategorized=uncategorized perms=perms only %}
     {% if incidents %}
-    <div class="incidents">
+    <div class="incidents mt-3 mb-3">
         <h2>
             {% trans 'Recent incidents' %}
             {% if perms.statusboard.incident_create %}
