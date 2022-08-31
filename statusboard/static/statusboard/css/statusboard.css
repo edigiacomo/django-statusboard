@@ -43,7 +43,7 @@ div.servicegroup.servicegroup-empty {
 div.servicegroup.servicegroup-empty a.servicegroup-name::before {
 }
 
-div.form-group.required label.control-label:after {
+div.form-group.required label.form-label:after {
     content: "*";
 }
 
