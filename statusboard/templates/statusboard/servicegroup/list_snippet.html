@@ -5,86 +5,100 @@
 {% for grp in servicegroups %}
 <div class="servicegroup {% if grp.is_empty_group %}servicegroup-empty{% endif %}">
     {% if grp.is_empty_group != True or perms.statusboard.change_servicegroup or perms.statusboard.delete_servicegroup %}
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <strong><a class="servicegroup-name {% if grp.collapsed %}collapsed{% endif %}" data-toggle="collapse" data-target="#servicegroup-{{ grp.id}}-panel-body">{{ grp.name }}</a></strong>
+    <div class="card">
+        <div class="card-header">
+            <strong>
+                <a class="servicegroup-name {% if grp.collapsed %}collapsed{% endif %}" data-bs-toggle="collapse" data-bs-target="#servicegroup-{{ grp.id}}-panel-body">
+                    {{ grp.name }}
+                </a>
+            </strong>
             {% if perms.statusboard.delete_servicegroup %}
             <small><a href="{% url 'statusboard:servicegroup:delete' pk=grp.id %}">{% trans 'delete' %}</a></small>
             {% endif %}
             {% if perms.statusboard.change_servicegroup %}
             <small><a href="{% url 'statusboard:servicegroup:edit' pk=grp.id %}">{% trans 'edit' %}</a></small>
             {% endif %}
-            <div class="pull-right">
-                <span class="dot dot-{{ grp.worst_service.status|service_status_class:"" }}" title="{{ grp.worst_service.get_status_display }}"></span>
+            <i class="bi bi-circle-fill float-end text-{{ grp.worst_service.status|service_status_class:"" }}" title="{{ grp.worst_service.get_status_display }}"></i>
+        </div>
+        <div id="servicegroup-{{ grp.id}}-panel-body" class="collapse {% if not grp.collapsed %}show{% endif %}">
+            <div class="card-body">
+                <ul class="list-group list-group-flush">
+                    {% for srv in grp.services.priority_sorted %}
+                    <li class="list-group-item clearfix">
+                        {% if srv.href %}
+                        <a href="{{ srv.href }}">{{ srv.name }}</a>
+                        {% else %}
+                        <span>{{ srv.name }}</span>
+                        {% endif %}
+                        {% if srv.description %}
+                        <span class="glyphicon glyphicon-question-sign service-tooltip" aria-hidden="true" data-toggle="tooltip" title="{{ srv.description }}"></span>
+                        {% endif %}
+                        {% if perms.statusboard.delete_service %}
+                        <small><a href="{% url 'statusboard:service:delete' pk=srv.id %}">{% trans 'delete' %}</a></small>
+                        {% endif %}
+                        {% if perms.statusboard.change_service %}
+                        <small><a href="{% url 'statusboard:service:edit' pk=srv.id %}">{% trans 'edit' %}</a></small>
+                        {% endif %}
+
+                        <div class="float-end">
+                            <span class="badge float-end text-bg-{{ srv.status|service_status_class:"" }}">{{ srv.get_status_display }}</span>
+                        </div>
+                        <small class="timeinfo">{% trans "last update" %} <abbr title="{{ srv.modified|date:"r" }}">{{ srv.modified|naturaltime }}</abbr></small>
+                    </li>
+                    {% endfor %}
+                </ul>
             </div>
         </div>
-        <ul id="servicegroup-{{ grp.id}}-panel-body" class="list-group collapse {% if not grp.collapsed %}in{% endif %}">
-            {% for srv in grp.services.priority_sorted %}
-            <li class="list-group-item clearfix">
-                {% if srv.href %}
-                <a href="{{ srv.href }}">{{ srv.name }}</a>
-                {% else %}
-                <span>{{ srv.name }}</span>
-                {% endif %}
-                {% if srv.description %}
-                <span class="glyphicon glyphicon-question-sign service-tooltip" aria-hidden="true" data-toggle="tooltip" title="{{ srv.description }}"></span>
-                {% endif %}
-                {% if perms.statusboard.delete_service %}
-                <small><a href="{% url 'statusboard:service:delete' pk=srv.id %}">{% trans 'delete' %}</a></small>
-                {% endif %}
-                {% if perms.statusboard.change_service %}
-                <small><a href="{% url 'statusboard:service:edit' pk=srv.id %}">{% trans 'edit' %}</a></small>
-                {% endif %}
-
-                <div class="pull-right">
-                    <span class="label label-{{ srv.status|service_status_class:"" }}">{{ srv.get_status_display }}</span>
-                </div>
-                <small class="timeinfo">{% trans "last update" %} <abbr title="{{ srv.modified|date:"r" }}">{{ srv.modified|naturaltime }}</abbr></small>
-            </li>
-            {% endfor %}
-        </ul>
     </div>
     {% endif %}
 </div>
 {% endfor %}
-<script type="text/javascript">
-$(".service-tooltip").tooltip({
-    "placement": "right",
-    "trigger": "hover click"
-});
-</script>
 {% if uncategorized.count %}
 <div class="servicegroup">
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <strong><a class="servicegroup-name collapsed" data-toggle="collapse" data-target="#servicegroup-uncategorized-panel-body">{% trans "Uncategorized" %}</a></strong>
-            <div class="pull-right">
-                <span class="dot dot-{{ uncategorized.worst_service.status|service_status_class:"" }}" title="{{ uncategorized.worst_service.get_status_display }}"></span>
+    <div class="card">
+        <div class="card-header">
+            <strong>
+                <a class="servicegroup-name" data-bs-toggle="collapse" data-bs-target="#servicegroup-{{ grp.id}}-panel-body">
+                    {% trans "Uncategorized" %}
+                </a>
+            </strong>
+            {% if perms.statusboard.delete_servicegroup %}
+            <small><a href="{% url 'statusboard:servicegroup:delete' pk=grp.id %}">{% trans 'delete' %}</a></small>
+            {% endif %}
+            {% if perms.statusboard.change_servicegroup %}
+            <small><a href="{% url 'statusboard:servicegroup:edit' pk=grp.id %}">{% trans 'edit' %}</a></small>
+            {% endif %}
+            <i class="bi bi-circle-fill float-end text-{{ uncategorized.worst_service.status|service_status_class:"" }}" title="{{ uncategorized.worst_service.get_status_display }}"></i>
+        </div>
+        <div id="servicegroup-{{ grp.id}}-panel-body" class="collapse show">
+            <div class="card-body">
+                <ul class="list-group list-group-flush">
+                    {% for srv in uncategorized %}
+                    <li class="list-group-item clearfix">
+                        {% if srv.href %}
+                        <a href="{{ srv.href }}">{{ srv.name }}</a>
+                        {% else %}
+                        <span>{{ srv.name }}</span>
+                        {% endif %}
+                        {% if srv.description %}
+                        <span class="glyphicon glyphicon-question-sign service-tooltip" aria-hidden="true" data-toggle="tooltip" title="{{ srv.description }}"></span>
+                        {% endif %}
+                        {% if perms.statusboard.delete_service %}
+                        <small><a href="{% url 'statusboard:service:delete' pk=srv.id %}">{% trans 'delete' %}</a></small>
+                        {% endif %}
+                        {% if perms.statusboard.change_service %}
+                        <small><a href="{% url 'statusboard:service:edit' pk=srv.id %}">{% trans 'edit' %}</a></small>
+                        {% endif %}
+
+                        <div class="float-end">
+                            <span class="badge float-end text-bg-{{ srv.status|service_status_class:"" }}">{{ srv.get_status_display }}</span>
+                        </div>
+                        <small class="timeinfo">{% trans "last update" %} <abbr title="{{ srv.modified|date:"r" }}">{{ srv.modified|naturaltime }}</abbr></small>
+                    </li>
+                    {% endfor %}
+                </ul>
             </div>
         </div>
-        <ul id="servicegroup-uncategorized-panel-body" class="list-group collapse">
-            {% for srv in uncategorized %}
-            <li class="list-group-item clearfix">
-                {% if srv.href %}
-                <a href="{{ srv.href }}">{{ srv.name }}</a>
-                {% else %}
-                <span>{{ srv.name }}</span>
-                {% endif %}
-
-                {% if perms.statusboard.delete_service %}
-                <small><a href="{% url 'statusboard:service:delete' pk=srv.id %}">{% trans 'delete' %}</a></small>
-                {% endif %}
-                {% if perms.statusboard.change_service %}
-                <small><a href="{% url 'statusboard:service:edit' pk=srv.id %}">{% trans 'edit' %}</a></small>
-                {% endif %}
-
-                <div class="pull-right">
-                    <span class="label label-{{ srv.status|service_status_class:"" }}">{{ srv.get_status_display }}</span>
-                </div>
-                <small class="timeinfo">{% trans "last update" %} <abbr title="{{ srv.modified|date:"r" }}">{{ srv.modified|naturaltime }}</abbr></small>
-            </li>
-            {% endfor %}
-        </ul>
     </div>
 </div>
 {% endif %}
