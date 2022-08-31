@@ -1,3 +1,8 @@
+main {
+    padding-top: 1em;
+    padding-bottom: 1em;
+}
+
 div.incidents {
     margin-top: 5em;
 }
