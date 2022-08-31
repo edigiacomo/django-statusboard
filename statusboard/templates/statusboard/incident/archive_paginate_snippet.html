@@ -1,16 +1,16 @@
 <nav>
-    <ul class="pager">
+    <ul class="pagination">
         {% if previous_month %}
-        <li class="previous">
-            <a href="{% url "statusboard:incident:archive-month" previous_month.year previous_month.month %}">
+        <li class="page-item">
+            <a class="page-link" href="{% url "statusboard:incident:archive-month" previous_month.year previous_month.month %}">
                 <span aria-hidden="true">&larr;</span>
                 {{ previous_month|date:"b Y" }}
             </a>
         </li>
         {% endif %}
         {% if next_month %}
-        <li class="next">
-            <a href="{% url "statusboard:incident:archive-month" next_month.year next_month.month %}">
+        <li class="page-item">
+            <a class="page-link" href="{% url "statusboard:incident:archive-month" next_month.year next_month.month %}">
                 {{ next_month|date:"b Y" }}
                 <span aria-hidden="true">&rarr;</span>
             </a>
