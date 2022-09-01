@@ -3,8 +3,8 @@
 {% load i18n %}
 
 {% for incident in incidents %}
-{% ifchanged incident.occurred.date %}
 <div class="mb-3 mt-3">
+    {% ifchanged incident.occurred|date:"DATE_FORMAT" %}
     <h3>{{ incident.occurred|date:"DATE_FORMAT" }}</h3>
     {% endifchanged %}
     <div class="card">
