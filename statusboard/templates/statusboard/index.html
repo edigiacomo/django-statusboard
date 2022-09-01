@@ -42,10 +42,10 @@
     <div class="incidents mt-3 mb-3">
         <h2>
             {% trans 'Recent incidents' %}
-        </h2>
-        {% if perms.statusboard.incident_create %}
-        <small><a href="{% url "statusboard:incident:create" %}">{% trans 'create' %}</a></small>
+            {% if perms.statusboard.incident_create %}
+            <small><a href="{% url "statusboard:incident:create" %}">{% trans 'create' %}</a></small>
         {% endif %}
+        </h2>
         {% include "statusboard/incident/list_snippet.html" with incidents=incidents perms=perms only %}
     </div>
     {% endif %}
