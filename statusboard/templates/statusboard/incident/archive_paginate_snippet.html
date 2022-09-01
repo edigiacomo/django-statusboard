@@ -1,5 +1,5 @@
 <nav>
-    <ul class="pagination">
+    <ul class="pagination justify-content-between">
         {% if previous_month %}
         <li class="page-item">
             <a class="page-link" href="{% url "statusboard:incident:archive-month" previous_month.year previous_month.month %}">
