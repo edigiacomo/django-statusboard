@@ -70,7 +70,7 @@
                         <li class="nav-item">
                             <form id="logout-form" method="post" action="{% url 'statusboard:logout' %}">
                                 {% csrf_token %}
-                                <button type="submit" class="btn btn-link navbar-btn">{% trans 'Sign out' %}</button>
+                                <button type="submit" class="btn btn-link nav-link navbar-btn">{% trans 'Sign out' %}</button>
                             </form>
                         </li>
                         {% else %}
