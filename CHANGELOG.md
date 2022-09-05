@@ -6,6 +6,7 @@
 * Logout using HTTP POST request
 * Cancel button in delete confirmation pages
 * Updated Bootstrap from 3.4.1 to 5.2.0
+* Fixed Django deprecation warnings
 
 ## 0.11.0
 
