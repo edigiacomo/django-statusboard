@@ -15,7 +15,7 @@
 
 from __future__ import unicode_literals
 
-from django.conf.urls import url, include
+from django.urls import re_path, include
 from django.contrib.auth import views as auth_views
 
 from rest_framework import routers
@@ -33,9 +33,12 @@ router.register(r"maintenance", views.MaintenanceViewSet)
 app_name = "statusboard"
 
 service_urls = [
-    url("^create/$", views.ServiceCreate.as_view(), name="create"),
-    url("^(?P<pk>[0-9]+)/edit/$", views.ServiceUpdate.as_view(), name="edit"),
-    url(
+    re_path("^create/$", views.ServiceCreate.as_view(), name="create"),
+    re_path(
+        "^(?P<pk>[0-9]+)/edit/$", views.ServiceUpdate.as_view(),
+        name="edit",
+    ),
+    re_path(
         "^(?P<pk>[0-9]+)/delete/$",
         views.ServiceDelete.as_view(),
         name="delete",
@@ -43,13 +46,13 @@ service_urls = [
 ]
 
 servicegroup_urls = [
-    url("^create/$", views.ServiceGroupCreate.as_view(), name="create"),
-    url(
+    re_path("^create/$", views.ServiceGroupCreate.as_view(), name="create"),
+    re_path(
         "^(?P<pk>[0-9]+)/edit/$",
         views.ServiceGroupUpdate.as_view(),
         name="edit",
     ),
-    url(
+    re_path(
         "^(?P<pk>[0-9]+)/delete/$",
         views.ServiceGroupDelete.as_view(),
         name="delete",
@@ -57,13 +60,13 @@ servicegroup_urls = [
 ]
 
 maintenance_urls = [
-    url("^create/$", views.MaintenanceCreate.as_view(), name="create"),
-    url(
+    re_path("^create/$", views.MaintenanceCreate.as_view(), name="create"),
+    re_path(
         "^(?P<pk>[0-9]+)/edit/$",
         views.MaintenanceUpdate.as_view(),
         name="edit",
     ),
-    url(
+    re_path(
         "^(?P<pk>[0-9]+)/delete/$",
         views.MaintenanceDelete.as_view(),
         name="delete",
@@ -71,15 +74,15 @@ maintenance_urls = [
 ]
 
 incident_urls = [
-    url("^archive/$", views.incident_archive_index, name="archive-index"),
-    url(
+    re_path("^archive/$", views.incident_archive_index, name="archive-index"),
+    re_path(
         "^archive/(?P<year>[0-9]{4})/(?P<month>[0-9]{1,2})/$",
         views.IncidentMonthArchiveView.as_view(),
         name="archive-month",
     ),
-    url("^create/$", views.incident_create, name="create"),
-    url("^(?P<pk>[0-9]+)/edit/$", views.incident_edit, name="edit"),
-    url(
+    re_path("^create/$", views.incident_create, name="create"),
+    re_path("^(?P<pk>[0-9]+)/edit/$", views.incident_edit, name="edit"),
+    re_path(
         "^(?P<pk>[0-9]+)/delete/$",
         views.IncidentDeleteView.as_view(),
         name="delete",
@@ -87,18 +90,18 @@ incident_urls = [
 ]
 
 urlpatterns = [
-    url(r"^$", views.index, name="index"),
+    re_path(r"^$", views.index, name="index"),
 ]
 
 urlpatterns += [
-    url(
+    re_path(
         r"^login/$",
         auth_views.LoginView.as_view(
             template_name="statusboard/login.html",
         ),
         name="login",
     ),
-    url(
+    re_path(
         r"^logout/$",
         auth_views.LogoutView.as_view(
             template_name="statusboard/login.html",
@@ -108,9 +111,9 @@ urlpatterns += [
 ]
 
 urlpatterns += [
-    url(r"^service/", include((service_urls, "service"))),
-    url(r"^servicegroup/", include((servicegroup_urls, "servicegroup"))),
-    url(r"^incident/", include((incident_urls, "incident"))),
-    url(r"^maintenance/", include((maintenance_urls, "maintenance"))),
-    url(r"^api/(?P<version>(v0\.1))/", include((router.urls, "api"))),
+    re_path(r"^service/", include((service_urls, "service"))),
+    re_path(r"^servicegroup/", include((servicegroup_urls, "servicegroup"))),
+    re_path(r"^incident/", include((incident_urls, "incident"))),
+    re_path(r"^maintenance/", include((maintenance_urls, "maintenance"))),
+    re_path(r"^api/(?P<version>(v0\.1))/", include((router.urls, "api"))),
 ]
