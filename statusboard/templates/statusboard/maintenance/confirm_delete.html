@@ -5,16 +5,13 @@
 
 {% block content %}
 <div class="container">
-    <div class="page-header">
-        <h1>{% trans "Delete a maintenance" %}</h1>
-    </div>
+    <h1>{% trans "Delete a maintenance" %}</h1>
     <form class="form-horizontal" role="form" method="post" action="">
         {% csrf_token %}
-        <p class="col-sm-10">{% blocktrans %}Are you sure you want to delete the maintenance "{{ maintenance }}"?{% endblocktrans %}</p>
+        <p>{% blocktrans %}Are you sure you want to delete the maintenance "{{ maintenance }}"?{% endblocktrans %}</p>
         <div class="form-group">
-            <div class="col-sm-2">
-                <input type="submit" class="btn btn-primary" value="{% trans "Confirm" %}">
-            </div>
+            <input type="submit" class="btn btn-primary" value="{% trans "Confirm" %}">
+            <a class="btn btn-secondary" role="button" href="{% url "statusboard:index" %}">{% trans "Cancel" %}</a>
         </div>
     </form>
 </div>

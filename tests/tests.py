@@ -60,16 +60,16 @@ class TestApiPermission(TestCase):
     def test_servicegroup(self):
         """Test service group API permissions"""
         response = self.anon_client.get("/statusboard/api/v0.1/servicegroup/")
-        self.assertEquals(response.status_code, 200)
+        self.assertEqual(response.status_code, 200)
         response = self.anon_client.post("/statusboard/api/v0.1/servicegroup/")
-        self.assertEquals(response.status_code, 403)
+        self.assertEqual(response.status_code, 403)
 
         response = self.create_client.post(
             "/statusboard/api/v0.1/servicegroup/", {
                 "name": "test",
             }
         )
-        self.assertEquals(response.status_code, 201)
+        self.assertEqual(response.status_code, 201)
         self.assertTrue(ServiceGroup.objects.get(name="test") is not None)
 
         response = self.delete_client.patch(
@@ -77,7 +77,7 @@ class TestApiPermission(TestCase):
                 "name": "t",
             }
         )
-        self.assertEquals(response.status_code, 403)
+        self.assertEqual(response.status_code, 403)
         self.assertTrue(ServiceGroup.objects.get(name="test") is not None)
 
         response = self.edit_client.patch(
@@ -85,20 +85,20 @@ class TestApiPermission(TestCase):
                 "name": "t",
             }
         )
-        self.assertEquals(response.status_code, 200)
+        self.assertEqual(response.status_code, 200)
         self.assertTrue(ServiceGroup.objects.get(name="t") is not None)
 
         response = self.create_client.delete(
             "/statusboard/api/v0.1/servicegroup/1/"
         )
-        self.assertEquals(response.status_code, 403)
-        self.assertEquals(ServiceGroup.objects.filter(pk=1).count(), 1)
+        self.assertEqual(response.status_code, 403)
+        self.assertEqual(ServiceGroup.objects.filter(pk=1).count(), 1)
 
         response = self.delete_client.delete(
             "/statusboard/api/v0.1/servicegroup/1/"
         )
-        self.assertEquals(response.status_code, 204)
-        self.assertEquals(ServiceGroup.objects.filter(pk=1).count(), 0)
+        self.assertEqual(response.status_code, 204)
+        self.assertEqual(ServiceGroup.objects.filter(pk=1).count(), 0)
 
 
 class TestTemplate(TestCase):
@@ -112,7 +112,7 @@ class TestTemplate(TestCase):
         client = Client()
         client.login(username="admin", password="admin")
         response = client.get('/statusboard/service/create/')
-        self.assertEquals(response.status_code, 200)
+        self.assertEqual(response.status_code, 200)
         templates = [t.name for t in response.templates]
         self.assertTrue('statusboard/base.html' in templates)
         self.assertTrue('statusboard/service/create.html' in templates)
@@ -122,7 +122,7 @@ class TestTemplate(TestCase):
         client = Client()
         client.login(username="admin", password="admin")
         response = client.get('/statusboard/maintenance/create/')
-        self.assertEquals(response.status_code, 200)
+        self.assertEqual(response.status_code, 200)
         templates = [t.name for t in response.templates]
         self.assertTrue('statusboard/base.html' in templates)
         self.assertTrue('statusboard/maintenance/create.html' in templates)
@@ -223,9 +223,9 @@ class TestIncidentCreate(TestCase):
             'updates-MIN_NUM_FORMS': 0,
         })
         incident = Incident.objects.get(pk=1)
-        self.assertEquals(incident.services.count(), 2)
+        self.assertEqual(incident.services.count(), 2)
         for s in incident.services.all():
-            self.assertEquals(s.status, 0)
+            self.assertEqual(s.status, 0)
 
     def test_create_without_services(self):
         client = Client()
@@ -241,7 +241,7 @@ class TestIncidentCreate(TestCase):
             'updates-MIN_NUM_FORMS': 0,
         })
         incident = Incident.objects.get(pk=1)
-        self.assertEquals(incident.services.count(), 0)
+        self.assertEqual(incident.services.count(), 0)
 
     def test_create_with_empty_service_status(self):
         client = Client()
@@ -257,9 +257,9 @@ class TestIncidentCreate(TestCase):
             'updates-MIN_NUM_FORMS': 0,
         })
         incident = Incident.objects.get(pk=1)
-        self.assertEquals(incident.services.count(), 2)
+        self.assertEqual(incident.services.count(), 2)
         for s in incident.services.all():
-            self.assertEquals(s.status, 2)
+            self.assertEqual(s.status, 2)
 
 
 class TestIncidentEdit(TestCase):
@@ -293,9 +293,9 @@ class TestIncidentEdit(TestCase):
             'updates-MIN_NUM_FORMS': 0,
         })
         incident = Incident.objects.get(pk=1)
-        self.assertEquals(incident.services.count(), 2)
+        self.assertEqual(incident.services.count(), 2)
         for s in incident.services.all():
-            self.assertEquals(s.status, 0)
+            self.assertEqual(s.status, 0)
 
     def test_edit_with_empty_service_status(self):
         client = Client()
@@ -311,9 +311,9 @@ class TestIncidentEdit(TestCase):
             'updates-MIN_NUM_FORMS': 0,
         })
         incident = Incident.objects.get(pk=1)
-        self.assertEquals(incident.services.count(), 2)
+        self.assertEqual(incident.services.count(), 2)
         for s in incident.services.all():
-            self.assertEquals(s.status, 2)
+            self.assertEqual(s.status, 2)
 
     def test_edit_remove_service(self):
         client = Client()
@@ -329,7 +329,7 @@ class TestIncidentEdit(TestCase):
             'updates-MIN_NUM_FORMS': 0,
         })
         i = Incident.objects.get(pk=1)
-        self.assertEquals(i.services.count(), 1)
+        self.assertEqual(i.services.count(), 1)
 
     def test_valid_status(self):
         client = Client()
@@ -346,24 +346,24 @@ class TestIncidentEdit(TestCase):
         })
         i = Incident.objects.get(pk=1)
         s = i.services.first()
-        self.assertEquals(s.status, 2)
+        self.assertEqual(s.status, 2)
 
 
 class TestServiceGroup(TestCase):
     def test_priority_order(self):
         s0 = ServiceGroup.objects.create(name="s0", priority=1)
         s1 = ServiceGroup.objects.create(name="s1", priority=0)
-        self.assertEquals(ServiceGroup.objects.all()[0], s0)
-        self.assertEquals(ServiceGroup.objects.all()[1], s1)
-        self.assertEquals(ServiceGroup.objects.priority_sorted()[0], s0)
-        self.assertEquals(ServiceGroup.objects.priority_sorted()[1], s1)
+        self.assertEqual(ServiceGroup.objects.all()[0], s0)
+        self.assertEqual(ServiceGroup.objects.all()[1], s1)
+        self.assertEqual(ServiceGroup.objects.priority_sorted()[0], s0)
+        self.assertEqual(ServiceGroup.objects.priority_sorted()[1], s1)
         # When two groups have the same priority, order by name
         s2 = ServiceGroup.objects.create(name="s2", priority=0)
-        self.assertEquals(ServiceGroup.objects.priority_sorted()[0], s0)
-        self.assertEquals(ServiceGroup.objects.priority_sorted()[1], s1)
-        self.assertEquals(ServiceGroup.objects.priority_sorted()[2], s2)
+        self.assertEqual(ServiceGroup.objects.priority_sorted()[0], s0)
+        self.assertEqual(ServiceGroup.objects.priority_sorted()[1], s1)
+        self.assertEqual(ServiceGroup.objects.priority_sorted()[2], s2)
         # Filter queryset object
-        self.assertEquals(
+        self.assertEqual(
             ServiceGroup.objects.filter(name="s1").priority_sorted()[0], s1
         )
 
@@ -373,11 +373,11 @@ class TestServiceGroup(TestCase):
         s = Service.objects.create(name="s0", description="test", status=0)
         g.services.add(s)
         g.save()
-        self.assertEquals(g.worst_service(), s)
+        self.assertEqual(g.worst_service(), s)
         s = Service.objects.create(name="s1", description="test", status=1)
         g.services.add(s)
         g.save()
-        self.assertEquals(g.worst_service(), s)
+        self.assertEqual(g.worst_service(), s)
 
     def test_is_empty_group(self):
         g = ServiceGroup.objects.create(name="test", collapse=0)
@@ -401,10 +401,10 @@ class TestIncidentManager(TestCase):
         self.days = days
 
     def test_occurred_in_last_n_days(self):
-        self.assertEquals(
+        self.assertEqual(
             Incident.objects.occurred_in_last_n_days(self.days-1).count(), 1
         )
-        self.assertEquals(
+        self.assertEqual(
             Incident.objects.occurred_in_last_n_days(self.days).count(), 1
         )
 
@@ -412,53 +412,53 @@ class TestIncidentManager(TestCase):
         with self.settings(STATUSBOARD={
             "INCIDENT_DAYS_IN_INDEX": self.days+2,
         }):
-            self.assertEquals(Incident.objects.last_occurred().count(), 2)
+            self.assertEqual(Incident.objects.last_occurred().count(), 2)
 
         with self.settings(STATUSBOARD={
             "INCIDENT_DAYS_IN_INDEX": self.days+1,
         }):
-            self.assertEquals(Incident.objects.last_occurred().count(), 2)
+            self.assertEqual(Incident.objects.last_occurred().count(), 2)
 
         with self.settings(STATUSBOARD={
             "INCIDENT_DAYS_IN_INDEX": self.days,
         }):
-            self.assertEquals(Incident.objects.last_occurred().count(), 1)
+            self.assertEqual(Incident.objects.last_occurred().count(), 1)
 
         with self.settings(STATUSBOARD={
             "INCIDENT_DAYS_IN_INDEX": self.days-1,
         }):
-            self.assertEquals(Incident.objects.last_occurred().count(), 1)
+            self.assertEqual(Incident.objects.last_occurred().count(), 1)
 
         with self.settings(STATUSBOARD={
             "INCIDENT_DAYS_IN_INDEX": 1,
         }):
-            self.assertEquals(Incident.objects.last_occurred().count(), 1)
+            self.assertEqual(Incident.objects.last_occurred().count(), 1)
 
         with self.settings(STATUSBOARD={
             "INCIDENT_DAYS_IN_INDEX": 0,
         }):
-            self.assertEquals(Incident.objects.last_occurred().count(), 0)
+            self.assertEqual(Incident.objects.last_occurred().count(), 0)
 
     def test_in_index(self):
-        self.assertEquals(Incident.objects.in_index().count(), 2)
+        self.assertEqual(Incident.objects.in_index().count(), 2)
 
         with self.settings(STATUSBOARD={
             "OPEN_INCIDENT_IN_INDEX": True,
             "INCIDENT_DAYS_IN_INDEX": self.days+1,
         }):
-            self.assertEquals(Incident.objects.in_index().count(), 2)
+            self.assertEqual(Incident.objects.in_index().count(), 2)
 
         with self.settings(STATUSBOARD={
             "OPEN_INCIDENT_IN_INDEX": True,
             "INCIDENT_DAYS_IN_INDEX": 0,
         }):
-            self.assertEquals(Incident.objects.in_index().count(), 1)
+            self.assertEqual(Incident.objects.in_index().count(), 1)
 
         with self.settings(STATUSBOARD={
             "OPEN_INCIDENT_IN_INDEX": False,
             "INCIDENT_DAYS_IN_INDEX": 0,
         }):
-            self.assertEquals(Incident.objects.in_index().count(), 0)
+            self.assertEqual(Incident.objects.in_index().count(), 0)
 
 
 class TestIncident(TestCase):
@@ -502,9 +502,9 @@ class TestTemplateTags(TestCase):
 class TestService(TestCase):
     def test_worst_status(self):
         # ServiceManager
-        self.assertEquals(Service.objects.worst_status(), None)
+        self.assertEqual(Service.objects.worst_status(), None)
         # ServiceQuerySet
-        self.assertEquals(Service.objects.all().worst_status(), None)
+        self.assertEqual(Service.objects.all().worst_status(), None)
 
     def test_previous_status(self):
         from django.db.models.signals import post_save
@@ -546,9 +546,9 @@ class TestSettings(TestCase):
         with self.settings(STATUSBOARD={
             "INCIDENT_DAYS_IN_INDEX": 30,
         }):
-            self.assertEquals(statusconf.INCIDENT_DAYS_IN_INDEX, 30)
-            self.assertEquals(settings.STATUSBOARD["INCIDENT_DAYS_IN_INDEX"],
-                              statusconf.INCIDENT_DAYS_IN_INDEX)
+            self.assertEqual(statusconf.INCIDENT_DAYS_IN_INDEX, 30)
+            self.assertEqual(settings.STATUSBOARD["INCIDENT_DAYS_IN_INDEX"],
+                             statusconf.INCIDENT_DAYS_IN_INDEX)
 
     def test_missing_default(self):
         from statusboard.settings import statusconf
@@ -580,25 +580,25 @@ class TestMaintenanceEdit(TestCase):
             'description': 'modified description',
         })
         m = Maintenance.objects.get(pk=1)
-        self.assertEquals(m.scheduled, dt)
-        self.assertEquals(m.name, "modified name")
-        self.assertEquals(m.description, "modified description")
+        self.assertEqual(m.scheduled, dt)
+        self.assertEqual(m.name, "modified name")
+        self.assertEqual(m.description, "modified description")
 
 
 class TestReverseAndResolve(TestCase):
     def test_maintenance(self):
         from django.urls import reverse, resolve
 
-        self.assertEquals(
+        self.assertEqual(
             reverse('statusboard:maintenance:create'),
             '/statusboard/maintenance/create/',
         )
         resolver = resolve('/statusboard/maintenance/create/')
-        self.assertEquals(
+        self.assertEqual(
             resolver.namespaces,
             ['statusboard', 'maintenance'],
         )
-        self.assertEquals(
+        self.assertEqual(
             resolver.view_name,
             'statusboard:maintenance:create',
         )
@@ -639,8 +639,8 @@ class TestChangePermission(TestCase):
                 'groups': [self.servicegroup.pk],
             }
         )
-        self.assertEquals(Service.objects.get(pk=self.service.pk).name,
-                          's1-changed')
+        self.assertEqual(Service.objects.get(pk=self.service.pk).name,
+                         's1-changed')
 
 
 class TestArchiveIncident(TestCase):

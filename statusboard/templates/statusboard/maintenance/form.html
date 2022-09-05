@@ -1,10 +1,9 @@
 {% load i18n %}
 <form class="form-horizontal" role="form" method="post" action="">
+    {% include "statusboard/maintenance/note.html" %}
     {% csrf_token %}
     {% include "statusboard/raw_data_form.html" %}
     <div class="form-group">
-        <div class="col-sm-10 col-sm-offset-2">
-            <input type="submit" class="btn btn-primary" value="{% trans "Submit" %}">
-        </div>
+        <input type="submit" class="btn btn-primary" value="{% trans "Submit" %}">
     </div>
 </form>

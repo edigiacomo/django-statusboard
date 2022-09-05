@@ -14,11 +14,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from django.conf import settings
-
-try:
-    from django.contrib.staticfiles.templatetags.staticfiles import static
-except ImportError:
-    from django.templatetags.static import static
+from django.templatetags.static import static
 
 
 """
