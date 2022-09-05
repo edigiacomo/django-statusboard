@@ -35,7 +35,8 @@ app_name = "statusboard"
 service_urls = [
     re_path("^create/$", views.ServiceCreate.as_view(), name="create"),
     re_path(
-        "^(?P<pk>[0-9]+)/edit/$", views.ServiceUpdate.as_view(),
+        "^(?P<pk>[0-9]+)/edit/$",
+        views.ServiceUpdate.as_view(),
         name="edit",
     ),
     re_path(
