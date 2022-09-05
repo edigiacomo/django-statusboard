@@ -11,6 +11,7 @@
         <p>{% blocktrans %}Are you sure you want to delete the maintenance "{{ maintenance }}"?{% endblocktrans %}</p>
         <div class="form-group">
             <input type="submit" class="btn btn-primary" value="{% trans "Confirm" %}">
+            <a class="btn btn-secondary" role="button" href="{% url "statusboard:index" %}">{% trans "Cancel" %}</a>
         </div>
     </form>
 </div>
