@@ -1,6 +1,6 @@
 # Changelog
 
-## development
+## 0.12.0
 
 * Removed Django 3.1 support
 * Logout using HTTP POST request
