@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.12.1
+
+* Fixed readthedocs build
+
 ## 0.12.0
 
 * Removed Django 3.1 support
