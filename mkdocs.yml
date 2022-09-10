@@ -3,7 +3,7 @@ site_description: A Django based status page
 site_author: Emanuele Di Giacomo <emanuele@digiacomo.cc>
 copyright: Copyright (C) 2017 Emanuele Di Giacomo <emanuele@digiacomo.cc>
 repo_url: https://github.com/edigiacomo/django-statusboard
-pages:
+nav:
     - Home: index.md
     
 theme: readthedocs
