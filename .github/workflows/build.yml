@@ -30,17 +30,3 @@ jobs:
           pip install codecov
           codecov
         if: matrix.python == '3.9' && matrix.django == '32'
-  docs:
-    name: Build docs
-    runs-on: ubuntu-latest
-    steps:
-      - name: Install system dependencies
-        run: pip install tox
-      - name: Setup Python 3.9
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.9
-      - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Run mkdocs
-        run: mkdocs
