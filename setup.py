@@ -34,6 +34,7 @@ setup(
         'License :: OSI Approved :: GNU General Public License v2 or later (GPLv2+)',
         'Framework :: Django',
         'Framework :: Django :: 3.2',
+        'Framework :: Django :: 4.1',
         'Operating System :: OS Independent',
         'Programming Language :: Python',
         'Programming Language :: Python :: 3',
