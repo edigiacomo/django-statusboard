@@ -15,10 +15,10 @@
 
 from __future__ import unicode_literals
 
-from django.conf.urls import url, include
+from django.urls import re_path, include
 
 
 urlpatterns = [
-    url(r'^statusboard/', include('statusboard.urls',
-                                  namespace="statusboard")),
+    re_path(r'^statusboard/', include('statusboard.urls',
+                                      namespace="statusboard")),
 ]
