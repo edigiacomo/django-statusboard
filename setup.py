@@ -4,7 +4,6 @@ import re
 from setuptools import find_packages, setup
 
 
-
 def get_version(package):
     # Thanks to Tom Christie
     init_py = open(os.path.join(package, '__init__.py')).read()
@@ -34,7 +33,6 @@ setup(
         'Environment :: Web Environment',
         'License :: OSI Approved :: GNU General Public License v2 or later (GPLv2+)',
         'Framework :: Django',
-        'Framework :: Django :: 2.2',
         'Framework :: Django :: 3.2',
         'Operating System :: OS Independent',
         'Programming Language :: Python',
