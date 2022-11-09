@@ -149,8 +149,13 @@ def notify_service_update(sender, instance, **kwargs):
 
 ## REST API
 
-`django-statusboard` comes with a set of REST API to manage its models, based on [Django REST Framework](https://www.django-rest-framework.org/) `ModelViewSet`.
+`django-statusboard` comes with a set of REST API to manage its models, based on [Django REST Framework](https://www.django-rest-framework.org/) `ModelViewSet`:
 
+* `/api/v0.1/servicegroup/`
+* `/api/v0.1/service/`
+* `/api/v0.1/incident/`
+* `/api/v0.1/incidentupdate/`
+* `/api/v0.1/maintenance/`
 
 ## Development
 
