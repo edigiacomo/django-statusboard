@@ -56,12 +56,7 @@ class IncidentForm(forms.ModelForm):
     service_status = forms.ChoiceField(
         choices=tuple([("", "---------")] + list(SERVICE_STATUSES)),
         label=_("Services status"),
-        help_text=_(
-            (
-                "Update the status of involved services "
-                "(an empty value means that they will be left unaltered)"
-            )
-        ),
+        help_text=_("Update the status of involved services (an empty value means that they will be left unaltered)"),
         required=False,
     )
 
