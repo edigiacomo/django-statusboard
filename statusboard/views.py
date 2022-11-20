@@ -64,9 +64,7 @@ def index(request):
             "uncategorized": Service.objects.uncategorized(),
             "worst_status": worst_status,
             "incidents": Incident.objects.in_index().order_by("-occurred"),
-            "maintenances": Maintenance.objects.filter(
-                scheduled__gt=timezone.now()
-            ).order_by("-scheduled"),
+            "maintenances": Maintenance.objects.filter(scheduled__gt=timezone.now()).order_by("-scheduled"),
             "auto_refresh": statusconf.AUTO_REFRESH_INDEX_SECONDS,
             "favicon": statusconf.FAVICON_INDEX_DICT.get(
                 worst_status,
@@ -153,9 +151,7 @@ def incident_create(request):
         form = IncidentForm(request.POST)
         if form.is_valid():
             incident = form.save(commit=False)
-            incident_updates = IncidentUpdateFormSet(
-                request.POST, instance=incident
-            )
+            incident_updates = IncidentUpdateFormSet(request.POST, instance=incident)
             if incident_updates.is_valid():
                 form.save()
                 incident_updates.save()
@@ -181,9 +177,7 @@ def incident_edit(request, pk):
         form = IncidentForm(request.POST or None, instance=incident)
         if form.is_valid():
             incident = form.save(commit=False)
-            incident_updates = IncidentUpdateFormSet(
-                request.POST, request.FILES, instance=incident
-            )
+            incident_updates = IncidentUpdateFormSet(request.POST, request.FILES, instance=incident)
             if incident_updates.is_valid():
                 form.save()
                 incident_updates.save()
@@ -209,9 +203,7 @@ class IncidentDeleteView(PermissionRequiredMixin, DeleteView):
 def incident_archive_index(request):
     try:
         dt = Incident.objects.latest("occurred").occurred
-        return redirect(
-            "statusboard:incident:archive-month", year=dt.year, month=dt.month
-        )
+        return redirect("statusboard:incident:archive-month", year=dt.year, month=dt.month)
     except Incident.DoesNotExist:
         return render(request, "statusboard/incident/archive_month_empty.html")
 

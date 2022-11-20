@@ -81,6 +81,4 @@ class IncidentForm(forms.ModelForm):
         return model
 
 
-IncidentUpdateFormSet = inlineformset_factory(
-    Incident, IncidentUpdate, fields=("status", "description"), extra=1
-)
+IncidentUpdateFormSet = inlineformset_factory(Incident, IncidentUpdate, fields=("status", "description"), extra=1)

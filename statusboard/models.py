@@ -42,9 +42,7 @@ class ServiceQuerySet(models.QuerySet):
         return self.latest("status")
 
     def uncategorized(self):
-        return self.annotate(group_count=models.Count("groups")).filter(
-            group_count=0
-        )
+        return self.annotate(group_count=models.Count("groups")).filter(group_count=0)
 
     def priority_sorted(self):
         return self.order_by("-priority", "name")
@@ -66,17 +64,11 @@ class ServiceManager(models.Manager):
 
 
 class Service(TimeStampedModel):
-    name = models.CharField(
-        max_length=255, unique=True, verbose_name=_("name")
-    )
+    name = models.CharField(max_length=255, unique=True, verbose_name=_("name"))
     description = models.TextField(blank=True, verbose_name=_("description"))
     href = models.URLField(blank=True)
-    status = models.IntegerField(
-        choices=SERVICE_STATUSES, verbose_name=_("status")
-    )
-    priority = models.PositiveIntegerField(
-        default=0, verbose_name=_("priority")
-    )
+    status = models.IntegerField(choices=SERVICE_STATUSES, verbose_name=_("status"))
+    priority = models.PositiveIntegerField(default=0, verbose_name=_("priority"))
     groups = models.ManyToManyField(
         "ServiceGroup",
         blank=True,
@@ -124,15 +116,9 @@ class ServiceGroupManager(models.Manager):
 
 
 class ServiceGroup(TimeStampedModel):
-    name = models.CharField(
-        max_length=255, unique=True, verbose_name=_("name")
-    )
-    priority = models.PositiveIntegerField(
-        default=0, verbose_name=_("priority")
-    )
-    collapse = models.IntegerField(
-        choices=SERVICEGROUP_COLLAPSE_OPTIONS, default=0
-    )
+    name = models.CharField(max_length=255, unique=True, verbose_name=_("name"))
+    priority = models.PositiveIntegerField(default=0, verbose_name=_("priority"))
+    collapse = models.IntegerField(choices=SERVICEGROUP_COLLAPSE_OPTIONS, default=0)
     objects = ServiceGroupManager()
 
     def worst_service(self):
@@ -172,15 +158,11 @@ class IncidentQuerySet(models.QuerySet):
     def occurred_in_last_n_days_q(self, days):
         """Q obects for the incidents occurred in last N days (1 = today)."""
         threshold = timezone.now() - timezone.timedelta(days=days - 1)
-        threshold = threshold.replace(
-            hour=0, minute=0, second=0, microsecond=0
-        )
+        threshold = threshold.replace(hour=0, minute=0, second=0, microsecond=0)
         return models.Q(occurred__gte=threshold)
 
     def last_occurred_q(self):
-        return self.occurred_in_last_n_days_q(
-            statusconf.INCIDENT_DAYS_IN_INDEX
-        )
+        return self.occurred_in_last_n_days_q(statusconf.INCIDENT_DAYS_IN_INDEX)
 
     def occurred_in_last_n_days(self, days=7):
         """Return incidents occurred in last N days (1 = today)."""
@@ -225,9 +207,7 @@ class Incident(TimeStampedModel):
         related_query_name="incident",
         verbose_name=_("services"),
     )
-    occurred = models.DateTimeField(
-        default=timezone.now, verbose_name=_("occurred")
-    )
+    occurred = models.DateTimeField(default=timezone.now, verbose_name=_("occurred"))
     closed = models.BooleanField(default=False)
     objects = IncidentManager()
 
@@ -256,9 +236,7 @@ class IncidentUpdate(TimeStampedModel):
         related_query_name="update",
         verbose_name=_("incident"),
     )
-    status = models.IntegerField(
-        choices=INCIDENT_STATUSES, verbose_name=_("status")
-    )
+    status = models.IntegerField(choices=INCIDENT_STATUSES, verbose_name=_("status"))
     description = models.TextField(verbose_name=_("description"))
 
     def __str__(self):

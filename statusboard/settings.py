@@ -34,9 +34,7 @@ DEFAULTS = {
     # Automatic refresth the home page in seconds (disable with 0)
     "AUTO_REFRESH_INDEX_SECONDS": 0,
     # Default favicon
-    "FAVICON_DEFAULT": static(
-        "statusboard/favicons/statusboard-icon-default.ico"
-    ),
+    "FAVICON_DEFAULT": static("statusboard/favicons/statusboard-icon-default.ico"),
     # Favicons for index
     "FAVICON_INDEX_DICT": {
         0: static("statusboard/favicons/statusboard-icon-operational.ico"),
@@ -52,9 +50,7 @@ class Settings(object):
 
     def __getattr__(self, name):
         if name not in DEFAULTS:
-            raise RuntimeError(
-                ("{} is not a valid statusboard " "setting").format(name)
-            )
+            raise RuntimeError(("{} is not a valid statusboard " "setting").format(name))
         s = getattr(settings, "STATUSBOARD", {})
         return s.get(name, DEFAULTS[name])
 
