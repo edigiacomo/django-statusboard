@@ -128,7 +128,7 @@ ACME, Inc.
 ## Notifications
 
 `django-statusboard` doesn't provide an out-of-the-box notification system, but
-it's easy to implement using [django signals](https://docs.djangoproject.com/en/dev/topics/signals/).
+it's easy to implement using [django signals](https://docs.djangoproject.com/en/dev/topics/signals/) or you can use [django-statusboard-notify](https://github.com/edigiacomo/django-statusboard-notify).
 
 Moreover, `django-statusboard` tracks the previous status of a service
 (`Service._status`).
