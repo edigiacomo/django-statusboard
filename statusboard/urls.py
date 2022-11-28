@@ -116,5 +116,5 @@ urlpatterns += [
     re_path(r"^servicegroup/", include((servicegroup_urls, "servicegroup"))),
     re_path(r"^incident/", include((incident_urls, "incident"))),
     re_path(r"^maintenance/", include((maintenance_urls, "maintenance"))),
-    re_path(r"^api/(?P<version>(v0\.1))/", include((router.urls, "api"))),
+    re_path(r"^api/v0.1/", include((router.urls, "api"), namespace="v0.1")),
 ]
