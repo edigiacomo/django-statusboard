@@ -1,5 +1,14 @@
 # Changelog
 
+## devel
+
+* Removed Django 2.2 support
+* Added Django 4.1 support
+* Added Python 3.11 support
+* Use NamespaceVersioning instead of URLPathVersioning in API routes
+* Bootstrap 5.2.3
+* Bootstrap Icons 1.10.4
+
 ## 0.12.1
 
 * Fixed readthedocs build

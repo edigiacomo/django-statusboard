@@ -46,8 +46,7 @@ Update your database
 You can configure the app using the dict `STATUSBOARD` in `settings.py`:
 
 ```python
-from django.contrib.staticfiles.templatetags.staticfiles import static
-# for Django >= 3.0: from django.templatetags.static import static
+from django.templatetags.static import static
 
 STATUSBOARD = {
     "INCIDENT_DAYS_IN_INDEX": 7,
@@ -108,9 +107,6 @@ A.C.M.E. statuspage
 
 ### Example: change branding and title
 
-In Django >= 1.9, the templates can be extended recursively (see
-https://docs.djangoproject.com/en/1.9/releases/1.9/#templates).
-
 Create a `statusboard/base.html` in one of your templates dir:
 
 ```
@@ -128,7 +124,7 @@ ACME, Inc.
 ## Notifications
 
 `django-statusboard` doesn't provide an out-of-the-box notification system, but
-it's easy to implement using [django signals](https://docs.djangoproject.com/en/dev/topics/signals/) or you can use [django-statusboard-notify](https://github.com/edigiacomo/django-statusboard-notify).
+it's easy to implement using [django signals](https://docs.djangoproject.com/en/dev/topics/signals/) or you can use [django-statusboard-notify](https://github.com/edigiacomo/django-statusboard-notify) that provides some builtin notifications (e.g. email, Telegram).
 
 Moreover, `django-statusboard` tracks the previous status of a service
 (`Service._status`).
@@ -175,6 +171,6 @@ $ cd statusboard && django-admin makemessages -l LOCALE
 
 ## Contact and copyright information
 
-Copyright (C) 2019 Emanuele Di Giacomo <emanuele@digiacomo.cc>
+Copyright (C) 2019-2023 Emanuele Di Giacomo <emanuele@digiacomo.cc>
 
 django-statusboard is licensed under GPLv2+.
