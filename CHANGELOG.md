@@ -2,6 +2,7 @@
 
 ## devel
 
+* Added Django 4.2 support
 * Removed Django 2.2 support
 * Added Django 4.1 support
 * Added Python 3.11 support
