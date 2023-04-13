@@ -11,10 +11,14 @@ jobs:
     strategy:
       matrix:
         python: ["3.6", "3.7", "3.8", "3.9", "3.10", "3.11"]
-        django: [32, 41]
+        django: [32, 41, 42]
         exclude:
           - python: "3.6"
             django: 41
+          - python: "3.6"
+            django: 42
+          - python: "3.7"
+            django: 42
     steps:
       - name: Install system dependencies
         run: pip install tox
