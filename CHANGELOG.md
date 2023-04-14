@@ -1,6 +1,6 @@
 # Changelog
 
-## devel
+## 0.13.0
 
 * Added Django 4.2 support
 * Removed Django 2.2 support
