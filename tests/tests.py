@@ -15,6 +15,8 @@
 
 from __future__ import unicode_literals
 
+from datetime import datetime, timedelta
+
 from django.test import TestCase
 from django.test import Client
 from django.contrib.auth.models import User, Permission
@@ -118,6 +120,17 @@ class TestTemplate(TestCase):
         self.assertTrue('statusboard/service/create.html' in templates)
         self.assertTrue('statusboard/service/form.html' in templates)
 
+    def test_service_delete(self):
+        client = Client()
+        client.login(username="admin", password="admin")
+        Service.objects.create(pk=1, name="test", status=0)
+        response = client.get('/statusboard/service/1/delete/')
+        self.assertEqual(response.status_code, 200)
+        templates = [t.name for t in response.templates]
+        self.assertTrue('statusboard/base.html' in templates)
+        self.assertTrue('statusboard/service/confirm_delete.html' in templates)
+
+
     def test_maintenance_create(self):
         client = Client()
         client.login(username="admin", password="admin")
@@ -127,6 +140,71 @@ class TestTemplate(TestCase):
         self.assertTrue('statusboard/base.html' in templates)
         self.assertTrue('statusboard/maintenance/create.html' in templates)
         self.assertTrue('statusboard/maintenance/form.html' in templates)
+
+    def test_maintenance_delete(self):
+        client = Client()
+        client.login(username="admin", password="admin")
+        Maintenance.objects.create(pk=1, scheduled=datetime.now(), name="test", description="test")
+        response = client.get('/statusboard/maintenance/1/delete/')
+        self.assertEqual(response.status_code, 200)
+        templates = [t.name for t in response.templates]
+        self.assertTrue('statusboard/base.html' in templates)
+        self.assertTrue('statusboard/maintenance/confirm_delete.html' in templates)
+
+    def test_index_maintenance(self):
+        client = Client()
+        Maintenance.objects.create(
+            pk=1,
+            scheduled=datetime.now() + timedelta(hours=1),
+            name="maintenance-name-1",
+            description="maintenance-description-1",
+        )
+        Maintenance.objects.create(
+            pk=2,
+            scheduled=datetime.now() - timedelta(hours=1),
+            name="maintenance-name-2",
+            description="maintenance-description-2",
+        )
+        response = client.get('/statusboard/')
+        self.assertContains(response, text='maintenance-name-1')
+        self.assertContains(response, text='maintenance-description-1')
+        self.assertNotContains(response, text='maintenance-name-2')
+        self.assertNotContains(response, text='maintenance-description-2')
+
+    def test_index_incident(self):
+        client = Client()
+        Incident.objects.create(pk=1, name="incident-name-1", occurred=datetime.now(), closed=False)
+        response = client.get('/statusboard/')
+        self.assertContains(response, text="incident-name-1")
+        templates = [t.name for t in response.templates]
+        self.assertTrue("statusboard/incident/list_snippet.html" in templates)
+
+    def test_index_open_past_incident(self):
+        client = Client()
+        Incident.objects.create(pk=1, name="incident-name-1", occurred=datetime.now()-timedelta(days=1), closed=False)
+        Incident.objects.create(pk=2, name="incident-name-2", occurred=datetime.now()-timedelta(days=1), closed=True)
+        with self.settings(STATUSBOARD={
+            'OPEN_INCIDENT_IN_INDEX': True,
+            'INCIDENT_DAYS_IN_INDEX': 3,
+        }):
+            response = client.get('/statusboard/')
+            self.assertContains(response, text="incident-name-1")
+            self.assertContains(response, text="incident-name-2")
+
+        with self.settings(STATUSBOARD={
+            'INCIDENT_DAYS_IN_INDEX': 1,
+            'OPEN_INCIDENT_IN_INDEX': False,
+        }):
+            response = client.get('/statusboard/')
+            self.assertNotContains(response, text="incident-name-1")
+            self.assertNotContains(response, text="incident-name-2")
+
+        with self.settings(STATUSBOARD={
+            'INCIDENT_DAYS_IN_INDEX': 2,
+        }):
+            response = client.get('/statusboard/')
+            self.assertContains(response, text="incident-name-1")
+            self.assertContains(response, text="incident-name-2")
 
     def test_index_refresh(self):
         client = Client()
