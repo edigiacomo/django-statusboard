@@ -206,6 +206,16 @@ class TestTemplate(TestCase):
             self.assertContains(response, text="incident-name-1")
             self.assertContains(response, text="incident-name-2")
 
+    def test_index_servicegroup(self):
+        client = Client()
+        servicegroup = ServiceGroup.objects.create(name="servicegroup-name")
+        service = Service.objects.create(name="s1", description="s1", status=2)
+        service.groups.add(servicegroup)
+        response = client.get('/statusboard/')
+        templates = [t.name for t in response.templates]
+        self.assertTrue('statusboard/servicegroup/list_snippet.html' in templates)
+        self.assertContains(response, text='servicegroup-name')
+
     def test_index_refresh(self):
         client = Client()
 
