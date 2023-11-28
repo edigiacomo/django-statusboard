@@ -69,7 +69,7 @@ class Service(TimeStampedModel):
     description = models.TextField(blank=True, verbose_name=_("description"))
     href = models.URLField(blank=True)
     status = models.IntegerField(choices=SERVICE_STATUSES, verbose_name=_("status"))
-    status_modified = models.DateTimeField(default=timezone.now, verbose_name=_("last change of status"))
+    status_modified = models.DateTimeField(default=timezone.now, verbose_name=_("last status update"))
     priority = models.PositiveIntegerField(default=0, verbose_name=_("priority"))
     groups = models.ManyToManyField(
         "ServiceGroup",
