@@ -16,6 +16,7 @@
 from __future__ import unicode_literals
 
 from datetime import datetime, timedelta
+from unittest.mock import patch
 
 from django.test import TestCase
 from django.test import Client
@@ -285,6 +286,40 @@ class TestTemplate(TestCase):
                 response = client.get('/statusboard/')
                 self.assertContains(response, status_code=200,
                                     text=statusconf.FAVICON_DEFAULT)
+
+
+class TestServiceUpdate(TestCase):
+    def setUp(self):
+        admin = User.objects.create_superuser(username="admin",
+                                              password="admin",
+                                              email="admin@admin")
+        admin.save()
+
+        Service.objects.create(name="s1", description="s1", status=0)
+
+    def test_update_without_changing_status(self):
+        s = Service.objects.get(pk=1)
+        status_modified_0 = s.status_modified
+
+        client = Client()
+        client.login(username="admin", password="admin")
+        response = client.post('/statusboard/service/1/edit/', {
+            'status': 0
+        })
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(s.status_modified, status_modified_0)
+
+    def test_update_status(self):
+        s = Service.objects.get(pk=1)
+        status_modified_0 = s.status_modified
+
+        client = Client()
+        client.login(username="admin", password="admin")
+        response = client.post('/statusboard/service/1/edit/', {
+            'status': 1
+        })
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(s.status_modified, status_modified_0)
 
 
 class TestIncidentCreate(TestCase):
@@ -618,6 +653,24 @@ class TestService(TestCase):
         self.assertTrue(check_different.is_different)
 
         post_save.disconnect(check_different)
+
+    def test_status_modified(self):
+        s = Service(name="service", description="test", status=0)
+        s.save()
+        status_modified_0 = s.status_modified
+        # When the status doesn't change, the status_modified doesn't change too
+        s.status = 0
+        s.save()
+        self.assertEqual(s.status_modified, status_modified_0)
+        # When the status changes, the status_modified changes too and it's greater that the previous value
+        s.status = 1
+        s.save()
+        self.assertGreater(s.status_modified, status_modified_0)
+        status_modified_1 = s.status_modified
+        # When another field changes, the status_modified doesn't change
+        s.name = "service_2"
+        s.save()
+        self.assertEqual(s.status_modified, status_modified_1)
 
 
 class TestSettings(TestCase):

@@ -39,6 +39,7 @@ class ServiceSerializer(serializers.ModelSerializer):
             "priority",
             "created",
             "modified",
+            "status_modified",
         )
 
 

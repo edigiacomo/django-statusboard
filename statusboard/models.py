@@ -19,6 +19,7 @@ from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from django.dispatch import receiver
+from django.utils import timezone
 
 from model_utils.models import TimeStampedModel
 
@@ -68,6 +69,7 @@ class Service(TimeStampedModel):
     description = models.TextField(blank=True, verbose_name=_("description"))
     href = models.URLField(blank=True)
     status = models.IntegerField(choices=SERVICE_STATUSES, verbose_name=_("status"))
+    status_modified = models.DateTimeField(default=timezone.now, verbose_name=_("last change of status"))
     priority = models.PositiveIntegerField(default=0, verbose_name=_("priority"))
     groups = models.ManyToManyField(
         "ServiceGroup",
@@ -86,8 +88,14 @@ class Service(TimeStampedModel):
         self._status = self.status
 
     def save(self, *args, **kwargs):
+        # If the status value is really changed, update the status_modified field
+        if self._status != self.status:
+            self.status_modified = timezone.now()
+
         # When the instance is saved, the original status is updated
         super(Service, self).save(*args, **kwargs)
+
+        # Update the previous status
         self._status = self.status
 
     class Meta:
