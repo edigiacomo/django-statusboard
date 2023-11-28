@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Django Statusboard\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-19 09:39-0600\n"
+"POT-Creation-Date: 2023-11-28 11:38+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Emanuele Di Giacomo <emanuele@digiacomo.cc>\n"
 "Language-Team: Italian\n"
@@ -29,39 +29,44 @@ msgstr ""
 "Aggiorna lo status dei servizi coinvolti (se vuoto, saranno lasciati "
 "inalterati)"
 
-#: models.py:29
+#: models.py:30
 msgid "Operational"
 msgstr "Operativo"
 
-#: models.py:30
+#: models.py:31
 msgid "Performance issues"
 msgstr "Problemi di performance"
 
-#: models.py:31
+#: models.py:32
 msgid "Partial outage"
 msgstr "Interruzione parziale"
 
-#: models.py:32
+#: models.py:33
 msgid "Major outage"
 msgstr "Interruzione totale"
 
-#: models.py:70 models.py:128 models.py:220 models.py:274
+#: models.py:68 models.py:127 models.py:210 models.py:260
 msgid "name"
 msgstr "nome"
 
-#: models.py:72 models.py:262 models.py:275
+#: models.py:69 models.py:248 models.py:261
 msgid "description"
 msgstr "descrizione"
 
-#: models.py:75 models.py:260
+#: models.py:71 models.py:247
 msgid "status"
 msgstr "status"
 
-#: models.py:78 models.py:131
+#: models.py:72 templates/statusboard/servicegroup/list_snippet.html:47
+#: templates/statusboard/servicegroup/list_snippet.html:92
+msgid "last status update"
+msgstr "ultimo cambio di status"
+
+#: models.py:73 models.py:128
 msgid "priority"
 msgstr "priorità"
 
-#: models.py:85
+#: models.py:79
 msgid "groups"
 msgstr "gruppi"
 
@@ -69,7 +74,7 @@ msgstr "gruppi"
 msgid "service"
 msgstr "servizio"
 
-#: models.py:103 models.py:226
+#: models.py:103 models.py:216
 msgid "services"
 msgstr "servizi"
 
@@ -85,59 +90,59 @@ msgstr "Compatta sempre"
 msgid "Collapse when all the services are operational"
 msgstr "Compatta quando tutti i servizi sono operativi"
 
-#: models.py:159
+#: models.py:153
 msgid "service group"
 msgstr "gruppo dei servizi"
 
-#: models.py:160
+#: models.py:154
 msgid "service groups"
 msgstr "gruppi dei servizi"
 
-#: models.py:164
+#: models.py:158
 msgid "Investigating"
 msgstr "In studio"
 
-#: models.py:165
+#: models.py:159
 msgid "Identified"
 msgstr "Identificato"
 
-#: models.py:166
+#: models.py:160
 msgid "Watching"
 msgstr "In esame"
 
-#: models.py:167
+#: models.py:161
 msgid "Fixed"
 msgstr "Risolto"
 
-#: models.py:229 templates/statusboard/incident/list_snippet.html:40
+#: models.py:218 templates/statusboard/incident/list_snippet.html:40
 msgid "occurred"
 msgstr "avvenuto"
 
-#: models.py:247 models.py:257
+#: models.py:235 models.py:245
 msgid "incident"
 msgstr "incidente"
 
-#: models.py:248
+#: models.py:236
 msgid "incidents"
 msgstr "incidenti"
 
-#: models.py:268
+#: models.py:254
 msgid "incident update"
 msgstr "aggiornamento dell'incidente"
 
-#: models.py:269
+#: models.py:255
 msgid "incident updates"
 msgstr "aggiornamenti dell'incidente"
 
-#: models.py:273
+#: models.py:259
 msgid "scheduled start"
 msgstr "inizio previsto"
 
-#: models.py:281
+#: models.py:267
 msgid "maintenance"
 msgstr "manutenzione"
 
-#: models.py:282
+#: models.py:268
 msgid "maintenances"
 msgstr "manutenzioni"
 
@@ -229,7 +234,7 @@ msgstr "Descrizione"
 #: templates/statusboard/index.html:24
 #: templates/statusboard/servicegroup/list_snippet.html:16
 #: templates/statusboard/servicegroup/list_snippet.html:37
-#: templates/statusboard/servicegroup/list_snippet.html:81
+#: templates/statusboard/servicegroup/list_snippet.html:82
 msgid "delete"
 msgstr "elimina"
 
@@ -244,13 +249,13 @@ msgstr "Invia"
 #: templates/statusboard/index.html:27
 #: templates/statusboard/servicegroup/list_snippet.html:19
 #: templates/statusboard/servicegroup/list_snippet.html:40
-#: templates/statusboard/servicegroup/list_snippet.html:84
+#: templates/statusboard/servicegroup/list_snippet.html:85
 msgid "edit"
 msgstr "modifica"
 
 #: templates/statusboard/incident/list_snippet.html:33
 #: templates/statusboard/servicegroup/list_snippet.html:46
-#: templates/statusboard/servicegroup/list_snippet.html:90
+#: templates/statusboard/servicegroup/list_snippet.html:91
 msgid "last update"
 msgstr "ultimo aggiornamento"
 
@@ -389,7 +394,7 @@ msgstr "Crea un nuovo gruppo di servizi"
 msgid "Edit service group"
 msgstr "Modifica un gruppo di servizi"
 
-#: templates/statusboard/servicegroup/list_snippet.html:62
+#: templates/statusboard/servicegroup/list_snippet.html:63
 msgid "Uncategorized"
 msgstr "Non categorizzati"
 
@@ -408,3 +413,6 @@ msgstr "Qualche sistema soffre di interruzione parziale"
 #: templatetags/statusboard.py:33
 msgid "Some systems are experiencing major outages"
 msgstr "Qualche sistema soffre di interruzione totale"
+
+#~ msgid "last change of status"
+#~ msgstr "ultimo cambio di status"
