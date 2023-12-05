@@ -144,7 +144,7 @@ class TestTemplate(TestCase):
     def test_maintenance_delete(self):
         client = Client()
         client.login(username="admin", password="admin")
-        Maintenance.objects.create(pk=1, scheduled=datetime.now(), name="test", description="test")
+        Maintenance.objects.create(pk=1, scheduled=timezone.now(), name="test", description="test")
         response = client.get('/statusboard/maintenance/1/delete/')
         self.assertEqual(response.status_code, 200)
         templates = [t.name for t in response.templates]
@@ -155,13 +155,13 @@ class TestTemplate(TestCase):
         client = Client()
         Maintenance.objects.create(
             pk=1,
-            scheduled=datetime.now() + timedelta(hours=1),
+            scheduled=timezone.now() + timedelta(hours=1),
             name="maintenance-name-1",
             description="maintenance-description-1",
         )
         Maintenance.objects.create(
             pk=2,
-            scheduled=datetime.now() - timedelta(hours=1),
+            scheduled=timezone.now() - timedelta(hours=1),
             name="maintenance-name-2",
             description="maintenance-description-2",
         )
@@ -173,7 +173,7 @@ class TestTemplate(TestCase):
 
     def test_index_incident(self):
         client = Client()
-        Incident.objects.create(pk=1, name="incident-name-1", occurred=datetime.now(), closed=False)
+        Incident.objects.create(pk=1, name="incident-name-1", occurred=timezone.now(), closed=False)
         response = client.get('/statusboard/')
         self.assertContains(response, text="incident-name-1")
         templates = [t.name for t in response.templates]
@@ -181,8 +181,8 @@ class TestTemplate(TestCase):
 
     def test_index_open_past_incident(self):
         client = Client()
-        Incident.objects.create(pk=1, name="incident-name-1", occurred=datetime.now()-timedelta(days=1), closed=False)
-        Incident.objects.create(pk=2, name="incident-name-2", occurred=datetime.now()-timedelta(days=1), closed=True)
+        Incident.objects.create(pk=1, name="incident-name-1", occurred=timezone.now()-timedelta(days=1), closed=False)
+        Incident.objects.create(pk=2, name="incident-name-2", occurred=timezone.now()-timedelta(days=1), closed=True)
         with self.settings(STATUSBOARD={
             'OPEN_INCIDENT_IN_INDEX': True,
             'INCIDENT_DAYS_IN_INDEX': 3,
@@ -478,7 +478,7 @@ class TestServiceGroup(TestCase):
 
 class TestIncidentManager(TestCase):
     def setUp(self):
-        dt = timezone.datetime.now()
+        dt = timezone.now()
         days = 30
         i = Incident.objects.create(name="a", occurred=dt)
         IncidentUpdate.objects.create(incident=i, status=0, description="test")
@@ -652,7 +652,7 @@ class TestMaintenanceEdit(TestCase):
                                               email="admin@admin")
         admin.save()
 
-        m = Maintenance(scheduled=timezone.datetime.now(),
+        m = Maintenance(scheduled=timezone.now(),
                         name="test",
                         description="test")
         m.full_clean()
@@ -661,7 +661,7 @@ class TestMaintenanceEdit(TestCase):
     def test_edit(self):
         client = Client()
         client.login(username="admin", password="admin")
-        dt = timezone.datetime.now()
+        dt = timezone.now()
         client.post('/statusboard/maintenance/1/edit/', {
             'scheduled': dt,
             'name': 'modified name',

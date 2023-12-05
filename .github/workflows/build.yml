@@ -11,7 +11,7 @@ jobs:
     strategy:
       matrix:
         python: ["3.6", "3.7", "3.8", "3.9", "3.10", "3.11"]
-        django: [32, 41, 42]
+        django: [32, 42]
         exclude:
           - python: "3.6"
             django: 41
@@ -32,4 +32,4 @@ jobs:
         run: tox -e py-django${{ matrix.django }}
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
-        if: matrix.python == '3.9' && matrix.django == '32'
+        if: matrix.python == '3.11' && matrix.django == '42'
