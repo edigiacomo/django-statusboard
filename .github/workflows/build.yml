@@ -12,37 +12,26 @@ jobs:
       matrix:
         include:
           - python: "3.6"
-            py: 36
             django: 32
           - python: "3.7"
-            py: 37
             django: 32
           - python: "3.8"
-            py: 38
             django: 32
           - python: "3.9"
-            py: 39
             django: 32
           - python: "3.9"
-            py: 39
             django: 42
           - python: "3.10"
-            py: 310
             django: 32
           - python: "3.10"
-            py: 310
             django: 42
           - python: "3.10"
-            py: 310
             django: 50
           - python: "3.11"
-            py: 311
             django: 32
           - python: "3.11"
-            py: 311
             django: 42
           - python: "3.11"
-            py: 311
             django: 50
     steps:
       - name: Install system dependencies
@@ -54,7 +43,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
       - name: Run tests
-        run: tox -e py${{ matrix.py }}-django${{ matrix.django }}
+        run: tox -e py-django${{ matrix.django }}
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
         if: matrix.python == '3.11' && matrix.django == '42'
