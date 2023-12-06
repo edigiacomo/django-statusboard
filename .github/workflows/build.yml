@@ -34,7 +34,9 @@ jobs:
           - python: "3.11"
             django: 50
     steps:
-      - name: Install system dependencies
+      - name: Update pip
+        run: pip install -U pip
+      - name: Install tox
         run: pip install tox
       - name: Setup Python ${{ matrix.python }}
         uses: actions/setup-python@v4
