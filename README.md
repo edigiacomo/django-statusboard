@@ -7,6 +7,8 @@
 
 Status page application with browser and REST API interface.
 
+![screenshot](screenshot.png)
+
 ## Installation
 
 Install the package
