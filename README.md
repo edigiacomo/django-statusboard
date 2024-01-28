@@ -72,6 +72,13 @@ STATUSBOARD = {
 * `FAVICON_INDEX_DICT`: favicon for index, based on the worst status (default:
   `FAVICON_DEFAULT`). The keys `(0, 1, 2, 3)` are the status values (see `SERVICE_STATUSES` in `statusboard/models.py`).
 
+## Internationalization and localization
+
+`django-statusboard` supports the following languages:
+
+* English
+* Italian
+
 ## Customize pages
 
 The following blocks are customizable in `statusboard/base.html`:
