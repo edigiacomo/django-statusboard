@@ -9,10 +9,10 @@ jobs:
       - name: Install system dependencies
         run: pip install tox
       - name: Setup Python 3.9
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: 3.9
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Run mkdocs
         run: tox -e docs
