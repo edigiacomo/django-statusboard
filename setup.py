@@ -17,7 +17,7 @@ setup(
     author_email="emanuele@digiacomo.cc",
     python_requires=">=3.6",
     install_requires=[
-        'django>=2.2', 'djangorestframework', 'django-model-utils', 'pytz'
+        'django>=2.2', 'djangorestframework!=3.15.0', 'django-model-utils', 'pytz'
     ],
     classifiers=[
         'Development Status :: 4 - Beta',
