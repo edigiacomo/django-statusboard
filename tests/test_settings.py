@@ -19,6 +19,7 @@ import os
 
 
 USE_TZ = True
+TIME_ZONE = "Europe/Rome"
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
