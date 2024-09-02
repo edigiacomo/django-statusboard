@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.14.0
+
+* Added Django 5.1 support
+* Added i18n and l10n sections in README.md
+* Fixed empty .woff file #65
+
 ## 0.13.0
 
 * Added Django 4.2 support
