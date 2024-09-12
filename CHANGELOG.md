@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.15.0
+
+* Use `datetime-local` input type instead of `text` (#12)
+
 ## 0.14.0
 
 * Added Django 5.1 support
