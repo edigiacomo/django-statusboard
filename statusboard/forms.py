@@ -27,6 +27,28 @@ from .models import Maintenance
 from .models import SERVICE_STATUSES
 
 
+# DateTimeLocalInput and DateTimeLocalField classes were copied from https://stackoverflow.com/a/69965027 hence they are
+# distributed under CC BY-SA 4.0 (see https://stackoverflow.com/help/licensing).
+
+class DateTimeLocalInput(forms.DateTimeInput):
+    input_type = "datetime-local"
+
+
+class DateTimeLocalField(forms.DateTimeField):
+    # Set DATETIME_INPUT_FORMATS here because, if USE_L10N
+    # is True, the locale-dictated format will be applied
+    # instead of settings.DATETIME_INPUT_FORMATS.
+    # See also:
+    # https://developer.mozilla.org/en-US/docs/Web/HTML/Date_and_time_formats
+
+    input_formats = [
+        "%Y-%m-%dT%H:%M:%S",
+        "%Y-%m-%dT%H:%M:%S.%f",
+        "%Y-%m-%dT%H:%M",
+    ]
+    widget = DateTimeLocalInput(format="%Y-%m-%dT%H:%M")
+
+
 class ServiceGroupForm(forms.ModelForm):
     class Meta:
         model = ServiceGroup
@@ -47,6 +69,8 @@ class ServiceForm(forms.ModelForm):
 
 
 class MaintenanceForm(forms.ModelForm):
+    scheduled = DateTimeLocalField()
+
     class Meta:
         model = Maintenance
         fields = ["name", "description", "scheduled"]
@@ -59,6 +83,7 @@ class IncidentForm(forms.ModelForm):
         help_text=_("Update the status of involved services (an empty value means that they will be left unaltered)"),
         required=False,
     )
+    occurred = DateTimeLocalField()
 
     class Meta:
         model = Incident
