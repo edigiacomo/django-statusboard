@@ -30,6 +30,7 @@ from .models import SERVICE_STATUSES
 # DateTimeLocalInput and DateTimeLocalField classes were copied from https://stackoverflow.com/a/69965027 hence they are
 # distributed under CC BY-SA 4.0 (see https://stackoverflow.com/help/licensing).
 
+
 class DateTimeLocalInput(forms.DateTimeInput):
     input_type = "datetime-local"
 
