@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.15.1
+
+* Support Python 3.12
+* Support Python 3.13
+
 ## 0.15.0
 
 * Use `datetime-local` input type instead of `text` (#12)
