@@ -50,8 +50,6 @@ jobs:
           - python: "3.12"
             django: 52
           - python: "3.13"
-            django: 51
-          - python: "3.13"
             django: 52
     steps:
       - name: Checkout code
