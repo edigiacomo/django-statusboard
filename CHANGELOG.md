@@ -1,5 +1,9 @@
 # Changelog
 
+## devel
+
+* Support Django 5.2
+
 ## 0.15.1
 
 * Support Python 3.12
