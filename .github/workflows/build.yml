@@ -12,8 +12,6 @@ jobs:
       matrix:
         include:
           - django: 32
-            python: "3.7"
-          - django: 32
             python: "3.8"
           - django: 32
             python: "3.9"
