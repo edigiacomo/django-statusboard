@@ -24,7 +24,6 @@ from model_utils.models import TimeStampedModel
 
 from .settings import statusconf
 
-
 SERVICE_STATUSES = (
     (0, _("Operational")),
     (1, _("Performance issues")),

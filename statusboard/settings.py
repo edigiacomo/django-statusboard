@@ -16,7 +16,6 @@
 from django.conf import settings
 from django.templatetags.static import static
 
-
 """
 The settings for the app can be set in the project settings, e.g.:
 
