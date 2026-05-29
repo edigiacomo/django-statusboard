@@ -8,14 +8,14 @@ jobs:
   linter:
     runs-on: ubuntu-latest
     steps:
-      - name: Setup Python
-        uses: actions/setup-python@v5
+      - name: Install Python
+        uses: actions/setup-python@v6
         with:
-          python-version: 3.9
+          python-version: "3.x"
       - name: Install system dependencies
         run: pip install tox
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       - name: Linter
         run: tox -e linter
       - name: Security check

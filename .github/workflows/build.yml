@@ -45,9 +45,9 @@ jobs:
             python: "3.14"
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       - name: Setup Python ${{ matrix.python }}
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: ${{ matrix.python }}
       - name: Update packaging tools
@@ -57,5 +57,5 @@ jobs:
       - name: Run tests
         run: tox -e py$(echo ${{ matrix.python-version }} | tr -d .)-django${{ matrix.django }}
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v6
         if: matrix.python == '3.11' && matrix.django == '42'
